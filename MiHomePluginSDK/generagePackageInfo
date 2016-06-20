@@ -1,0 +1,43 @@
+#!/usr/bin/python
+import sys
+import os
+
+f = open("SDK_API_LEVEL", "r")
+x = f.read()[:-1]
+
+SDK_API_LEVEL = x
+
+def fail_and_exit(message):
+    print "Error: "+message
+    print "generate packageInfo failed!"
+    exit(0)
+
+def shell_dir():
+    path = sys.path[0]
+    if os.path.isdir(path):
+        return path 
+    elif os.path.isfile(path):
+        return os.path.dirname(path)
+
+if len(sys.argv)<5:
+    fail_and_exit("generatePackageInfo packageName developerId supportModels version")
+
+shellDir = shell_dir()
+packageName = sys.argv[1]
+packageName = packageName.replace("/", "")
+
+developerId = sys.argv[2]
+supportModels = sys.argv[3]
+version = sys.argv[4]
+
+#r = os.system("sed \"s/testplugin/"+pluginName+"/g\" ./"+pluginName+"/Setting/index.ios.js > tempsetting.js")
+
+print "{"
+print "  "+"\"package_name\":"+"\""+packageName+"\","
+print "  "+"\"developer_id\":"+"\""+developerId+"\","
+print "  "+"\"models\":"+"\""+supportModels+"\","
+print "  "+"\"min_api_level\":"+"\""+SDK_API_LEVEL+"\","
+print "  "+"\"version\":"+"\""+version+"\","
+print "  "+"\"platform\":"+"\""+"iphone"+"\""
+print "}" 
+

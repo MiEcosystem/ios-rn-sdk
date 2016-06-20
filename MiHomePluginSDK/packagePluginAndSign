@@ -1,0 +1,81 @@
+#!/usr/bin/python
+import sys
+import os
+
+def fail_and_exit(message):
+    print "Error: "+message
+    print "package plugin failed!"
+    print "cleaning..."
+    r = os.system("rm -rf temp_plugin_dir")
+    r = os.system("rm -rf tmp.md5")
+    r = os.system("rm -rf ./tmp_signed")
+    exit(0)
+
+def shell_dir():
+    path = sys.path[0]
+    if os.path.isdir(path):
+        return path 
+    elif os.path.isfile(path):
+        return os.path.dirname(path)
+
+if len(sys.argv)<5:
+    fail_and_exit("packagePluginAndSign pluginName private.pem public.cer developerId noframework")
+
+shellDir = shell_dir()
+pluginName = sys.argv[1]
+pluginName = pluginName.replace("/", "")
+
+privateKeyFile = sys.argv[2]
+publicCertFile = sys.argv[3]
+developerId = sys.argv[4]
+
+noframework = "" 
+if len(sys.argv) >= 6:
+    noframework = sys.argv[5]
+
+answer = raw_input("Have you UPDATED your VERSION information THIS TIME in packageInfo.json under your plugin dir? [type yes to continue]")
+if (answer != "yes"):
+    fail_and_exit("Please update it first using any text editor!"
+)
+
+print "Packaging..."
+r = os.system("mkdir tmp_signed")
+
+r = os.system("cp ./"+pluginName+"/packageInfo.json ./tmp_signed")
+if (r!=0):
+    fail_and_exit("packageInfo.json not found, please generate it use generagePackageInfo")
+
+r = os.popen(shellDir+"/makeBundle "+pluginName+" temp_plugin_dir "+noframework, "r").read()
+r = os.system("cd temp_plugin_dir;zip -qr '../tmp_signed/"+pluginName+".zip' *;cd ..")
+r = os.system("rm -rf temp_plugin_dir")
+
+#sign
+md5 = os.popen("md5 " + "./tmp_signed/"+pluginName+".zip").read()
+md5 = md5[-33:-1]
+
+print "Signing..."
+print "Package MD5: " + md5
+
+r = os.system("echo "+md5+" > tmp.md5")
+if (r!=0):
+    fail_and_exit("Signing Failed! Cann't write!")
+r = os.system("openssl rsautl -sign -inkey " + privateKeyFile + " -out ./tmp_signed/" + pluginName + ".sign -in tmp.md5") 
+if (r!=0):
+    fail_and_exit("Signing Failed! Check your key files and password")
+r = os.system("rm tmp.md5")
+
+r = os.system("cp "+publicCertFile+" ./tmp_signed/public.cer")
+if (r!=0):
+    fail_and_exit("Signing Failed! Cann't write!")
+
+r = os.system("echo "+developerId+" > ./tmp_signed/developerId")
+if (r!=0):
+    fail_and_exit("Signing Failed! Cann't write!")
+
+r = os.system("cd tmp_signed;zip -qr '../"+pluginName+".signed.zip' *;cd ..")
+if (r!=0):
+    fail_and_exit("Signing Failed! Cann't write!")
+
+r = os.system("rm -rf tmp_signed")
+
+print "package plugin finished!"

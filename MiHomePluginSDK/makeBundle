@@ -1,0 +1,77 @@
+#!/bin/sh
+# build dir
+if [ $# -ge 3 ]
+then
+  echo $1 $2 $3
+  if [ $3 == "noframework" ]
+  then
+    noframework="true"
+  fi
+else
+  noframework="false"
+fi
+
+rm -rf $2 
+mkdir $2 
+
+cd $1
+
+for file in *
+do
+    if [ -d $file ]
+    then
+        if [ $file == "JSPatch" ]
+        then
+            echo "copy JSPatch"
+            cp -r $file ../$2
+        elif [ $file == "Resources" ]
+        then
+            echo "copy resources"
+            cp -r $file/* ../$2
+        elif [ $file != "CommonModules" ]
+        then
+            echo "making bundle for page:"$file 
+            cd ..
+            mkdir iOS
+            react-native bundle --root $1/$file --entry-file $1/$file/index.ios.js --platform ios --bundle-output iOS/main.jsbundle --reset-cache --dev false --noframework $noframework 
+            str=` echo $file| tr '[A-Z]' '[a-z]' `
+            mv iOS/main.jsbundle ./$str.jsbundle
+            rm -rf iOS
+            cd $1
+        fi
+    elif [ -f $file ]
+    then
+        cp $file ../$2
+    fi
+done
+
+cd ..
+
+# make main bundle
+#mkdir iOS
+#cp $1/Main/*.js ./
+#react-native bundle
+#mv iOS/main.jsbundle ./main.jsbundle
+#rm -rf iOS
+#rm *.js
+
+# copy main bundle
+cp *.jsbundle $2 
+rm *.jsbundle
+
+# make setting bundle
+#mkdir iOS
+#cp $1/Setting/*.js ./
+#react-native bundle
+#mv iOS/main.jsbundle ./setting.jsbundle
+#rm -rf iOS
+#rm *.js
+
+#copy setting bundle
+#cp *.jsbundle $2 
+#rm *.jsbundle
+
+#copy resources
+#cp -r ./$1/Resources/* $2 
+
+

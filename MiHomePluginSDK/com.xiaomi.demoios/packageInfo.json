@@ -1,0 +1,8 @@
+{
+  "package_name":"com.xiaomi.demoios",
+  "developer_id":"123454321",
+  "models":"xiaomi.demo.v1|xiaomi.demo.v2|xiaomi.dev.v1|xiaomi.dev.v3",
+  "min_api_level":"32001",
+  "version":"29",
+  "platform":"iphone"
+}

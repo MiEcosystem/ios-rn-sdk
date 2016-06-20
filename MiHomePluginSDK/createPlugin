@@ -1,0 +1,56 @@
+#! /usr/bin/env python
+import sys
+import os
+
+def fail_and_exit(message, clean=True):
+    print "Error: "+message
+    if (clean):
+        print "cleaning..."
+        os.system("rm -rf "+pluginName)
+    print "build plugin failed!"
+    exit(0)
+
+def shell_dir():
+    path = sys.path[0]
+    if os.path.isdir(path):
+        return path 
+    elif os.path.isfile(path):
+        return os.path.dirname(path)
+
+if len(sys.argv)<2:
+    fail_and_exit("buildPlugin pluginName", False)
+
+shellDir = shell_dir()
+pluginName = sys.argv[1]
+pluginName = pluginName.replace("/", "")
+
+print "Building "+pluginName+"..."
+
+r = os.system("mkdir "+pluginName)
+if (r!=0):
+    fail_and_exit(pluginName+" directory exists!", False)
+
+print "making plugin "+pluginName+" structure..."
+
+r = os.system("cp -r "+shellDir+"/structure/Main ./"+pluginName+"/")
+if (r!=0):
+    fail_and_exit("shell structure incomplete, please re-download SDK")
+
+r = os.system("cp -r "+shellDir+"/structure/Resources ./"+pluginName+"/")
+if (r!=0):
+    fail_and_exit("shell structure incomplete, please re-download SDK")
+
+r = os.system("cp -r "+shellDir+"/structure/config.plist ./"+pluginName+"/")
+if (r!=0):
+    fail_and_exit("shell structure incomplete. please re-download SDK")
+r = os.system("cp -r "+shellDir+"/structure/CommonModules ./"+pluginName+"/")
+if (r!=0):
+    fail_and_exit("shell structure incomplete. please re-download SDK")
+
+r = os.system("sed \"s/testplugin/"+pluginName+"/g\" ./"+pluginName+"/Main/index.ios.js > temp.js")
+r = os.system("cp temp.js ./"+pluginName+"/Main/index.ios.js")
+r = os.system("rm temp.js")
+
+r = os.system(shellDir+"/generagePackageInfo "+pluginName+" \"your_developer_id\" \"your_device_model1|your_device_model2\" \"1\" >./"+pluginName+"/packageInfo.json")
+
+print "build plugin finished!"
