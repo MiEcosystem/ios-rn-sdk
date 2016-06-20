@@ -11,14 +11,14 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 
 **本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档**
 
-- [config.plist 配置项含义](./config.html)
-- [MHPluginSDK 模块文档](./MHPluginSDK.html)
-- [MHBluetooth 模块文档](./MHBluetooth.html)
-- [MHPluginFS 模块文档](./MHPluginFS.html)
-- [使用 MHJSPatch 辅助开发插件](./MHJSPatch.html)
-- [插件的多语言化](./localization.html)
-- [使用 React Native 第三方开源组件](./library.html)
-- [插件页面和组件代码说明](./code.html)
+- [config.plist 配置项含义](./config.md)
+- [MHPluginSDK 模块文档](./MHPluginSDK.md)
+- [MHBluetooth 模块文档](./MHBluetooth.md)
+- [MHPluginFS 模块文档](./MHPluginFS.md)
+- [使用 MHJSPatch 辅助开发插件](./MHJSPatch.md)
+- [插件的多语言化](./localization.md)
+- [使用 React Native 第三方开源组件](./library.md)
+- [插件页面和组件代码说明](./code.md)
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
