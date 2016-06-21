@@ -2,7 +2,7 @@
   "package_name":"com.xiaomi.powerstripdemo.ios",
   "developer_id":"12345678",
   "models":"your.device.model",
-  "min_api_level":"12",
+  "min_api_level":"100",
   "version":"1",
   "platform":"iphone"
 }

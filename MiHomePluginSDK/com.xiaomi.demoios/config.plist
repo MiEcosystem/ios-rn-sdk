@@ -5,7 +5,7 @@
         <key>pluginStructureVersion</key>
 	<integer>1</integer>
         <key>noFrameworkCode</key>
-        <true />
+	<true />
         <key>deviceStatusRefreshInterval</key>
         <integer>6</integer>
 	<key>customSceneTriggerIds</key>
