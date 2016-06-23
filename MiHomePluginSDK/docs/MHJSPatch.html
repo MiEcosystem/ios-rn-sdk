@@ -882,10 +882,10 @@ MHJSPatch.evaluateScriptName(&quot;demo.js&quot;, (result) =&gt; {
 
 <p>除了 JSPatch 文档中提供的语法和 API 之外，插件系统提供了一些在 JSPatch 脚本中可以使用的新的 API 来简化插件的开发。</p>
 
-<h4 id="toc_6"><em>gDevice</em></h4>
+<h4 id="toc_6"><em>gDevice()</em> <code>AL-[101,)</code></h4>
 
 <blockquote>
-<p>全局变量，当前插件的设备对象</p>
+<p>返回当前插件的设备对象</p>
 
 <pre><code class="language-js">gDevice.name().toJS(); // 设备名称
 gDevice.model().toJS(); // 设备 model
@@ -893,16 +893,16 @@ gDevice.isOnline(); // 设备是否在线
 </code></pre>
 </blockquote>
 
-<h4 id="toc_7"><em>gDeviceViewController</em></h4>
+<h4 id="toc_7"><em>gDeviceViewController()</em> <code>AL-[101,)</code></h4>
 
 <blockquote>
-<p>全局变量，当前插件的父ViewController</p>
+<p>返回当前插件的父ViewController</p>
 </blockquote>
 
-<h4 id="toc_8"><em>gBasePath</em></h4>
+<h4 id="toc_8"><em>gBasePath()</em> <code>AL-[101,)</code></h4>
 
 <blockquote>
-<p>全局变量，当前插件的资源目录路径，相当于 MHPluginSDK.basePath</p>
+<p>返回当前插件的资源目录路径，相当于 MHPluginSDK.basePath</p>
 
 <pre><code class="language-js">require(&quot;MHImageView&quot;);
 var imageView = MHImageView.alloc().initWithFrame({x:0,y:0,width:100,height:100});

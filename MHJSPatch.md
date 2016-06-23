@@ -36,8 +36,8 @@ MHJSPatch.evaluateScriptName("demo.js", (result) => {
 
 除了 JSPatch 文档中提供的语法和 API 之外，插件系统提供了一些在 JSPatch 脚本中可以使用的新的 API 来简化插件的开发。
 
-#### *gDevice*
->全局变量，当前插件的设备对象
+#### *gDevice()* `AL-[101,)`
+>返回当前插件的设备对象
 >
 >```js
 gDevice.name().toJS(); // 设备名称
@@ -45,11 +45,11 @@ gDevice.model().toJS(); // 设备 model
 gDevice.isOnline(); // 设备是否在线
 ```
 
-#### *gDeviceViewController*
->全局变量，当前插件的父ViewController
+#### *gDeviceViewController()* `AL-[101,)`
+>返回当前插件的父ViewController
 
-#### *gBasePath*
->全局变量，当前插件的资源目录路径，相当于 MHPluginSDK.basePath
+#### *gBasePath()* `AL-[101,)`
+>返回当前插件的资源目录路径，相当于 MHPluginSDK.basePath
 >
 >```js
 require("MHImageView");
