@@ -22,7 +22,7 @@ var MHJSPatch = require('NativeModules').MHJSPatch;
 >`scriptName` 脚本名称
 >`callback` 回调方法 **(id result)**
 >
->插件的 JSPatch 脚本统一存储在插件的 JSPatch 目录下，此方法的 callback 可以获得脚本的返回值。
+>插件的 JSPatch 脚本统一存储在插件的 JSPatch 目录下，此方法的 callback 可以获得脚本的返回值。（脚本最后一行代码的返回值）
 >**注意** 若脚本的返回值不是简单类型（如返回了对象引用），React Native 并不能识别，因此返回值将没有作用。
 >
 >```js
@@ -30,6 +30,31 @@ var MHJSPatch = require('NativeModules').MHJSPatch;
 MHJSPatch.evaluateScriptName("demo.js", (result) => {
   console.log(result);
 });
+```
+
+#### *evaluateScriptNameWithParams(scriptName, nameSpace, params)* `AL-[102,)`
+>执行指定名称的 JSPatch 脚本，带参数
+>
+>`scriptName` 脚本名称
+>`nameSpace` 参数的命名空间
+>`params` 参数字典
+>`callback` 回调方法 **(id result)**
+>
+>插件的 JSPatch 脚本统一存储在插件的 JSPatch 目录下，此方法的 callback 可以获得脚本的返回值。（脚本最后一行代码的返回值）
+>**注意** 若脚本的返回值不是简单类型（如返回了对象引用），React Native 并不能识别，因此返回值将没有作用。
+>
+>```js
+// 执行插件目录 /JSPatch/demo.js 脚本
+MHJSPatch.evaluateScriptNameWithParams("demo.js", "demoNameSpace", {'content': 'This is a demo."}, (result) => {
+  console.log(result); // This is a demo.Done!
+});
+```
+>
+>```js
+// demo脚本内容
+var params = __demoNameSpace_params().toJS(); // 获取传进来的参数
+var result = params.content + "Done!";
+result; // 返回值
 ```
 
 ## JSPatch 脚本 API

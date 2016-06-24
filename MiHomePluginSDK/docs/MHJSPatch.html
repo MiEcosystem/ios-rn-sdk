@@ -868,7 +868,7 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <p><code>scriptName</code> 脚本名称<br/>
 <code>callback</code> 回调方法 <strong>(id result)</strong></p>
 
-<p>插件的 JSPatch 脚本统一存储在插件的 JSPatch 目录下，此方法的 callback 可以获得脚本的返回值。<br/>
+<p>插件的 JSPatch 脚本统一存储在插件的 JSPatch 目录下，此方法的 callback 可以获得脚本的返回值。（脚本最后一行代码的返回值）<br/>
 <strong>注意</strong> 若脚本的返回值不是简单类型（如返回了对象引用），React Native 并不能识别，因此返回值将没有作用。</p>
 
 <pre><code class="language-js">// 执行插件目录 /JSPatch/demo.js 脚本
@@ -878,11 +878,37 @@ MHJSPatch.evaluateScriptName(&quot;demo.js&quot;, (result) =&gt; {
 </code></pre>
 </blockquote>
 
-<h2 id="toc_5">JSPatch 脚本 API</h2>
+<h4 id="toc_5"><em>evaluateScriptNameWithParams(scriptName, nameSpace, params)</em> <code>AL-[102,)</code></h4>
+
+<blockquote>
+<p>执行指定名称的 JSPatch 脚本，带参数</p>
+
+<p><code>scriptName</code> 脚本名称<br/>
+<code>nameSpace</code> 参数的命名空间<br/>
+<code>params</code> 参数字典<br/>
+<code>callback</code> 回调方法 <strong>(id result)</strong></p>
+
+<p>插件的 JSPatch 脚本统一存储在插件的 JSPatch 目录下，此方法的 callback 可以获得脚本的返回值。（脚本最后一行代码的返回值）<br/>
+<strong>注意</strong> 若脚本的返回值不是简单类型（如返回了对象引用），React Native 并不能识别，因此返回值将没有作用。</p>
+
+<pre><code class="language-js">// 执行插件目录 /JSPatch/demo.js 脚本
+MHJSPatch.evaluateScriptNameWithParams(&quot;demo.js&quot;, &quot;demoNameSpace&quot;, {&#39;content&#39;: &#39;This is a demo.&quot;}, (result) =&gt; {
+  console.log(result); // This is a demo.Done!
+});
+</code></pre>
+
+<pre><code class="language-js">// demo脚本内容
+var params = __demoNameSpace_params().toJS(); // 获取传进来的参数
+var result = params.content + &quot;Done!&quot;;
+result; // 返回值
+</code></pre>
+</blockquote>
+
+<h2 id="toc_6">JSPatch 脚本 API</h2>
 
 <p>除了 JSPatch 文档中提供的语法和 API 之外，插件系统提供了一些在 JSPatch 脚本中可以使用的新的 API 来简化插件的开发。</p>
 
-<h4 id="toc_6"><em>gDevice()</em> <code>AL-[101,)</code></h4>
+<h4 id="toc_7"><em>gDevice()</em> <code>AL-[101,)</code></h4>
 
 <blockquote>
 <p>返回当前插件的设备对象</p>
@@ -893,13 +919,13 @@ gDevice.isOnline(); // 设备是否在线
 </code></pre>
 </blockquote>
 
-<h4 id="toc_7"><em>gDeviceViewController()</em> <code>AL-[101,)</code></h4>
+<h4 id="toc_8"><em>gDeviceViewController()</em> <code>AL-[101,)</code></h4>
 
 <blockquote>
 <p>返回当前插件的父ViewController</p>
 </blockquote>
 
-<h4 id="toc_8"><em>gBasePath()</em> <code>AL-[101,)</code></h4>
+<h4 id="toc_9"><em>gBasePath()</em> <code>AL-[101,)</code></h4>
 
 <blockquote>
 <p>返回当前插件的资源目录路径，相当于 MHPluginSDK.basePath</p>
@@ -911,7 +937,7 @@ imageView.loadImage();
 </code></pre>
 </blockquote>
 
-<h4 id="toc_9"><em>definePage(pageDeclaration, insMethods, classMethods)</em></h4>
+<h4 id="toc_10"><em>definePage(pageDeclaration, insMethods, classMethods)</em></h4>
 
 <blockquote>
 <p>定义一个新的页面</p>
@@ -921,7 +947,7 @@ imageView.loadImage();
 <p>该方法与defineClass类似，只是定义的类统一继承MHPViewController，在pageDeclaration中不需要再指明基类</p>
 </blockquote>
 
-<h4 id="toc_10"><em>pushNewPage(pageObj)</em></h4>
+<h4 id="toc_11"><em>pushNewPage(pageObj)</em></h4>
 
 <blockquote>
 <p>打开一个新的页面</p>
@@ -953,7 +979,7 @@ pushNewPage(testViewController);
 </code></pre>
 </blockquote>
 
-<h4 id="toc_11"><em>callMethod(device, method, params, extraInfo, callback)</em></h4>
+<h4 id="toc_12"><em>callMethod(device, method, params, extraInfo, callback)</em></h4>
 
 <blockquote>
 <p>调用设备的RPC接口，类似 MHPluginSDK.callMethod 方法。</p>
@@ -971,7 +997,7 @@ callMethod(gDevice, &quot;set_power&quot;, [&quot;on&quot;], {}, function(isSucc
 </code></pre>
 </blockquote>
 
-<h4 id="toc_12"><em>callSmartHomeAPI(api, params, callback)</em></h4>
+<h4 id="toc_13"><em>callSmartHomeAPI(api, params, callback)</em></h4>
 
 <blockquote>
 <p>调用智能家庭云端接口，类似 MHPluginSDK.callSmartHomeAPI 方法。</p>
@@ -992,13 +1018,13 @@ callSmartHomeAPI(&quot;/scene/list&quot;,TimerQuestData,function(response) {
 </code></pre>
 </blockquote>
 
-<h2 id="toc_13">MHPViewController 类参考</h2>
+<h2 id="toc_14">MHPViewController 类参考</h2>
 
 <p>definePage 方法定义的页面，基类为 MHViewController ，代表了一个最基本的页面。</p>
 
-<h3 id="toc_14">属性</h3>
+<h3 id="toc_15">属性</h3>
 
-<h4 id="toc_15"><em>isTabBarHidden</em></h4>
+<h4 id="toc_16"><em>isTabBarHidden</em></h4>
 
 <blockquote>
 <p>TabBar 是否隐藏，默认为 YES，隐藏。</p>
@@ -1006,7 +1032,7 @@ callSmartHomeAPI(&quot;/scene/list&quot;,TimerQuestData,function(response) {
 <p><code>BOOL</code></p>
 </blockquote>
 
-<h4 id="toc_16"><em>isNavBarHidden</em></h4>
+<h4 id="toc_17"><em>isNavBarHidden</em></h4>
 
 <blockquote>
 <p>NavigationBar 是否隐藏，默认为 NO，不隐藏。</p>
@@ -1014,7 +1040,7 @@ callSmartHomeAPI(&quot;/scene/list&quot;,TimerQuestData,function(response) {
 <p><code>BOOL</code></p>
 </blockquote>
 
-<h4 id="toc_17"><em>isNavBarTranslucent</em></h4>
+<h4 id="toc_18"><em>isNavBarTranslucent</em></h4>
 
 <blockquote>
 <p>NavigationBar 是否透明，默认为 NO，不透明。</p>
@@ -1022,7 +1048,7 @@ callSmartHomeAPI(&quot;/scene/list&quot;,TimerQuestData,function(response) {
 <p><code>BOOL</code></p>
 </blockquote>
 
-<h4 id="toc_18"><em>attributedTitle</em></h4>
+<h4 id="toc_19"><em>attributedTitle</em></h4>
 
 <blockquote>
 <p>带属性的 title 字符串</p>
@@ -1030,27 +1056,27 @@ callSmartHomeAPI(&quot;/scene/list&quot;,TimerQuestData,function(response) {
 <p><code>NSAttributedString *</code></p>
 </blockquote>
 
-<h3 id="toc_19">方法</h3>
+<h3 id="toc_20">方法</h3>
 
-<h4 id="toc_20"><em>refreshTitle</em></h4>
+<h4 id="toc_21"><em>refreshTitle</em></h4>
 
 <blockquote>
 <p>更新页面标题</p>
 </blockquote>
 
-<h4 id="toc_21"><em>applicationDidEnterBackground</em></h4>
+<h4 id="toc_22"><em>applicationDidEnterBackground</em></h4>
 
 <blockquote>
 <p>程序切后台回调，插件可复写此方法。</p>
 </blockquote>
 
-<h4 id="toc_22"><em>applicationWillEnterForeground</em></h4>
+<h4 id="toc_23"><em>applicationWillEnterForeground</em></h4>
 
 <blockquote>
 <p>程序切前台回调，插件可复写此方法。</p>
 </blockquote>
 
-<h4 id="toc_23"><em>(BOOL)isNeedBackButton</em></h4>
+<h4 id="toc_24"><em>(BOOL)isNeedBackButton</em></h4>
 
 <blockquote>
 <p>页面左上是否有返回按钮，插件复写此方法，默认返回 YES</p>
