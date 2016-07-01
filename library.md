@@ -143,7 +143,8 @@ this._tableView.reloadData(dataSource);
 [UIImagePickerManager](https://github.com/marcshilling/react-native-image-picker) 通过原生相机和相册空间选择图片
 
 ```js
-var UIImagePickerManager = require("NativeModules").UIImagePickerManager;
+var UIImagePickerManager = require("NativeModules").UIImagePickerManager; // 旧版
+var UIImagePickerManager = require("NativeModules").ImagePickerManager; // 新版
 ```
 
 

@@ -13,9 +13,15 @@ PluginApp 对象提供了一些方法来完成一些全局性的功能，各个�
 
 #### *sourceOfImage(filename)*
 > 获取插件包内图片的 source，通常是给 Image 组件使用
-> 
+>
 > ```js
 <Image style={styles.iconDemo} source={this.props.app.sourceOfImage("control_home.png")} />
+```
+> **注意** React Native的require方式获取图片只支持常量字符串，不能采用字符串拼接的方式，如果要用require方式获取图片，不能用以上方法，而要用类似如下的代码：
+> 
+> ```js
+var icon = MHPluginSDK.devMode ? require('../Resources/xxx.png') : require('./xxx.png');
+<ImageButton source={icon} ...>
 ```
 
 #### *setIsNavigationBarHidden(isHidden)*

@@ -866,6 +866,12 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 
 <pre><code class="language-js">&lt;Image style={styles.iconDemo} source={this.props.app.sourceOfImage(&quot;control_home.png&quot;)} /&gt;
 </code></pre>
+
+<p><strong>注意</strong> React Native的require方式获取图片只支持常量字符串，不能采用字符串拼接的方式，如果要用require方式获取图片，不能用以上方法，而要用类似如下的代码：</p>
+
+<pre><code class="language-js">var icon = MHPluginSDK.devMode ? require(&#39;../Resources/xxx.png&#39;) : require(&#39;./xxx.png&#39;);
+&lt;ImageButton source={icon} ...&gt;
+</code></pre>
 </blockquote>
 
 <h4 id="toc_4"><em>setIsNavigationBarHidden(isHidden)</em></h4>
