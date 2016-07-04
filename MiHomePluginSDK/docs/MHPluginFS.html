@@ -996,7 +996,54 @@ MHPluginFS.uploadFile(params, (c, response) =&gt; {
 </code></pre>
 </blockquote>
 
-<h4 id="toc_17"><em>downloadFile(url, filename, callback)</em></h4>
+<h4 id="toc_17"><em>uploadFileToFDS(params, callback)</em> <code>AL-[103,)</code></h4>
+
+<blockquote>
+<p>上传文件到小米云FDS</p>
+
+<p><code>params</code> 参数字典<br/>
+<code>callback</code> 回调方法 <strong>(null, Object response)</strong></p>
+
+<p><strong>注意</strong> 专门用来向FDS发送文件，参数格式与uploadFile保持一致，一次只能发送一个文件</p>
+
+<pre><code class="language-js">MHPluginSDK.callSmartHomeAPI(&quot;/home/genpresignedurl&quot;, {&quot;did&quot;:MHPluginSDK.deviceId,&quot;suffix&quot;:&quot;png&quot;}, (response) =&gt; {
+  // console.log(&quot;+++++++++++++++++++++++&quot;+JSON.stringify(response));
+  if (response !== null &amp;&amp; response.code === 0 &amp;&amp; result !== null ) {
+    var result = response.result;
+    if (result.hasOwnProperty(&#39;png&#39;) &amp;&amp; result.png !== null) {
+      var png = result.png;
+      if (png.url !== null) {
+        var obj_name = png.obj_name;
+        var name = obj_name.substring(obj_name.length-22);
+        MHPluginFS.writeFileThroughBase64(name, picture, (isSuccess) =&gt; {
+          if (isSuccess) {
+            var params = {
+              uploadUrl: png.url,
+              method: &#39;PUT&#39;, // default &#39;POST&#39;,support &#39;POST&#39; and &#39;PUT&#39;
+              headers: {
+                &quot;Content-Type&quot;:&quot;&quot;
+              },             
+              files: [
+                {
+                  filename: name, // 只能上传插件sandbox里的文件
+                },
+              ]
+            };
+            MHPluginFS.uploadFileToFDS(params, (c, response) =&gt; {
+              console.log(response.state, response.data);
+            });
+          };
+        });
+      };
+    };
+  } else {
+    AlertIOS.alert(&quot;温馨提示&quot;,&quot;上传头像失败，请重试！&quot;);
+  };
+});
+</code></pre>
+</blockquote>
+
+<h4 id="toc_18"><em>downloadFile(url, filename, callback)</em></h4>
 
 <blockquote>
 <p>下载文件到插件存储空间</p>
@@ -1029,7 +1076,7 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 </code></pre>
 </blockquote>
 
-<h4 id="toc_18"><em>dataLengthOfBase64Data(base64Data, callback)</em></h4>
+<h4 id="toc_19"><em>dataLengthOfBase64Data(base64Data, callback)</em></h4>
 
 <blockquote>
 <p>获取data长度</p>
@@ -1038,7 +1085,7 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 <code>callback</code> 回调方法 <strong>(int length)</strong></p>
 </blockquote>
 
-<h4 id="toc_19"><em>subBase64DataOfBase64Data(base64Data, loc, len, callback)</em></h4>
+<h4 id="toc_20"><em>subBase64DataOfBase64Data(base64Data, loc, len, callback)</em></h4>
 
 <blockquote>
 <p>获取一个data的子data（base64编码）</p>
@@ -1049,7 +1096,7 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 <code>callback</code> 回调方法 <strong>(bool isSuccess, String subData)</strong></p>
 </blockquote>
 
-<h4 id="toc_20"><em>unzipFile(fileName, callback)</em></h4>
+<h4 id="toc_21"><em>unzipFile(fileName, callback)</em></h4>
 
 <blockquote>
 <p>解压缩一个zip文件</p>
@@ -1060,7 +1107,7 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 <p>解压缩后的文件会直接存储在插件存储空间的根目录下</p>
 </blockquote>
 
-<h4 id="toc_21"><em>ungzFile(fileName, callback)</em></h4>
+<h4 id="toc_22"><em>ungzFile(fileName, callback)</em></h4>
 
 <blockquote>
 <p>解压缩一个gz文件</p>
@@ -1071,7 +1118,7 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 <p>与zip解压不同，这个方法只会把数据解压缩到内存里，并以base64编码的形式直接返回给插件，而不会做本地存储</p>
 </blockquote>
 
-<h4 id="toc_22"><em>screenShot(imageName, callback)</em> <code>AL-[101,)</code></h4>
+<h4 id="toc_23"><em>screenShot(imageName, callback)</em> <code>AL-[101,)</code></h4>
 
 <blockquote>
 <p>屏幕截屏</p>

@@ -119,6 +119,51 @@ MHPluginFS.uploadFile(params, (c, response) => {
 });
 ```
 
+#### *uploadFileToFDS(params, callback)* `AL-[103,)`
+>上传文件到小米云FDS
+>
+>`params` 参数字典
+>`callback` 回调方法 **(null, Object response)**
+>
+>**注意** 专门用来向FDS发送文件，参数格式与uploadFile保持一致，一次只能发送一个文件
+>
+>```js
+> MHPluginSDK.callSmartHomeAPI("/home/genpresignedurl", {"did":MHPluginSDK.deviceId,"suffix":"png"}, (response) => {
+  // console.log("+++++++++++++++++++++++"+JSON.stringify(response));
+  if (response !== null && response.code === 0 && result !== null ) {
+    var result = response.result;
+    if (result.hasOwnProperty('png') && result.png !== null) {
+      var png = result.png;
+      if (png.url !== null) {
+        var obj_name = png.obj_name;
+        var name = obj_name.substring(obj_name.length-22);
+        MHPluginFS.writeFileThroughBase64(name, picture, (isSuccess) => {
+          if (isSuccess) {
+            var params = {
+              uploadUrl: png.url,
+              method: 'PUT', // default 'POST',support 'POST' and 'PUT'
+              headers: {
+                "Content-Type":""
+              },             
+              files: [
+                {
+                  filename: name, // 只能上传插件sandbox里的文件
+                },
+              ]
+            };
+            MHPluginFS.uploadFileToFDS(params, (c, response) => {
+              console.log(response.state, response.data);
+            });
+          };
+        });
+      };
+    };
+  } else {
+    AlertIOS.alert("温馨提示","上传头像失败，请重试！");
+  };
+});
+```
+
 #### *downloadFile(url, filename, callback)*
 >下载文件到插件存储空间
 >

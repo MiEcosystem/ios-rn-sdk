@@ -849,12 +849,12 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 
 <p>MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版本设备控制插件的开发环境，智能家庭 iOS 客户端的插件基于 <a href="https://facebook.github.io/react-native/">React Native</a>框架实现，并融合了 <a href="http://jspatch.com">JSPatch</a> 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。</p>
 
-<p><strong>当前版本: 2.0e</strong><br/>
-<strong>发布时间: 2016-06-21</strong><br/>
-<strong>文档修改日期: 2016-06-21</strong><br/>
+<p><strong>当前版本: 2.1</strong><br/>
+<strong>发布时间: 2016-07-04</strong><br/>
+<strong>文档修改日期: 2016-07-04</strong><br/>
 <strong>React Native引擎版本: 0.24.0</strong></p>
 
-<p><strong>本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档</strong></p>
+<p><strong>本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，常见问题请见wiki</strong></p>
 
 <ul>
 <li><a href="./config.html">config.plist 配置项含义</a></li>
@@ -870,7 +870,15 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li>一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录</li>
 </ul>
 
-<h2 id="toc_1">开发环境</h2>
+<h2 id="toc_1">最近更新</h2>
+
+<ol>
+<li>MHPluginFS 增加了向小米云FDS上传文件的API</li>
+<li>MHJSPatch 增加了带参数调用JSPatch脚本的API</li>
+<li>第三方UIImagePickerManager升级到新引擎版本（旧版本仍然存在）</li>
+</ol>
+
+<h2 id="toc_2">开发环境</h2>
 
 <ol>
 <li><a href="https://facebook.github.io/react-native/">React Native</a>（以下简称RN）: RN 的安装过程参见该项目主页。<strong>注意</strong> 目前智能家庭 iOS 客户端中内置的RN引擎版本为 <strong>0.24.0</strong>。MiHomePluginSDK 中已经携带，开发机上安装的 RN 版本并不影响插件的开发，0.24.0以后版本RN的新功能暂时不能使用。</li>
@@ -882,14 +890,14 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li><p>iPhone真机: 由于要使用appstore版本的小米智能家庭APP进行调试，所以不能使用模拟器开发，必须使用一部 iOS7.0 以上系统的 iPhone 真机。</p></li>
 </ol>
 
-<h2 id="toc_2">插件的申请与创建</h2>
+<h2 id="toc_3">插件的申请与创建</h2>
 
 <ol>
 <li>在<a href="http://open.home.mi.com">小米智能家庭开放平台</a>上注册一个开发者账号（智能设备硬件、iOS插件、android插件使用同一个开发者账号）并等待审核通过。</li>
 <li>创建智能设备的插件。创建插件的过程中需要填写一个插件包名，命名规则一般为：若开发者标识为 <em>aaa</em>，设备 model 为<em>aaa.bbb.v1</em>，则 iOS 插件包名一般为 <em>com.aaa.bbb.ios</em> 。例如，<em>xiaomi</em> 公司开发了一款火箭筒，设备 <em>model</em> 为 <em>xiaomi.rocketlauncher.v1</em>，则该火箭筒在智能家庭iOS客户端中的插件包名为 <em>com.xiaomi.rocketlauncher.ios</em></li>
 </ol>
 
-<h2 id="toc_3">开始制作一个新的插件</h2>
+<h2 id="toc_4">开始制作一个新的插件</h2>
 
 <ol>
 <li>进入 MiHomePluginSDK 所在目录</li>
@@ -915,7 +923,7 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <p><strong>注意</strong> 每次打包上传插件包时，都要检查 version 字段是否递增了</p></li>
 </ol>
 
-<h2 id="toc_4">插件包 min_api_level 的确定</h2>
+<h2 id="toc_5">插件包 min_api_level 的确定</h2>
 
 <ol>
 <li>智能家庭 iOS 客户端的功能随着版本的变化也在发生变化，开放给插件的 API 也在逐渐增加（极少数情况下也会废弃），每一个版本的客户端都有一个 API_Level，代表了客户端支持的 API 集合，随版本升高和 API 的引入而增加。</li>
@@ -923,7 +931,7 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li>插件包的 min_api_level 为整个插件中所使用的所有 API 中API_Level 最高的一个，API_Level 低于 min_api_level 的智能家庭APP将无法获取到此插件，默认情况下 min_api_level 为当前 SDK 的 SDK_API_Level（该 SDK 中所有 API 里 API_Level 最高的一个）</li>
 </ol>
 
-<h2 id="toc_5">插件目录结构及文件含义</h2>
+<h2 id="toc_6">插件目录结构及文件含义</h2>
 
 <p>本地插件包目录下包含以下文件和目录：</p>
 
@@ -935,7 +943,7 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li>JSPatch目录：所有插件用到的JSPatch脚本文件存储在这个目录下。</strike></li>
 </ol>
 
-<h2 id="toc_6">智能设备的发现与连接</h2>
+<h2 id="toc_7">智能设备的发现与连接</h2>
 
 <ol>
 <li><p>小米智能家庭 iOS 使用 appstore 版本的客户端进行智能设备插件的开发与调试，在开发与调试之前，需要将设备连接到智能家庭 iOS 客户端中。目前支持使用以下几种设备进行 iOS 插件的开发和调试：</p>
@@ -961,7 +969,7 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li><p>虚拟设备的创建流程见下节。</p></li>
 </ol>
 
-<h2 id="toc_7">调试本地插件</h2>
+<h2 id="toc_8">调试本地插件</h2>
 
 <ol>
 <li>使用小米智能家庭开发者账号登陆小米智能家庭 iOS APP ，并确保智能设备（或虚拟设备）已经出现在设备列表中，若有疑问，参见“智能设备的发现与连接”章节。</li>
@@ -999,7 +1007,7 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li><p>插件代码错误不会导致APP崩溃，而是会弹出一个页面提示错误原因，并可以勾选将错误日志上报。当插件正式上线后，可以在小米智能家庭开放平台看到用户上报的插件崩溃日志。</p></li>
 </ol>
 
-<h2 id="toc_8">开发自定义智能场景（Experimental）</h2>
+<h2 id="toc_9">开发自定义智能场景（Experimental）</h2>
 
 <p>MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条件或动作页面），具体步骤如下：</p>
 
@@ -1013,7 +1021,7 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 </code></pre></li>
 </ol>
 
-<h2 id="toc_9">调试本地插件自定义场景</h2>
+<h2 id="toc_10">调试本地插件自定义场景</h2>
 
 <ol>
 <li>参见“调试本地插件”章节，完成电脑和手机上的设置，并在开发者选项中设置自定义场景sc_id(开发条件）或sa_id（开发动作）以及相应checkbox。</li>
@@ -1021,9 +1029,9 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li>单击对应设备的对应动作，如果sc_id或sa_id匹配，则会读取电脑上的插件进行调试。</li>
 </ol>
 
-<h2 id="toc_10">插件的打包和签名</h2>
+<h2 id="toc_11">插件的打包和签名</h2>
 
-<h3 id="toc_11">准备插件签名文件</h3>
+<h3 id="toc_12">准备插件签名文件</h3>
 
 <ol>
 <li><p>生成属于小米智能家庭开发者账号的 keystore 证书文件。 <strong>注意</strong> 此文件 iOS 与 android 通用并且需要保持一致，如果已经开发过 android 插件，请使用当时生成的 keystore 文件，并跳过步骤1和2。</p>
@@ -1055,7 +1063,7 @@ openssl pkcs12 -in private.pkcs -out private.pem
 <li><p>保留好生成的 public.cer 以及 private.pem，插件包签名时将用到这两个文件。</p></li>
 </ol>
 
-<h3 id="toc_12">打包并给插件签名</h3>
+<h3 id="toc_13">打包并给插件签名</h3>
 
 <ol>
 <li>修改本地插件包的 packageInfo.json 一般是将上一次成功上传的 version + 1，并确定 min_api_level 等其他信息是否填写正确。</li>
@@ -1072,7 +1080,7 @@ openssl pkcs12 -in private.pkcs -out private.pem
 <li><p>成功后点击该插件包的“白名单测试”，即可用 appstore 版本的客户端下载在白名单范围内下载到此插件进行测试。</p></li>
 </ol>
 
-<h2 id="toc_13">插件的测试和发布</h2>
+<h2 id="toc_14">插件的测试和发布</h2>
 
 <ol>
 <li>插件的测试和发布流程请联系小米智能家庭的工作人员。</li>

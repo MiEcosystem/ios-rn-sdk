@@ -194,7 +194,6 @@ class PluginApp extends React.Component {
     return MHPluginSDK.basePath + filename;
   }
 
-
   // 获取插件包内图片source，<Image>用
   sourceOfImage(filename) {
     return {
