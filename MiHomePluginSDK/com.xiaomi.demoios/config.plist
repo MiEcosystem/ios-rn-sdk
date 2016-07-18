@@ -2,19 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-        <key>pluginStructureVersion</key>
+	<key>pluginStructureVersion</key>
 	<integer>1</integer>
-        <key>noFrameworkCode</key>
-	<true />
-        <key>deviceStatusRefreshInterval</key>
-        <integer>6</integer>
+	<key>noFrameworkCode</key>
+	<true/>
+	<key>deviceStatusRefreshInterval</key>
+	<integer>6</integer>
 	<key>customSceneTriggerIds</key>
 	<array>
 		<string>250</string>
 	</array>
-        <key>customSceneActionIds</key>
+	<key>customSceneActionIds</key>
 	<array>
 		<string>250</string>
 	</array>
+	<key>widget</key>
+	<dict>
+		<key>deviceImage</key>
+		<string>demo_operation_device_icon</string>
+		<key>contents</key>
+		<array>
+			<dict>
+				<key>localizablename</key>
+				<dict>
+					<key>en</key>
+					<string>open</string>
+					<key>zh_HK</key>
+					<string>打開</string>
+					<key>zh_TW</key>
+					<string>打開</string>
+					<key>zh_CN</key>
+					<string>打开</string>
+				</dict>
+				<key>name</key>
+				<string>widget.operation.icon.ondemo</string>
+				<key>iconurl</key>
+				<string>demo_operation_icon_auto</string>
+				<key>method</key>
+				<string>set_power</string>
+				<key>params</key>
+				<string>on</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>widget.operation.icon.off</string>
+				<key>iconurl</key>
+				<string>demo_operation_icon_love</string>
+				<key>method</key>
+				<string>set_power</string>
+				<key>params</key>
+				<string>off</string>
+			</dict>
+		</array>
+	</dict>
 </dict>
 </plist>

@@ -27,9 +27,18 @@ var Camera = require("../CommonModules/Camera.ios");
 ### react-native-chart
 [react-native-chart](https://github.com/onefold/react-native-chart) 绘制图表。
 
+**注意** 这个库集成了两个版本，0.1.4（有native部分）
+
 ```js
 var RNChart = require('react-native-chart');
 ```
+
+以及1.0.6beta（纯js，例子参见开发板demo）`AL-[105,)`
+
+```js
+import 'Chart' from '../CommonModules/Chart/Chart.js'
+```
+
 	
 ### React-ART 
 绘图、绘制自定义控件

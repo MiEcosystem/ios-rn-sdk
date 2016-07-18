@@ -4,6 +4,8 @@ var React = require('react-native');
 var ActionSheetIOS = require('ActionSheetIOS');
 var HelloDeveloper = require('../CommonModules/HelloDeveloper');
 var HelloReactART = require('../CommonModules/HelloReactART');
+var ChartDemo = require('./ChartDemo');
+var MHMapDemo = require('./MHMapDemo');
 
 var {
   StyleSheet,
@@ -99,6 +101,12 @@ class MoreMenu extends Component {
         }
       },
       {
+        'name': 'react-native-chart',
+        'func': () => {
+          this.showChart();
+        }
+      },
+      {
         'name': '分享',
         'func': () => {
           MHPluginSDK.openShareListBar("小米智能家庭", "小米智能家庭", "about_icon_app", "http://open.home.mi.com");
@@ -110,6 +118,13 @@ class MoreMenu extends Component {
           //        MHPluginSDK.shareToML("小米智能家庭", "小米智能家庭", this.props.app.pathForResource("icon_demo.png"), "http://open.home.mi.com");
           // 分享到朋友圈
           //        MHPluginSDK.shareToWeChatMoment("小米智能家庭", "小米智能家庭", this.props.app.pathForResource("icon_demo.png"), "http://open.home.mi.com");
+        }
+      },
+
+      {
+        'name': '高德地图',
+        'func': () => {
+          this.props.navigator.push(MHMapDemo.route);
         }
       },
     ];
@@ -150,6 +165,10 @@ class MoreMenu extends Component {
 
   showReactART() {
     this.props.navigator.push(HelloReactART.route);
+  }
+
+  showChart() {
+    this.props.navigator.push(ChartDemo.route);
   }
 
   showActionSheet() {

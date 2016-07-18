@@ -154,6 +154,11 @@ type Props = {
    * This determines how frequently events such as scroll and layout can trigger a re-render.
    */
   recomputeRowsBatchingPeriod: number;
+  /**
+   * Called when rows will be mounted/unmounted. Mounted rows always form a contiguous block so it is expressed as a
+   * range of start plus count.
+   */
+  onMountedRowsWillChange: (firstIdx: number, count: number) => void;
 };
 const defaultProps = {
   enableDangerousRecycling: false,
@@ -368,6 +373,7 @@ class WindowedListView extends React.Component {
       }
     }
     if (this.state.firstRow !== firstRow || this.state.lastRow !== lastRow) {
+      this.props.onMountedRowsWillChange && this.props.onMountedRowsWillChange(firstRow, lastRow - firstRow + 1);
       console.log('WLV: row render range changed:', {firstRow, lastRow});
     }
     this.setState({firstRow, lastRow});
@@ -451,7 +457,9 @@ class WindowedListView extends React.Component {
         lastRow === this.props.data.length - 1;
     if (this.props.renderFooter) {
       rows.push(
-        <View style={showFooter ? styles.include : styles.remove}>
+        <View
+          key="ind-footer"
+          style={showFooter ? styles.include : styles.remove}>
           {this.props.renderFooter()}
         </View>
       );

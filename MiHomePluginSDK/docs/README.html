@@ -849,10 +849,12 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 
 <p>MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版本设备控制插件的开发环境，智能家庭 iOS 客户端的插件基于 <a href="https://facebook.github.io/react-native/">React Native</a>框架实现，并融合了 <a href="http://jspatch.com">JSPatch</a> 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。</p>
 
-<p><strong>当前版本: 2.1</strong><br/>
-<strong>发布时间: 2016-07-04</strong><br/>
-<strong>文档修改日期: 2016-07-04</strong><br/>
-<strong>React Native引擎版本: 0.24.0</strong></p>
+<p><strong>当前版本: 2.5</strong><br/>
+<strong>发布时间: 2016-07-18</strong><br/>
+<strong>文档修改日期: 2016-07-18</strong><br/>
+<strong>React Native引擎版本: 0.25.1</strong><br/>
+<strong>Release API Level 102 -&gt; App 2.5.3</strong><br/>
+<strong>Max API Level 105 -&gt; App 2.5.4</strong></p>
 
 <p><strong>本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，常见问题请见wiki</strong></p>
 
@@ -861,10 +863,12 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <li><a href="./MHPluginSDK.html">MHPluginSDK 模块文档</a></li>
 <li><a href="./MHBluetooth.html">MHBluetooth 模块文档</a></li>
 <li><a href="./MHPluginFS.html">MHPluginFS 模块文档</a></li>
+<li><a href="./MHMapSearch.html">MHMapSearch 模块文档（高德地图）</a></li>
 <li><a href="./MHJSPatch.html">使用 MHJSPatch 辅助开发插件</a></li>
 <li><a href="./localization.html">插件的多语言化</a></li>
 <li><a href="./library.html">使用 React Native 第三方开源组件</a></li>
 <li><a href="./code.html">插件页面和组件代码说明</a></li>
+<li><a href="./widgetConfig.html">widget配置说明</a></li>
 <li>wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录</li>
 <li>支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录</li>
 <li>一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录</li>
@@ -873,9 +877,10 @@ c:[{cN:"comment",b:/\(\*/,e:/\*\)/},e.ASM,e.QSM,e.CNM,{cN:"list",b:/\{/,e:/\}/,i
 <h2 id="toc_1">最近更新</h2>
 
 <ol>
-<li>MHPluginFS 增加了向小米云FDS上传文件的API</li>
-<li>MHJSPatch 增加了带参数调用JSPatch脚本的API</li>
-<li>第三方UIImagePickerManager升级到新引擎版本（旧版本仍然存在）</li>
+<li>React Native引擎升级到0.25.1（旧插件包直接兼容，无需重新打包发布）</li>
+<li>插件支持配置锁屏widget</li>
+<li>react-native-chart第三方库升级到1.0.6beta，与旧版本库（0.1.4）并存</li>
+<li>插件支持使用高德地图</li>
 </ol>
 
 <h2 id="toc_2">开发环境</h2>

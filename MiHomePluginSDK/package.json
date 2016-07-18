@@ -7,8 +7,11 @@
   },
   "dependencies": {
     "art": "^0.10.0",
-    "react-native": "^0.24.0",
+    "react": "^0.14.5",
+    "react-native": "^0.25.1",
     "react-native-chart": "0.1.14",
-    "react-timer-mixin": "^0.13.3"
+    "react-timer-mixin": "^0.13.3",
+    "gl-react-native": "2.27.0",
+    "gl-react": "^2.2.3"
   }
 }

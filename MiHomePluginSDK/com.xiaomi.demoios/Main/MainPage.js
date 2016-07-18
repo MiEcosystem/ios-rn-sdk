@@ -38,7 +38,6 @@ class MainPage extends React.Component {
   }
 
   render() {
-
     var rowControlDemo = this._createMenuRow(ControlDemo);
     var rowCloudDebug = this._createMenuRow(CloudDebug);
     var rowMyProduct = this._createMenuRow(MyProduct);

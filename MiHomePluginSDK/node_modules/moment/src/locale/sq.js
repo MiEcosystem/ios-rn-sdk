@@ -1,5 +1,5 @@
 //! moment.js locale configuration
-//! locale : Albanian (sq)
+//! locale : Albanian [sq]
 //! author : Flakërim Ismani : https://github.com/flakerimi
 //! author: Menelion Elensúle: https://github.com/Oire (tests)
 //! author : Oerd Cukalla : https://github.com/oerd (fixes)
@@ -12,6 +12,7 @@ export default moment.defineLocale('sq', {
     weekdays : 'E Diel_E Hënë_E Martë_E Mërkurë_E Enjte_E Premte_E Shtunë'.split('_'),
     weekdaysShort : 'Die_Hën_Mar_Mër_Enj_Pre_Sht'.split('_'),
     weekdaysMin : 'D_H_Ma_Më_E_P_Sh'.split('_'),
+    weekdaysParseExact : true,
     meridiemParse: /PD|MD/,
     isPM: function (input) {
         return input.charAt(0) === 'M';

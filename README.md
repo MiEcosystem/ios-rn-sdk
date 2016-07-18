@@ -4,10 +4,12 @@
 
 MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版本设备控制插件的开发环境，智能家庭 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
-**当前版本: 2.1**
-**发布时间: 2016-07-04**
-**文档修改日期: 2016-07-04**
-**React Native引擎版本: 0.24.0**
+**当前版本: 2.5**
+**发布时间: 2016-07-18**
+**文档修改日期: 2016-07-18**
+**React Native引擎版本: 0.25.1**
+**Release API Level 102 -> App 2.5.3**
+**Max API Level 105 -> App 2.5.4**
 
 **本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，常见问题请见wiki**
 
@@ -15,19 +17,22 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 - [MHPluginSDK 模块文档](./MHPluginSDK.md)
 - [MHBluetooth 模块文档](./MHBluetooth.md)
 - [MHPluginFS 模块文档](./MHPluginFS.md)
+- [MHMapSearch 模块文档（高德地图）](./MHMapSearch.md)
 - [使用 MHJSPatch 辅助开发插件](./MHJSPatch.md)
 - [插件的多语言化](./localization.md)
 - [使用 React Native 第三方开源组件](./library.md)
 - [插件页面和组件代码说明](./code.md)
+- [widget配置说明](./widgetConfig.md)
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
 
 ## 最近更新
 
-1. MHPluginFS 增加了向小米云FDS上传文件的API
-2. MHJSPatch 增加了带参数调用JSPatch脚本的API
-3. 第三方UIImagePickerManager升级到新引擎版本（旧版本仍然存在）
+1. React Native引擎升级到0.25.1（旧插件包直接兼容，无需重新打包发布）
+2. 插件支持配置锁屏widget
+3. react-native-chart第三方库升级到1.0.6beta，与旧版本库（0.1.4）并存
+4. 插件支持使用高德地图
 
 ## 开发环境
 
@@ -39,7 +44,7 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 	brew install openssl
 	```
 4. iPhone真机: 由于要使用appstore版本的小米智能家庭APP进行调试，所以不能使用模拟器开发，必须使用一部 iOS7.0 以上系统的 iPhone 真机。
-	
+
 ## 插件的申请与创建
 
 1. 在[小米智能家庭开放平台](http://open.home.mi.com)上注册一个开发者账号（智能设备硬件、iOS插件、android插件使用同一个开发者账号）并等待审核通过。
@@ -53,12 +58,12 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 	```
 	./createPlugin plugin_name
 	```
-	
+
 	其中 plugin_name 即为之前申请创建的插件包名 com.aaa.bbb.ios
-	
+
 3. 本地插件包创建成功后，会在 SDK 所在目录下生成一个 plugin_name 目录，其目录结构以及各文件的含义见相关章节。
 4. plugin_name 目录下有个名为 packageInfo.json 的插件包信息文件（**注意** 不要与 npm 的 package.json 混淆）。这个文件关系到插件包的打包和上传，创建本地插件包成功后，请用文本编辑器打开这个文件并编辑其中的内容：
-	
+
 	```js
 	{
     "package_name":"com.aaa.bbb.ios", // 插件包名，不用修改
@@ -69,9 +74,9 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
     "platform":"iphone" // 插件包支持的平台，目前只支持iphone，不用修改
   }
 	```
-	
+
 	**注意** 每次打包上传插件包时，都要检查 version 字段是否递增了
-	
+
 ## 插件包 min_api_level 的确定
 
 1. 智能家庭 iOS 客户端的功能随着版本的变化也在发生变化，开放给插件的 API 也在逐渐增加（极少数情况下也会废弃），每一个版本的客户端都有一个 API_Level，代表了客户端支持的 API 集合，随版本升高和 API 的引入而增加。
@@ -99,7 +104,7 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 		5. 虚拟设备
 
 	其中，3、4和5由于不具备待开发设备的相应功能，只能用来开发UI界面。
-	
+
 2. 使用1和2进行 iOS 插件开发时，需要将 iOS 的产品状态设置为白名单可见，不然无法在客户端的快连菜单和设备列表里看到设备。**注意** 产品的上线状态请联系小米智能家庭工作人员设置。
 
 3. 使用小米智能家庭开发者账号登陆 iOS 客户端
@@ -107,7 +112,7 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 
 		1. 确认已按前述步骤2联系小米智能家庭工作人员设置产品状态。
 		2. 退出登录开发者账号、杀死客户端进程并重新使用开发者账号登陆。
-		
+
 5. 在菜单中选择要连接的设备型号，按客户端提示进行连接。
 6. 如果连接失败。请按照指示灯的状态选择对应的模式再试一次，**注意** 设备不支持工作在 5G wifi 下。（一般是选用兼容模式再试）
 7. 当设备出现在设备列表以后，即可进行插件的开发和调试工作。
@@ -122,22 +127,22 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 	```
 	npm start --reset-cache
 	```
-	
+
 	**注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 4. 查看本机 IP 地址：
-	
+
 	```
 	ifconfig en0
 	```
-	
+
 	**注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
-	
+
 5. 客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
 
 		1. 退出登录开发者账号、杀死客户端进程并重新使用开发者账号登陆。
 		2. 切换到设备列表页卡，再切换回个人信息页卡。
 		3. 如果反复尝试仍未出现，请联系智能家庭工作人员。
-		
+
 6. 开启“开发者选项”，在弹出的对话框中按要求输入调试插件的信息：
 
 		1. 设备 model ：调试设备的 model，符合该 model 的设备将加载本地插件，可以是任意设备。
@@ -163,7 +168,7 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 	```js
 	MHPluginSDK.finishCustomSceneSetup(payload);
 	```
-	
+
 ## 调试本地插件自定义场景
 1. 参见“调试本地插件”章节，完成电脑和手机上的设置，并在开发者选项中设置自定义场景sc_id(开发条件）或sa_id（开发动作）以及相应checkbox。
 2. 点击个人页卡中的智能场景，添加场景，选择步骤一：触发条件或二：添加任务。
@@ -173,27 +178,27 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 
 ### 准备插件签名文件
 1. 生成属于小米智能家庭开发者账号的 keystore 证书文件。 **注意** 此文件 iOS 与 android 通用并且需要保持一致，如果已经开发过 android 插件，请使用当时生成的 keystore 文件，并跳过步骤1和2。
-	
+
 	```
 	keytool -genkey -dname CN=YourName,OU=YourCompany,O=YourCompany,L=Beijing,ST=Beijing,C=86 -alias yourKeyAlias -keypass 123456 -storepass 123456 -keystore ./your.keystore -validity 18000 -keyalg RSA -keysize 2048
 	```
-	
+
 2. 联系小米智能家庭工作人员，提供 keystore 文件的证书 MD5 指纹：
 
 	```
 	keytool -list -v -keystore your.keystore
 	```
-	
+
 	取出其中的 MD5 指纹并去掉冒号。
 3. 使用 keystore 文件按照下述流程提取出 iOS 能够识别的公钥和私钥文件。
 4. 导出公钥文件 public.cer:（需要安装keytool）
-	
+
 	```
 	keytool -export -keystore your.keystore -alias yourKeyAlias - file public.cer
 	```
-	
+
 	其中 yourKeyAlias 与生成 keystore时的同名参数保持一致。如果是安卓生成的，可以通过下面的命令来查看设置的别名。
-	
+
 	```
 	keytool -list -keystore your.keystore
 	```
@@ -202,12 +207,12 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 
 	```
 	keytool -importkeystore -srckeystore your.keystore -destkeystore private.pkcs -srcstoretype JKS -deststoretype PKCS12
-	
+
 	openssl pkcs12 -in private.pkcs -out private.pem
 	```
-	
+
 6. 保留好生成的 public.cer 以及 private.pem，插件包签名时将用到这两个文件。
-	
+
 ### 打包并给插件签名
 1. 修改本地插件包的 packageInfo.json 一般是将上一次成功上传的 version + 1，并确定 min_api_level 等其他信息是否填写正确。
 2. 进入 MiHomePluginSDK 目录
@@ -216,9 +221,9 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 	```
 	./packagePluginAndSign plugin_name /path/to/private.pem /path/to/public.cer yourDeveloperId
 	```
-	
+
 	其中 plugin_name 是插件包的目录名，private.pem 和 public.cer 分别是准备好的私钥和公钥文件，yourDeveloperId 是开发此插件的小米智能家庭开发者账号（数字小米ID）
-	
+
 4. 签名过程中会要求输入私钥文件的密码。
 5. 打包成功后会在当前目录下生成 plugin_name.signed.zip 的已签名插件包。
 6. 用开发者账号登录[小米智能家庭开放平台网站](https://open.home.mi.com/)，在插件管理里选择相应的iOS插件，点击“上传插件包”进行上传。
@@ -226,4 +231,5 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 
 ## 插件的测试和发布
 1. 插件的测试和发布流程请联系小米智能家庭的工作人员。
+
 
