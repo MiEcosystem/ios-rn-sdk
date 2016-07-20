@@ -83,9 +83,9 @@ definePage('MHDemoPowerCostViewController<UIScrollViewDelegate>', {
 
     init: function() {
         if (self = self.super().init()) {
-            var em = MHElecManager.sharedManagerOfDevice(gDevice);
+            var em = MHElecManager.sharedManagerOfDevice(gDevice());
             em.setMulti(0.01);
-            self.setElecManager(MHElecManager.sharedManagerOfDevice(gDevice));
+            self.setElecManager(MHElecManager.sharedManagerOfDevice(gDevice()));
             self.setCurPowerCostShowMode(MHPowerCostMode_Hour);
         }
         return self;
@@ -102,14 +102,14 @@ definePage('MHDemoPowerCostViewController<UIScrollViewDelegate>', {
         self.elecManager().loadCacheDataWithSuccess_failure(block('id', function(obj) {
             weakself.powerCostView().updatePowerCostData_mode_isLoadNext(weakself.elecManager().getDataListOfMode(MHPowerCostMode_Hour), MHPowerCostMode_Hour, NO);
         }), block('NSError *', function(obj) {
-            _OC_log("load cache fail", obj); 
+            _OC_log("load cache fail", obj);
         }));
 
         //后台拉取
         self.elecManager().refreshOfMode_success_failure(self.curPowerCostShowMode(),block('id', function(obj) {
             weakself.powerCostView().updatePowerCostData_mode_isLoadNext(weakself.elecManager().getDataListOfMode(MHPowerCostMode_Hour), MHPowerCostMode_Hour, NO);
         }), block('NSError *', function(obj) {
-            _OC_log("load net fail", obj); 
+            _OC_log("load net fail", obj);
         }));
 
         for (var mode = MHPowerCostMode_Hour; mode <= MHPowerCostMode_Month; mode++) {
@@ -121,11 +121,11 @@ definePage('MHDemoPowerCostViewController<UIScrollViewDelegate>', {
         var payload = {
             "method": "get_rt_power",
             "params": [1],
-            "did": gDevice.did()
+            "did": gDevice().did()
         };
 
         // 向插排发一个RPC指令让插排开始更新实时功率值
-        gDevice.sendPayload_success_failure(payload, block('id', function(json) {
+        gDevice().sendPayload_success_failure(payload, block('id', function(json) {
            _OC_log("json:", json);
         }), block('NSError*', function(error) {
 
@@ -141,10 +141,10 @@ definePage('MHDemoPowerCostViewController<UIScrollViewDelegate>', {
         var payload = {
             "method": "get_prop",
             "params": ["power_consume_rate"],
-            "did": gDevice.did()
+            "did": gDevice().did()
         };
         var slf = self;
-        gDevice.sendPayload_success_failure(payload, block('id', function(json) {
+        gDevice().sendPayload_success_failure(payload, block('id', function(json) {
             var res = json.objectForKey("result");
             if (res && res.isKindOfClass(NSArray.class()) && res.count() > 0) {
                 var power = res.objectAtIndex(0);
