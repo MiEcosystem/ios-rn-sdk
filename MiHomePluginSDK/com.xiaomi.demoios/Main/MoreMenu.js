@@ -6,6 +6,7 @@ var HelloDeveloper = require('../CommonModules/HelloDeveloper');
 var HelloReactART = require('../CommonModules/HelloReactART');
 var ChartDemo = require('./ChartDemo');
 var MHMapDemo = require('./MHMapDemo');
+var MHAudioDemo = require('./MHAudioDemo');
 
 var {
   StyleSheet,
@@ -125,6 +126,12 @@ class MoreMenu extends Component {
         'name': '高德地图',
         'func': () => {
           this.props.navigator.push(MHMapDemo.route);
+        }
+      },
+      {
+        'name': '音频',
+        'func': () => {
+          this.props.navigator.push(MHAudioDemo.route);
         }
       },
     ];

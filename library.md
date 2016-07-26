@@ -156,4 +156,6 @@ var UIImagePickerManager = require("NativeModules").UIImagePickerManager; // 旧
 var UIImagePickerManager = require("NativeModules").ImagePickerManager; // 新版
 ```
 
+### gl-react-native `AL-[105,)`
+[gl-react-native](https://github.com/ProjectSeptemberInc/gl-react-native) OPENGL组件，由于RN引擎版本的原因，集成的是2.27.0的版本
 

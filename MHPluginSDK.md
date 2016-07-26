@@ -257,6 +257,22 @@ MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, respons
 >
 >**注意** 此方法并不会发送 RPC 指令给设备来获取最新状态，只是返回当前 APP 内存缓存中存储的对应属性值，可获取/设置的设备属性并不需要在设备的 profile 中，可以是任何合法的 key，实际上可以看作一片 key-value pair 形式存储的内存缓存，在退出插件时会被清空。
 >
+>可以用此方法获取一些设备属性，包括：
+>
+>```js
+NSString* mac;            //设备的mac地址                 
+NSString* version;        //设备当前固件版本 
+double longitude;         //上次绑定时的经度
+double latitude;          //上次绑定时的纬度
+NSString* name;           //设备名称，用户可以修改
+NSString* model;          //设备类别标识，如插座、摄像头
+NSString* parent_id;      //父设备的ID
+NSString* parent_model;   //父设备的Model
+BOOL isOnline;            //设备是否在线（是否通电）
+BOOL adminFlag;           //是否被绑定
+BOOL shareFlag;           //是否已分享
+```
+
 >想要发送 RPC 指令给设备获取最新状态，请用 *callMethod(method, params, extraInfo, callback)* 方法，并发送 get_props 指令。
 >
 >```js

@@ -5,11 +5,16 @@
 MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版本设备控制插件的开发环境，智能家庭 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
 **当前版本: 2.5**
+
 **发布时间: 2016-07-18**
-**文档修改日期: 2016-07-18**
+
+**文档修改日期: 2016-07-26**
+
 **React Native引擎版本: 0.25.1**
-**Release API Level 102 -> App 2.5.3**
-**Max API Level 105 -> App 2.5.4**
+
+**Release API Level 105 -> App 2.5.4**
+
+**Max API Level 106 -> App 2.5.5**
 
 **本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，常见问题请见wiki**
 
@@ -18,6 +23,7 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 - [MHBluetooth 模块文档](./MHBluetooth.md)
 - [MHPluginFS 模块文档](./MHPluginFS.md)
 - [MHMapSearch 模块文档（高德地图）](./MHMapSearch.md)
+- [MHAudio 模块文档（音频）](./MHAudio.md)
 - [使用 MHJSPatch 辅助开发插件](./MHJSPatch.md)
 - [插件的多语言化](./localization.md)
 - [使用 React Native 第三方开源组件](./library.md)
@@ -33,6 +39,8 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 2. 插件支持配置锁屏widget
 3. react-native-chart第三方库升级到1.0.6beta，与旧版本库（0.1.4）并存
 4. 插件支持使用高德地图
+5. 插件添加OPENGL支持
+6. 插件支持音频播放和录音
 
 ## 开发环境
 
