@@ -6,9 +6,9 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 
 **当前版本: 2.5**
 
-**发布时间: 2016-07-18**
+**发布时间: 2016-08-01**
 
-**文档修改日期: 2016-07-26**
+**文档修改日期: 2016-08-01**
 
 **React Native引擎版本: 0.25.1**
 
@@ -25,13 +25,14 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 - [MHMapSearch 模块文档（高德地图）](./MHMapSearch.md)
 - [MHAudio 模块文档（音频）](./MHAudio.md)
 - [使用 MHJSPatch 辅助开发插件](./MHJSPatch.md)
-- [插件的多语言化](./localization.md)
+- [插件的多语言化](./localization.html)
 - [使用 React Native 第三方开源组件](./library.md)
 - [插件页面和组件代码说明](./code.md)
 - [widget配置说明](./widgetConfig.md)
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
+- 一个支持横竖屏切换展示的示例插件，SDK目录中 com.xiaomi.orientationdemo.ios 目录
 
 ## 最近更新
 

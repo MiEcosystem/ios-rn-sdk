@@ -159,3 +159,7 @@ var UIImagePickerManager = require("NativeModules").ImagePickerManager; // 新�
 ### gl-react-native `AL-[105,)`
 [gl-react-native](https://github.com/ProjectSeptemberInc/gl-react-native) OPENGL组件，由于RN引擎版本的原因，集成的是2.27.0的版本
 
+### react-native-orientation `AL-[106,)`
+[react-native-orientation](https://github.com/yamill/react-native-orientation)
+转屏组件，参见转屏demo
+
