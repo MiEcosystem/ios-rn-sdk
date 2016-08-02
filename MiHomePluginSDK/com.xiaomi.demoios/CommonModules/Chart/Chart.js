@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
 
 const getRoundNumber = (value, gridStep) => {
 	if (value <= 0) return 0;
+	Math.log10 = Math.log10 || function(x) {return Math.log(x) / Math.LN10;};
 	const logValue = Math.log10(value);
 	const scale = Math.pow(10, Math.floor(logValue));
 	const n = Math.ceil(value / scale * 4);

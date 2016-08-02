@@ -13,6 +13,7 @@
     "react-native": "^0.25.1",
     "react-native-chart": "0.1.14",
     "react-native-orientation": "1.17.0",
+    "react-native-video": "^0.8.0",
     "react-timer-mixin": "^0.13.3"
   }
 }

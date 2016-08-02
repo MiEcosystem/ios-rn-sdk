@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-end',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
+		backgroundColor: 'transparent',//设置为透明的，by heyalu
 	},
 });
 
@@ -20,8 +21,8 @@ export default class BarChart extends Component<void, any, any> {
 	}
 
 	_handlePress = (e : Object, dataPoint : number, index : number) => {
-		if (this.props.data.onDataPointPress) {
-			this.props.data.onDataPointPress(e, dataPoint, index);
+		if (this.props.onDataPointPress) {
+			this.props.onDataPointPress(e, dataPoint, index);
 		}
 	};
 
@@ -48,7 +49,8 @@ export default class BarChart extends Component<void, any, any> {
 		const divisor = (maxBound - minBound <= 0) ? 0.00001 : (maxBound - minBound);
 		const scale = HEIGHT / divisor;
 		let height = HEIGHT - ((minBound * scale) + (HEIGHT - (dataPoint * scale)));
-		if (height <= 0) height = 20;
+		// if (height <= 0) height = 20;
+		if (height <= 0) height = 0;//最低高度变为0，by heyalu
 		return (
 			<TouchableWithoutFeedback
 				key={index}
