@@ -29,23 +29,6 @@ MHMapView.propTypes = {
     }
   */
   userLocation: React.PropTypes.object,
-  //scaleOrigin包含x和y两个key
-  scaleOrigin: React.PropTypes.object,
-  showsScale: React.PropTypes.bool,
-  //compassOrigin包含x和y两个key
-  compassOrigin: React.PropTypes.object,
-  showsCompass: React.PropTypes.bool,
-  /*
-  annotations为annotation组成的数组，每一个annotation的属性如下：
-  id: string  //唯一标识
-  title: string   //目标位置,点击图标弹出的title
-  image: string //图片路径，如MHPluginSDK.basePath + 'map/002.png',
-  size: object  //图片显示尺寸，如 {width: 64, height: 64},
-  canShowCallout: bool//点击图标后是否显示气泡
-  coordinate: object//坐标
-  */
-  annotations: React.PropTypes.array,
-  polylines: React.PropTypes.array,
   /*
   circles
     [{coordinate: object //中心点坐标，包含latitude和longitude两个key
@@ -57,6 +40,13 @@ MHMapView.propTypes = {
     }]
   */
   circles: React.PropTypes.array,
+  //scaleOrigin包含x和y两个key
+  scaleOrigin: React.PropTypes.object,
+  showsScale: React.PropTypes.bool,
+  //compassOrigin包含x和y两个key
+  compassOrigin: React.PropTypes.object,
+  showsCompass: React.PropTypes.bool,
+  // annotations: React.PropTypes.array,
   // userLocationTitle: React.PropTypes.string,
   // userLocationSubtitle: React.PropTypes.string,
 

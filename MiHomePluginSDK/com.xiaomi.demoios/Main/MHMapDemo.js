@@ -96,6 +96,12 @@ class MHMapDemo extends Component {
     var annotation = {
       id: 'annotation' + e.nativeEvent.latitude + e.nativeEvent.longitude,
       title: '目标位置',
+      image: MHPluginSDK.basePath + 'map/002.png',
+      size: {
+        width: 64,
+        height: 64,
+      },
+      canShowCallout: false,
       coordinate: {
         latitude: e.nativeEvent.latitude,
         longitude: e.nativeEvent.longitude,
@@ -126,7 +132,7 @@ class MHMapDemo extends Component {
           var steps = path.steps;
           var polylines = [];
           for (var i = 0; i < steps.length; i++) {
-            var coordinates = this.coordinatesForString(steps[i].polyline, ';');
+            var coordinates = this.coordinatesForPolyline(steps[i].polyline);
             var polyline = {
               'id': 'polyline' + i,
               'coordinates': coordinates,
@@ -145,20 +151,11 @@ class MHMapDemo extends Component {
     });
   }
 
-  coordinatesForString(stepPolyline, parseToken) {
+  coordinatesForPolyline(stepPolyline, parseToken) {
     if (!stepPolyline.length) {
       return null;
     }
-    if (!parseToken.length) {
-      parseToken = ',';
-    }
-    var str = '';
-    if (',' === parseToken) {
-      str = stepPolyline;
-    }
-    else {
-      str = stepPolyline.replace(/;/g, ',');
-    }
+    var str = stepPolyline.replace(/;/g, ',');
     var tempArray = str.split(',');
     console.log(tempArray);
     var coordinates = [];
