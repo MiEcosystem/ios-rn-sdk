@@ -36,12 +36,10 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 
 ## 最近更新
 
-1. React Native引擎升级到0.25.1（旧插件包直接兼容，无需重新打包发布）
-2. 插件支持配置锁屏widget
-3. react-native-chart第三方库升级到1.0.6beta，与旧版本库（0.1.4）并存
-4. 插件支持使用高德地图
-5. 插件添加OPENGL支持
-6. 插件支持音频播放和录音
+1. 添加对转屏的支持react-native-orientation
+2. 添加对视频播放的支持react-native-video
+3. react-native-chart从1.0.6beta升级到1.0.7beta，并修改了iOS7上崩溃的bug
+4. 添加了一个截取指定屏幕rect图片的API
 
 ## 开发环境
 

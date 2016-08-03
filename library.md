@@ -165,6 +165,6 @@ var UIImagePickerManager = require("NativeModules").ImagePickerManager; // 新�
 
 ### react-native-video `AL-[106,)`
 [react-native-video](https://github.com/brentvatne/react-native-video)
-视频播放器，0.8.0
+视频播放器，0.8.0，参见开发板demo中的VideoDemo
 
 

@@ -7,6 +7,7 @@ var HelloReactART = require('../CommonModules/HelloReactART');
 var ChartDemo = require('./ChartDemo');
 var MHMapDemo = require('./MHMapDemo');
 var MHAudioDemo = require('./MHAudioDemo');
+var VideoDemo = require('./VideoDemo');
 
 var {
   StyleSheet,
@@ -132,6 +133,12 @@ class MoreMenu extends Component {
         'name': '音频',
         'func': () => {
           this.props.navigator.push(MHAudioDemo.route);
+        }
+      },
+      {
+        'name': '视频',
+        'func': () => {
+          this.props.navigator.push(VideoDemo.route);
         }
       },
     ];
