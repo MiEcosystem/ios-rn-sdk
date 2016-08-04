@@ -25,6 +25,7 @@ var Button = require('../CommonModules/Button');
 // 倒计时页面Component
 var Countdown = require('./CountDown');
 
+var PowerCostPage = require('./PowerCostPage');
 // 获取屏幕尺寸
 var window = Dimensions.get('window');
 var ratio = window.width / 375;
@@ -164,9 +165,19 @@ var MainPage = React.createClass({
       };
       this.props.navigator.push(countdownRoute);
   },
+
   _onButtonClick: function() {
     MHJSPatch.evaluateScriptName("PowerStatistics.js", (result) => {
     });
+  },
+
+  _onOpenPowerCostPage() {
+    var powerCostPage = {
+      ...PowerCostPage.route,
+      passProps: {
+        },
+      };
+      this.props.navigator.push(powerCostPage);
   },
 
   render: function() {
@@ -204,7 +215,8 @@ var MainPage = React.createClass({
         <View style={styles.bottom}>
           <Button style={styles.button} onPress={this.onOpenTimerSettingPage} title='定时' titleSize={11} imageNormal="timing_normal.png" imageHighlight="timing_press.png" highlightColor='transparent' />
           <Button style={styles.button} onPress={this._onCountdownClick} title='倒计时' titleSize={11} imageNormal="countdown_normal.png" imageHighlight={this.props.app.sourceOfImage("countdown_press.png")} highlightColor='transparent' />
-          <Button style={styles.button} onPress={this._onButtonClick} title='电力统计' titleSize={11} imageNormal="electricity_normal.png" imageHighlight="electricity_press.png" highlightColor='transparent' />
+          <Button style={styles.button} onPress={this._onButtonClick} title='电力统计1' titleSize={11} imageNormal="electricity_normal.png" imageHighlight="electricity_press.png" highlightColor='transparent' />
+          <Button style={styles.button} onPress={this._onOpenPowerCostPage} title='电力统计2' titleSize={11} imageNormal="electricity_normal.png" imageHighlight="electricity_press.png" highlightColor='transparent' />
         </View>
       </View>
     </View>

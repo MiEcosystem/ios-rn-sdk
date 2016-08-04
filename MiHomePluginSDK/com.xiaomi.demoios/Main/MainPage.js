@@ -45,9 +45,12 @@ class MainPage extends React.Component {
     return (
       <View style={styles.containerAll} >
         <StatusBar barStyle='light-content' />
+        {/*test*/}
         <View style={styles.containerIconDemo}>
+          {/*test*/}
           <Image style={styles.iconDemo} source={this.props.app.sourceOfImage("control_home.png")} />
           <Text style={styles.iconText}>欢迎使用小米开发板</Text>
+          {/*test*/}
         </View>
         <View style={styles.containerMenu}>
           {rowControlDemo}

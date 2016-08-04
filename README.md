@@ -2,6 +2,8 @@
 
 [Github项目主页](https://github.com/MiEcosystem/ios-rn-sdk)
 
+[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)
+
 MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版本设备控制插件的开发环境，智能家庭 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
 **当前版本: 2.5**
@@ -16,7 +18,7 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 
 **Max API Level 106 -> App 2.5.5**
 
-**本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，常见问题请见wiki**
+**本文档描述了智能家庭 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
 - [config.plist 配置项含义](./config.md)
 - [MHPluginSDK 模块文档](./MHPluginSDK.md)
@@ -33,6 +35,42 @@ MiHomePluginSDK 是为已接入小米智能家庭APP的智能设备制作iOS版�
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
 - 一个支持横竖屏切换展示的示例插件，SDK目录中 com.xiaomi.orientationdemo.ios 目录
+
+## 开发前必读
+
+将你的智能设备接入小米智能家庭iOS App前，需要确认以下事情：
+
+### 你的设备是蓝牙还是wifi？
+
+对于蓝牙设备：
+
+#### 设备是采用经典蓝牙还是BLE？
+目前iOS智能家庭不支持经典蓝牙设备接入，仅支持BLE。
+
+#### BLE设备是否采用小米智能家庭蓝牙通讯协议？
+目前iOS智能家庭的插件系统仅支持符合小米智能家庭蓝牙通讯协议的设备，普通BLE设备接入请联系智能家庭工作人员，采用其他方式。
+
+对于wifi设备：
+
+#### 设备是否采用小米智能芯片？
+非小米智能芯片设备接入请联系智能家庭工作人员决定用何种方式接入。
+
+### RN插件系统是否能够满足你设备的功能需求？
+
+由于React Native毕竟不是原生开发，一些对App有特殊要求的设备无法通过插件系统接入：
+
+#### 你的设备是否包含p2p视频功能？
+插件系统目前不支持p2p的视频播放，具有这类功能的设备如摄像头，接入请联系智能家庭工作人员，采用其他方式。
+
+#### 你的插件是否需要使用特殊的第三方原生SDK？
+例如红外遥控（恬家、酷控等）、网络内容源（喜马拉雅等）、语音识别（百度语音等）、或无法用js实现的原生复杂计算功能。包含这种功能的设备接入请联系智能家庭的工作人员。
+
+#### 采用了小米芯片的硬件，设备状态的获取方式是否采用了推送事件？
+android插件设备状态可以通过事件上报，app端可以订阅事件，iOS插件怎么处理设备的状态？
+
+由于技术原因，iOS插件系统目前并不支持设备的事件订阅机制，设备状态是通过6s一次的轮询（时间间隔可调）来实现的，轮询实际上是向设备发送 get_props 指令，所以只能获取到 props，而不能获取到 event，这点在开发支持iOS的硬件设备时一定要注意，event都要有对应的props以便获取。具体的轮询代码请参照开发板和插排demo的代码和注释。
+
+以上问题如有疑问，请联系小米智能家庭的工作人员
 
 ## 最近更新
 

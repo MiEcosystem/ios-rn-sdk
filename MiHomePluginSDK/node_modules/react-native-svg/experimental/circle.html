@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="number" value="100" id="width" />
+<input type="number" value="100" id="height" />
+<svg id="svg" style="visibility:hidden; position: absolute;" width="100" height="100">
+    <circle id="circle" r="100%" cx="50%" cy="50%" />
+</svg>
+<input type="text" disabled id="result" value="200" />
+<script>
+    (function () {
+        var width = document.getElementById('width'),
+            height = document.getElementById('height'),
+            svg = document.getElementById('svg'),
+            result = document.getElementById('result'),
+            circle = document.getElementById('circle');
+
+        document.body.addEventListener('change', function () {
+            svg.style.width = width.value;
+            svg.style.height = height.value;
+            result.value = circle.getBoundingClientRect().width;
+
+            console.log(Math.sqrt(Math.pow((width.value*1), 2) + Math.pow((height.value*1), 2)) / Math.sqrt(2) * 2);
+            //Math.sqrt(Math.pow((width*percent), 2) + Math.pow((height*percent), 2)) / Math.sqrt(2)
+        }, true);
+
+    }());
+</script>
+</body>
+</html>

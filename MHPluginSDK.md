@@ -235,6 +235,13 @@ MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, respons
 });
 ```
 
+#### *updateDeviceInfoCallback(callback)* `AL-[107,)`
+>向云端请求一次当前设备的信息，其中包含了当前设备是否在线
+>
+>`callback` 回调方法 **(Object response)**
+>
+>可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被智能家庭服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
+
 #### *postHTTP(url, params, callback)*
 >普通的 HTTP POST 请求，要求 response 为 JSON
 >
