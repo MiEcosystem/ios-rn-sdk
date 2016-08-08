@@ -1,0 +1,8 @@
+{
+  "package_name":"com.xiaomi.svgdemo.ios",
+  "developer_id":"12345678",
+  "models":"xiaomi.svgdemo.v1",
+  "min_api_level":"106",
+  "version":"1",
+  "platform":"iphone"
+}

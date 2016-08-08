@@ -167,4 +167,8 @@ var UIImagePickerManager = require("NativeModules").ImagePickerManager; // 新�
 [react-native-video](https://github.com/brentvatne/react-native-video)
 视频播放器，0.8.0，参见开发板demo中的VideoDemo
 
+### react-native-svg `AL-[107,)`
+[react-native-svg](https://github.com/magicismight/react-native-svg)
+SVG组件，2.0.0，参见SVG组件应用Demo
+
 

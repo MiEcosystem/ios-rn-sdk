@@ -1,0 +1,89 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "react-native-root-modal",
+        "scope": null,
+        "escapedName": "react-native-root-modal",
+        "name": "react-native-root-modal",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/khzliu/MICode/ios-rn-sdk/MiHomePluginSDK"
+    ]
+  ],
+  "_from": "react-native-root-modal@latest",
+  "_id": "react-native-root-modal@1.0.4",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/react-native-root-modal",
+  "_nodeVersion": "5.9.1",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/react-native-root-modal-1.0.4.tgz_1463132419125_0.4918174936901778"
+  },
+  "_npmUser": {
+    "name": "magicismight",
+    "email": "master@horcrux.cn"
+  },
+  "_npmVersion": "3.7.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "react-native-root-modal",
+    "scope": null,
+    "escapedName": "react-native-root-modal",
+    "name": "react-native-root-modal",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-root-modal/-/react-native-root-modal-1.0.4.tgz",
+  "_shasum": "10be16eb350783b18a8794ca043971860ebf6542",
+  "_shrinkwrap": null,
+  "_spec": "react-native-root-modal",
+  "_where": "/Users/khzliu/MICode/ios-rn-sdk/MiHomePluginSDK",
+  "bugs": {
+    "url": "https://github.com/magicismight/react-native-root-modal/issues"
+  },
+  "dependencies": {
+    "react-native-root-siblings": "^1.0.7"
+  },
+  "description": "react native modal component",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "10be16eb350783b18a8794ca043971860ebf6542",
+    "tarball": "https://registry.npmjs.org/react-native-root-modal/-/react-native-root-modal-1.0.4.tgz"
+  },
+  "gitHead": "1472f9c8c5e333279fd7ff1c677b44ed95bb1fb3",
+  "homepage": "https://github.com/magicismight/react-native-root-modal#readme",
+  "keywords": [
+    "react-component",
+    "react-native",
+    "ios",
+    "android",
+    "modal",
+    "popover"
+  ],
+  "license": "MIT",
+  "main": "./index.js",
+  "maintainers": [
+    {
+      "name": "magicismight",
+      "email": "master@horcrux.cn"
+    }
+  ],
+  "name": "react-native-root-modal",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magicismight/react-native-root-modal.git"
+  },
+  "scripts": {},
+  "version": "1.0.4"
+}
