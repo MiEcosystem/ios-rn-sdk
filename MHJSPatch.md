@@ -137,7 +137,7 @@ callMethod(gDevice, "set_power", ["on"], {}, function(isSuccess, response) {
 ```
 
 #### *callSmartHomeAPI(api, params, callback)*
->调用智能家庭云端接口，类似 MHPluginSDK.callSmartHomeAPI 方法。
+>调用米家云端接口，类似 MHPluginSDK.callSmartHomeAPI 方法。
 >
 >`api` 云端接口命令字
 >`params` 参数数组或字典

@@ -251,15 +251,15 @@ MHPluginFS.screenShot('test1.png', (isSuccess, response) => {
 >屏幕截屏，自定义范围
 >
 >`imageName` 图片的名称，格式为png
->`rect` 截屏范围；注意这个rect并不是图片在屏幕上显示的尺寸，而是实际的尺寸，要注意@2x@3x
+>`rect` 截屏范围；不用考虑屏幕的scale，接口内部已做处理；
 >`callback` 回调方法 **(bool isSuccess, String imagePath)**
 >
 >```js
 var rect = {
         l: 0,
         t: 0,
-        w: 414 * 3,
-        h: 200 * 3,
+        w: 414,
+        h: 200,
       };
       MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
         if (isSuccess) {
