@@ -39,6 +39,10 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 - 一个有关动画的示例插件，SDK目录中 com.xiaomi.artanimdemo.ios 目录
 - 一个粒子系统的示例插件，SDK目录中 com.xiaomi.particledemo.ios 目录
 
+## 最近更新
+
+1. 添加对粒子系统的支持react-native-particle-system
+
 ## 开发前必读
 
 将你的智能设备接入米家iOS App前，需要确认以下事情：
@@ -74,13 +78,6 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 由于技术原因，iOS插件系统目前并不支持设备的事件订阅机制，设备状态是通过6s一次的轮询（时间间隔可调）来实现的，轮询实际上是向设备发送 get_props 指令，所以只能获取到 props，而不能获取到 event，这点在开发支持iOS的硬件设备时一定要注意，event都要有对应的props以便获取。具体的轮询代码请参照开发板和插排demo的代码和注释。
 
 以上问题如有疑问，请联系米家的工作人员
-
-## 最近更新
-
-1. 添加对转屏的支持react-native-orientation
-2. 添加对视频播放的支持react-native-video
-3. react-native-chart从1.0.6beta升级到1.0.7beta，并修改了iOS7上崩溃的bug
-4. 添加了一个截取指定屏幕rect图片的API
 
 ## 开发环境
 

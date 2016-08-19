@@ -171,7 +171,7 @@ var UIImagePickerManager = require("NativeModules").ImagePickerManager; // 新�
 [react-native-svg](https://github.com/magicismight/react-native-svg)
 SVG组件，2.0.0，参见SVG组件应用Demo
 
-### react-native-particle-system `AL-[108,)`
+### react-native-particle-system `AL-[107,)`
 [react-native-particle-system](https://github.com/greghe/react-native-particle-system) 粒子系统。
 
 ```js
