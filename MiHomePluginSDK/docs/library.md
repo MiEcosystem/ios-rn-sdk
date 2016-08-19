@@ -2,9 +2,9 @@
 
 插件可以使用兼容 React Native 0.8.0 版本的第三方纯 js 开源组件，不能使用包含 Native 代码的组件。
 
-**如果有特殊需求，请与智能家庭工作人员联系**
+**如果有特殊需求，请与米家工作人员联系**
 
-## 智能家庭 APP 中已经集成的组件
+## 米家 APP 中已经集成的组件
 
 ### react-native-camera
 [react-native-camera](https://github.com/lwansbrough/react-native-camera) 相机界面，支持二维码扫描。插件可引用 CommonModules 下的 Camera.ios.js 并修改界面。
@@ -170,5 +170,12 @@ var UIImagePickerManager = require("NativeModules").ImagePickerManager; // 新�
 ### react-native-svg `AL-[107,)`
 [react-native-svg](https://github.com/magicismight/react-native-svg)
 SVG组件，2.0.0，参见SVG组件应用Demo
+
+### react-native-particle-system `AL-[108,)`
+[react-native-particle-system](https://github.com/greghe/react-native-particle-system) 粒子系统。
+
+```js
+import 'ParticleCell' from '../CommonModules/ParitcleSystem/ParticleCell.js'
+import 'ParticleView' from '../CommonModules/ParitcleSystem/ParticleView.js'
 
 

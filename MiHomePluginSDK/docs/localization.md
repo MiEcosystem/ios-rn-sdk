@@ -8,9 +8,9 @@ var LocalizedStrings = require("../CommonModules/LocalizedStrings");
 
 **注意** 具体的使用请参照开源项目的[wiki](https://github.com/stefalda/ReactNativeLocalization)
 
-## 小米智能家庭的多语言化标准
+## 米家的多语言化标准
 
-小米智能家庭APP要求插件支持四种语言：
+米家APP要求插件支持四种语言：
 
 1. 简体中文
 2. 英文

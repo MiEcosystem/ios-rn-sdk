@@ -37,6 +37,14 @@ class MHMapDemo extends Component {
           width: 64,
           height: 64,
         },
+
+      },
+      userLocationRepresentation: {
+        image: MHPluginSDK.basePath + 'map/003.png',
+        imageScale: 5,
+        showsAccuracyRing: false,
+        // strokeColor: [0.9, 0.1, 0.1, 0.9],
+        // fillColor: [0.1, 0.9, 0.1, 0.4],
       },
       annotations: [],
       circles: [],
@@ -51,11 +59,13 @@ class MHMapDemo extends Component {
           style={{width:window.width, height:window.height}}
           distanceFilter={100}
           zoomLevel={this.state.zoomLevel}
+          onMapWillZoomByUser={this._onMapWillZoomByUser.bind(this)}
+          onMapDidZoomByUser={this._onMapDidZoomByUser.bind(this)}
           showsUserLocation={true}
           userTrackingMode='follow'
           showsCompass={false}
           showsScale={false}
-          userLocation={this.state.userLocation}
+          userLocationRepresentation={this.state.userLocationRepresentation}
           annotations={this.state.annotations}
           onSingleTappedAtCoordinate={this._onSingleTappedAtCoordinate.bind(this)}
           onLongPressedAtCoordinate={this._onLongPressedAtCoordinate.bind(this)}
@@ -68,6 +78,14 @@ class MHMapDemo extends Component {
         </TouchableOpacity>
       </View>
     );
+  }
+
+  _onMapWillZoomByUser(e) {
+    console.log(e.nativeEvent);
+  }
+
+  _onMapDidZoomByUser(e) {
+    console.log(e.nativeEvent);
   }
 
   _onUpdateUserLocation(e) {
@@ -96,7 +114,7 @@ class MHMapDemo extends Component {
     var annotation = {
       id: 'annotation' + e.nativeEvent.latitude + e.nativeEvent.longitude,
       title: '目标位置',
-      image: MHPluginSDK.basePath + 'map/002.png',
+      image: MHPluginSDK.basePath + 'map/003.png',
       size: {
         width: 64,
         height: 64,
@@ -139,7 +157,7 @@ class MHMapDemo extends Component {
             };
             polylines.push(polyline);
           }
-          console.log(polylines);
+          // console.log(polylines);
           this.setState({
             polylines: polylines,
           });

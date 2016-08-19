@@ -26,6 +26,8 @@ import {
 } from 'react-native-svg';
 import * as examples from './examples';
 import Modal from '../CommonModules/react-native-root-modal';
+const AnimatedModal = Animated.createAnimatedComponent(Modal);
+
 const hairline = StyleSheet.hairlineWidth;
 
 const styles = StyleSheet.create({

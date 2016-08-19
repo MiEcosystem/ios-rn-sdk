@@ -7,7 +7,7 @@ import React, {
     PropTypes
 } from 'react';
 
-import RootSiblings from 'react-native-root-siblings';
+import RootSiblings from '../../react-native-root-siblings';
 import ModalContainer from './ModalContainer';
 
 class Modal extends Component {

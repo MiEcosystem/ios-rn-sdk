@@ -35,12 +35,21 @@ class VideoDemo extends Component {
   }
 
   //需要在工程本地导入一个名为'broadchurch'的mp4文件;
+  //http://cookbook.supor.com/Swast2SpEjewRAnE.mp4;
   render() {
+
+    var source = {
+        uri: 'http://cookbook.supor.com/Swast2SpEjewRAnE.mp4',
+        type: 'mp4',
+        isAsset: true,
+        isNetwork: true,
+    };
+
     return (
       <View style={styles.container}>
         <Video
           style={styles.video}
-          source={{uri:'broadchurch'}}
+          source={source}
           rate={1.0}
           volume={1.0}
           muted={false}
@@ -51,6 +60,7 @@ class VideoDemo extends Component {
           playWhenInactive={false}
           currentTime={this.state.currentTime}
           onProgress={this._onProgress.bind(this)}
+          onLoad={this._onLoad.bind(this)}
           />
         <View style={styles.progressLine} {...this._panResponder.panHandlers} />
         <View style={[styles.progressArrow, {left: this.state.progress * window.width - 10}]} />
@@ -58,12 +68,22 @@ class VideoDemo extends Component {
     );
   }
 
+  _onLoad(e) {
+    console.log('_onLoad');
+    console.log(e);
+    this.duration = e.duration;
+  }
+
   _onProgress(e) {
-    // console.log('currentTime' + e.currentTime);
+    console.log('_onProgress');
+    console.log(e);
     this.playableDuration = e.playableDuration;
-    this.setState({
-      progress: e.currentTime / e.playableDuration,
-    });
+    if (this.duration > 0) {
+      this.setState({
+        // progress: e.currentTime / e.playableDuration,
+        progress: e.currentTime / this.duration,
+      });
+    }
   }
 
   _handleStartShouldSetPanResponder(e: Object, gestureState: Object): boolean {
@@ -71,7 +91,7 @@ class VideoDemo extends Component {
   }
 
   _handlePanResponderGrant(e: Object, gestureState: Object) {
-    var currentTime = this.playableDuration * e.nativeEvent.locationX / window.width;
+    var currentTime = this.duration * e.nativeEvent.locationX / window.width;
     this.setState({
       currentTime: currentTime,
     });

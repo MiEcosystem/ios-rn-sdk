@@ -1,7 +1,7 @@
 # MiHomePlugin API参考文档
 ## MHPluginSDK模块 `AL-[100,)`
 
-MHPluginSDK 模块主要提供插件与小米智能家庭主APP、智能设备，以及智能家庭云端交互的API。包括获取设备信息、设置设备属性、向设备发送指令、访问智能家庭云端接口、访问特定UI资源等等。
+MHPluginSDK 模块主要提供插件与米家主APP、智能设备，以及米家云端交互的API。包括获取设备信息、设置设备属性、向设备发送指令、访问米家云端接口、访问特定UI资源等等。
 
 ```js
 // 模块初始化
@@ -39,7 +39,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >String
 
 #### *apiLevel*
->当前智能家庭 APP 的 API_Level
+>当前米家 APP 的 API_Level
 >
 >Int
 
@@ -80,7 +80,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 #### *deviceStatusUpdatedEventName*
 >设备状态更新
 >
->在插件运行在前台时，智能家庭APP会定期（默认每 6s 一次，可通过 config.plist 中的配置项进行调整）向设备发送 get_props 请求来获取设备指定属性集合的最新状态。之后插件会接收到本事件，触发事件回调。
+>在插件运行在前台时，米家APP会定期（默认每 6s 一次，可通过 config.plist 中的配置项进行调整）向设备发送 get_props 请求来获取设备指定属性集合的最新状态。之后插件会接收到本事件，触发事件回调。
 >
 >插件可以在该事件回调中进行相应的 state 设置，从而触发界面更新，来展示设备的最新状态。
 >
@@ -107,11 +107,11 @@ componentDidMount: function() {
 #### *onReceivingForegroundPushEventName*
 >插件在前台时收到 APNS 推送
 >
->智能家庭APP在后台时，收到苹果的 APNS 推送，用户点击推送会启动智能家庭 APP，并转到相应推送设备的插件首页，此时 MHPluginSDK.extraInfo 里包含了推送的相关参数。
+>米家APP在后台时，收到苹果的 APNS 推送，用户点击推送会启动米家 APP，并转到相应推送设备的插件首页，此时 MHPluginSDK.extraInfo 里包含了推送的相关参数。
 >
->智能家庭APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
+>米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
 >
->智能家庭APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert，插件会收到本通知，并触发通知的事件回调，携带参数在通知回调中给出。
+>米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert，插件会收到本通知，并触发通知的事件回调，携带参数在通知回调中给出。
 
 ```js
   var {DeviceEventEmitter} = require('react-native');
@@ -164,7 +164,7 @@ componentDidMount: function() {
 >`extraInfo` 附加信息字典
 >`callback` 回调方法 **(BOOL isSuccess, Object response)**
 >
->智能家庭APP会根据当时设备的情况选择是通过云端下发指令给设备，还是直接通过局域网向设备发送指令。设备接收的指令集请查阅该设备的 profile
+>米家APP会根据当时设备的情况选择是通过云端下发指令给设备，还是直接通过局域网向设备发送指令。设备接收的指令集请查阅该设备的 profile
 >**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档
 >
 >```js
@@ -181,13 +181,13 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 ```
 
 #### *callSmartHomeAPI(api, params, callback)*
->调用智能家庭云端 API
+>调用米家云端 API
 >
 >`api` 云端提供的 API 接口命令字字符串
 >`params` 参数字典或数组（视具体 API 而定）
 >`callback` 回调方法 **(Object response)**
 >
->具体不同设备开放的云端接口请参照智能家庭云端文档或咨询智能家庭后台。
+>具体不同设备开放的云端接口请参照米家云端文档或咨询米家后台。
 >
 >支持的部分云端 API：
 >`/scene/list` 获取设备定时列表
@@ -220,14 +220,14 @@ MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
 ```
 
 #### *callThirdPartyAPI(serverAppId, dids, params, callback)* 
->异步调用第三方对接小米智能家庭云端的 API
+>异步调用第三方对接米家云端的 API
 >
->`serverAppId` 小米智能家庭云端分配的 appId
+>`serverAppId` 米家云端分配的 appId
 >`dids` 设备 id 数组（可为空，若不为空则后台会对数组中的设备做校验）
 >`params` 参数字典
 >`callback` 回调方法 **(Int errorCode, Object response)**
 >
->插件原则上不允许直接访问非小米智能家庭后台的 API，如需访问第三方服务器（例如插件公司自己的服务器）的 API 必须通过小米智能家庭后台中转。第三方对接小米智能家庭云端的 API 将以异步的方式调用，细节对客户端透明，详细的服务器对接过程请与小米智能家庭后台联系。
+>插件原则上不允许直接访问非米家后台的 API，如需访问第三方服务器（例如插件公司自己的服务器）的 API 必须通过米家后台中转。第三方对接米家云端的 API 将以异步的方式调用，细节对客户端透明，详细的服务器对接过程请与米家后台联系。
 >
 >```js
 MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, response) => {
@@ -240,7 +240,7 @@ MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, respons
 >
 >`callback` 回调方法 **(Object response)**
 >
->可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被智能家庭服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
+>可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被米家服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
 
 #### *postHTTP(url, params, callback)*
 >普通的 HTTP POST 请求，要求 response 为 JSON
@@ -319,7 +319,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 #### *openAddDeviceGroupPage*
 > 打开创建设备组页
 >
->**注意** 只有特定设备支持创建设备组统一管理，此方法目前只支持特定设备，使用请与智能家庭联系。
+>**注意** 只有特定设备支持创建设备组统一管理，此方法目前只支持特定设备，使用请与米家联系。
 
 #### *openTimerSettingPage(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
 >提供设备定时设置的统一页面，用来让用户设置设备的定时开关。
@@ -451,7 +451,7 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >`url` 网页URL
 >
 >```js
-MHPluginSDK.openShareListBar("小米智能家庭开放平台", "小米智能火箭筒专卖", MHPluginSDK.basePath+"rockets.png", "http://open.home.mi.com");
+MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖", MHPluginSDK.basePath+"rockets.png", "http://open.home.mi.com");
 ```
 
 #### *shareToWeChatSession(title, description, path, url)*

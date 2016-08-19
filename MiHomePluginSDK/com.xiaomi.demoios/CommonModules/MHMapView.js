@@ -29,12 +29,26 @@ MHMapView.propTypes = {
     }
   */
   userLocation: React.PropTypes.object,
+  /*
+  userLocationRepresentation用户修改用户图标样式
+    {image: string //图片的路径；
+    imageScale: number //图片scale；
+    showsAccuracyRing: bool //是否显示精度圈。默认为YES；
+    showsHeadingIndicator: bool //是否显示方向指示(MAUserTrackingModeFollowWithHeading模式开启)。默认为YES；
+    lineWidth: number //精度圈边线宽度,默认是2；
+    strokeColor: array //描边颜色，如[0.9, 0.1, 0.1, 0.9]；
+    fillColor: array //填充颜色，如[0.9, 0.1, 0.1, 0.9]；
+    }
+  */
+  userLocationRepresentation: React.PropTypes.object,
   //scaleOrigin包含x和y两个key
   scaleOrigin: React.PropTypes.object,
   showsScale: React.PropTypes.bool,
   //compassOrigin包含x和y两个key
   compassOrigin: React.PropTypes.object,
   showsCompass: React.PropTypes.bool,
+  //是否可以调整zoomLevel
+  zoomEnabled: React.PropTypes.bool,
   /*
   annotations为annotation组成的数组，每一个annotation的属性如下：
   id: string  //唯一标识
@@ -68,6 +82,8 @@ MHMapView.propTypes = {
   onSingleTappedAtCoordinate: React.PropTypes.func,
   //长按事件的回调，返回坐标
   onLongPressedAtCoordinate: React.PropTypes.func,
+  onMapWillZoomByUser: React.PropTypes.func,
+  onMapDidZoomByUser: React.PropTypes.func,
 };
 
 var MHWrapperMapView = requireNativeComponent('MHWrapperMapView', MHMapView);
