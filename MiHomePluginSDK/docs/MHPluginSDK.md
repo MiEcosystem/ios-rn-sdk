@@ -486,11 +486,25 @@ MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖"
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
 
-#### *finishCustomSceneSetup(payload)*
+#### *finishCustomSceneSetupWithTrigger(trigger)* `AL-[107,)`
+>完成场景设置，回传设置后的 trigger</b>
+>
+>`trigger` 设置后的自定义场景trigger
+>
+>**注意** 此方法只在开发自定义智能场景触发条件时使用，作用是插件自定义场景处理完成时将处理好的 trigger 回传，请参见”开发自定义智能场景“章节
+
+#### *finishCustomSceneSetupWithAction(action)* `AL-[107,)`
+>完成场景设置，回传设置后的 action</b>
+>
+>`action` 设置后的自定义场景action
+>
+>**注意** 此方法只在开发自定义智能场景动作时使用，作用是插件自定义场景处理完成时将处理好的 action 回传，请参见”开发自定义智能场景“章节
+
+#### *finishCustomSceneSetup(payload)* `AL-[100,106](deprecated)`
 >完成场景设置，回传设置后的 payload</b>
 >
 >`payload` 设置后的自定义场景payload
 >
 >**注意** 此方法只在开发自定义智能场景插件 bundle 时使用，作用是插件自定义场景处理完成时将处理好的 payload 回传，请参见”开发自定义智能场景“章节
-
+>**注意** 此方法回传的payload会填到value字段里，无法自定义其它字段，已废弃，请使用finishCustomSceneSetupWithTrigger/Action方法替代
 
