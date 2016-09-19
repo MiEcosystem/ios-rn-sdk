@@ -1,8 +1,8 @@
 {
   "package_name":"com.xiaomi.orientationdemo.ios",
-  "developer_id":"894158105",
-  "models":"xiaomi.demo.v1",
-  "min_api_level":"107",
+  "developer_id":"12345678",
+  "models":"xiaomi.orientationdemo.v1",
+  "min_api_level":"106",
   "version":"1",
   "platform":"iphone"
 }

@@ -62,6 +62,7 @@ class MHMapDemo extends Component {
           onMapWillZoomByUser={this._onMapWillZoomByUser.bind(this)}
           onMapDidZoomByUser={this._onMapDidZoomByUser.bind(this)}
           showsUserLocation={true}
+          centerCoordinate={null}
           userTrackingMode='follow'
           showsCompass={false}
           showsScale={false}

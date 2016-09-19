@@ -29,6 +29,14 @@ MHMapView.propTypes = {
     }
   */
   userLocation: React.PropTypes.object,
+
+  /*
+  {
+    latitude: 40.000,
+    longitude: 120.000,
+  }
+  */
+  centerCoordinate: React.PropTypes.object,
   /*
   userLocationRepresentation用户修改用户图标样式
     {image: string //图片的路径；

@@ -1,0 +1,40 @@
+const chai = require('chai');
+const expect = chai.expect;
+const xcode = require('xcode');
+const addSharedLibraries = require('../../src/ios/addSharedLibraries');
+const getGroup = require('../../src/ios/getGroup');
+
+const project = xcode.project('test/fixtures/project.pbxproj');
+
+describe('ios::addSharedLibraries', () => {
+
+  beforeEach(() => {
+    project.parseSync();
+  });
+
+  it('should automatically create Frameworks group', () => {
+    expect(getGroup(project, 'Frameworks')).to.equal(null);
+    addSharedLibraries(project, ['libz.tbd']);
+    expect(getGroup(project, 'Frameworks')).to.not.equal(null);
+  });
+
+  it('should add shared libraries to project', () => {
+    addSharedLibraries(project, ['libz.tbd']);
+
+    const frameworksGroup = getGroup(project, 'Frameworks');
+    expect(frameworksGroup.children.length).to.equal(1);
+    expect(frameworksGroup.children[0].comment).to.equal('libz.tbd');
+
+    addSharedLibraries(project, ['MessageUI.framework']);
+    expect(frameworksGroup.children.length).to.equal(2);
+  });
+
+  it('should not add duplicate libraries to project', () => {
+    addSharedLibraries(project, ['libz.tbd']);
+    addSharedLibraries(project, ['libz.tbd']);
+
+    const frameworksGroup = getGroup(project, 'Frameworks');
+    expect(frameworksGroup.children.length).to.equal(1);
+  });
+
+});

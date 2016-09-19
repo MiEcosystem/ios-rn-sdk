@@ -23,6 +23,7 @@ var {
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 
 var OrientationDemo = require('./OrientationDemo');
+import Orientation from 'react-native-orientation';
 var Button = require('./Button');
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
