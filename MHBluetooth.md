@@ -147,7 +147,7 @@ MHBluetooth.discoverServices();
 >```js
 var {DeviceEventEmitter} = require('react-native');
 // 订阅特征值更新通知
-var subscription = DeviceEventEmitter.addListener(MHPluginSDK.peripheral_didUpdateValueForCharacteristic_error,(notification) => {
+var subscription = DeviceEventEmitter.addListener(MHBluetooth.peripheral_didUpdateValueForCharacteristic_error,(notification) => {
   console.log(JSON.stringify(notification));
 });
 // 读取特征值
