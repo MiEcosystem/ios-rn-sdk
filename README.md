@@ -243,7 +243,7 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 4. 导出公钥文件 public.cer:（需要安装keytool）
 
 	```
-	keytool -export -keystore your.keystore -alias yourKeyAlias - file public.cer
+	keytool -export -keystore your.keystore -alias yourKeyAlias -file public.cer
 	```
 
 	其中 yourKeyAlias 与生成 keystore时的同名参数保持一致。如果是安卓生成的，可以通过下面的命令来查看设置的别名。
@@ -255,7 +255,7 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 5. 导出私钥 pem 文件 private.pem: （需要 openSSL）
 
 	```
-	keytool -importkeystore -srckeystore your.keystore -destkeystore private.pkcs -srcstoretype JKS -deststoretype PKCS12
+	keytool -importkeystore -srckeystore your.keystore -destkeystore private.pkcs -srcstoretype JKS -deststoretype PKCS12 -alias yourKeyAlias
 
 	openssl pkcs12 -in private.pkcs -out private.pem
 	```
