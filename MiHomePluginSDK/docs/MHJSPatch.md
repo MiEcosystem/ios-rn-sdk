@@ -45,7 +45,7 @@ MHJSPatch.evaluateScriptName("demo.js", (result) => {
 >
 >```js
 // 执行插件目录 /JSPatch/demo.js 脚本
-MHJSPatch.evaluateScriptNameWithParams("demo.js", "demoNameSpace", {'content': 'This is a demo."}, (result) => {
+MHJSPatch.evaluateScriptNameWithParams("demo.js", "demoNameSpace", {'content': 'This is a demo.'}, (result) => {
   console.log(result); // This is a demo.Done!
 });
 ```

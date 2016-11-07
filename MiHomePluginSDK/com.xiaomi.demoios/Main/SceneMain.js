@@ -19,8 +19,10 @@ var {
 
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 var ImageButton = require('../CommonModules/ImageButton');
-
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+var rValue = 0;
+var gValue = 0;
+var bValue = 0;
 
 class SceneMain extends React.Component {
   constructor(props, context) {
@@ -32,9 +34,12 @@ class SceneMain extends React.Component {
   }
 
   componentDidMount() {
-    alert('Trigger: '+JSON.stringify(MHPluginSDK.extraInfo.trigger));
-    alert('Action: '+JSON.stringify(MHPluginSDK.extraInfo.action));
-    alert('Payload: '+JSON.stringify(MHPluginSDK.extraInfo.payload));
+    console.log('Trigger: '+JSON.stringify(MHPluginSDK.extraInfo.trigger));
+    console.log('Action: '+JSON.stringify(MHPluginSDK.extraInfo.action));
+    console.log('Payload: '+JSON.stringify(MHPluginSDK.extraInfo.payload));
+  }
+  test() {
+    alert("test");
   }
 
   render() {
@@ -46,6 +51,30 @@ class SceneMain extends React.Component {
           <Text style={styles.iconText}>开发自定义智能场景</Text>
         </View>
         <View style={styles.containerMenu}>
+          <TextInput
+            style={styles.textInput}
+            maxLength={3}
+            placeholder="R: 0-255"
+            onChangeText={(text) => {
+              rValue = text;
+            }}
+          />
+          <TextInput
+            style={styles.textInput}
+            maxLength={3}
+            placeholder="G: 0-255"
+            onChangeText={(text) => {
+              gValue = text;
+            }}
+          />
+          <TextInput
+            style={styles.textInput}
+            maxLength={3}
+            placeholder="B: 0-255"
+            onChangeText={(text) => {
+              bValue = text;
+            }}
+          />
         </View>
       </View>
     );
@@ -84,6 +113,19 @@ var styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center'
   },
+
+  textInput: {
+    height: 40,
+    borderWidth: 0.5,
+    borderColor: '#0f0f0f',
+    // flex: 1,
+    fontSize: 16,
+    padding: 4,
+    marginTop:20,
+    marginLeft: 30,
+    marginRight: 30,
+    backgroundColor: '#ffffff',
+  },
 });
 
 const KEY_OF_SCENEMAIN = 'SceneMain';
@@ -108,7 +150,6 @@ var route = {
         source={{uri:MHPluginSDK.uriNaviBackButtonImage, scale:PixelRatio.get()}}
         onPress={() => {
           if (index === 0) {
-            MHPluginSDK.finishCustomSceneSetup(MHPluginSDK.extraInfo.payload);
             MHPluginSDK.closeCurrentPage();
           } else {
             navigator.pop();
@@ -117,6 +158,21 @@ var route = {
         style={[{width:29, height:29, tintColor: '#000000'}, route.navLeftButtonStyle]}
       />
     </View>);
+  },
+  renderNavRightComponent: function(route, navigator, index, navState) {
+    return (
+      <View style={{left:0, width:29+15*2, height:APPBAR_HEIGHT, justifyContent:'center', alignItems:'center'}}>
+        <TouchableHighlight onPress={() => {
+            var color = rValue<<16|gValue<<8|bValue;
+            var action = MHPluginSDK.extraInfo.action;
+            action.payload.value = color;
+            MHPluginSDK.finishCustomSceneSetupWithAction(action);
+            MHPluginSDK.closeCurrentPage();
+          }}>
+          <Text style={{fontWeight: 'bold',color: '#f0f0f0'}}>确定</Text>
+        </TouchableHighlight>
+      </View>
+    );
   },
   isNavigationBarHidden: false,
 }

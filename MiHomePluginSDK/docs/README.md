@@ -6,17 +6,17 @@
 
 MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
-**当前版本: 3.0**
+**当前版本: 3.1**
 
-**发布时间: 2016-08-15**
+**发布时间: 2016-11-7**
 
-**文档修改日期: 2016-08-16**
+**文档修改日期: 2016-11-7**
 
 **React Native引擎版本: 0.25.1**
 
-**Release API Level 106 -> App 3.0.0**
+**Release API Level 108 -> App 3.4.0**
 
-**Max API Level 107 -> App 3.1.0**
+**Max API Level 109 -> App 3.4.1**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
@@ -41,7 +41,8 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 
 ## 最近更新
 
-1. 添加对粒子系统的支持react-native-particle-system
+1. 添加强制局域网或云端发送RPC的API
+2. 长截屏API，用于截scrollView
 
 ## 开发前必读
 
@@ -243,7 +244,7 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 4. 导出公钥文件 public.cer:（需要安装keytool）
 
 	```
-	keytool -export -keystore your.keystore -alias yourKeyAlias - file public.cer
+	keytool -export -keystore your.keystore -alias yourKeyAlias -file public.cer
 	```
 
 	其中 yourKeyAlias 与生成 keystore时的同名参数保持一致。如果是安卓生成的，可以通过下面的命令来查看设置的别名。
@@ -255,7 +256,7 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 5. 导出私钥 pem 文件 private.pem: （需要 openSSL）
 
 	```
-	keytool -importkeystore -srckeystore your.keystore -destkeystore private.pkcs -srcstoretype JKS -deststoretype PKCS12
+	keytool -importkeystore -srckeystore your.keystore -destkeystore private.pkcs -srcstoretype JKS -deststoretype PKCS12 -alias yourKeyAlias
 
 	openssl pkcs12 -in private.pkcs -out private.pem
 	```

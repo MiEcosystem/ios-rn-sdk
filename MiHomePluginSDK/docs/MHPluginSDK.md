@@ -180,6 +180,50 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 });
 ```
 
+#### *callMethodForceWay(method, params, extrainfo, way, callback)* `AL-[109,)`
+>调用设备 RPC 指令接口，指定发送方式（云端、局域网）
+>
+>`method` 方法命令字字符串
+>`params` 方法参数数组
+>`extraInfo` 附加信息字典
+>`way` 发送方式 **[0-app策略, 此时等同于callMethod, 1-强制局域网, 2-强制远程]**
+>`callback` 回调方法 **(BOOL isSuccess, Object response)**
+>
+>**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档
+>
+>```js
+// toggle 命令切换插座的开关状态，该命令没有参数，强制走局域网RPC
+MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
+  console.log("toggle result:"+isSuccess+json);
+  if (isSuccess)
+  {
+    this.setState({
+      currentState: this.state.currentState == 'on' ? 'off' : 'on',
+    });
+  }
+});
+```
+
+#### *localPingWithCallback(callback)* `AL-[109,)`
+>检测设备是否在局域网内（ping通）
+>
+>`callback` 回调方法 **(BOOL isLocal)**
+>
+>**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档
+>
+>```js
+// toggle 命令切换插座的开关状态，该命令没有参数，强制走局域网RPC
+MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
+  console.log("toggle result:"+isSuccess+json);
+  if (isSuccess)
+  {
+    this.setState({
+      currentState: this.state.currentState == 'on' ? 'off' : 'on',
+    });
+  }
+});
+```
+
 #### *callSmartHomeAPI(api, params, callback)*
 >调用米家云端 API
 >

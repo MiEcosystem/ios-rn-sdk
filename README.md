@@ -6,17 +6,17 @@
 
 MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
-**当前版本: 3.0**
+**当前版本: 3.1**
 
-**发布时间: 2016-08-15**
+**发布时间: 2016-11-7**
 
-**文档修改日期: 2016-10-28**
+**文档修改日期: 2016-11-7**
 
 **React Native引擎版本: 0.25.1**
 
-**Release API Level 107 -> App 3.2.3**
+**Release API Level 108 -> App 3.4.0**
 
-**Max API Level 108 -> App 3.3.1**
+**Max API Level 109 -> App 3.4.1**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
@@ -41,7 +41,8 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 
 ## 最近更新
 
-1. 添加对粒子系统的支持react-native-particle-system
+1. 添加强制局域网或云端发送RPC的API
+2. 长截屏API，用于截scrollView
 
 ## 开发前必读
 

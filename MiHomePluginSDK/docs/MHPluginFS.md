@@ -273,4 +273,25 @@ var rect = {
 <Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
+#### *longScreenShot(viewRef, imageName, callback)* `AL-[108,)`
+>长截屏，用来截scrollView，会把超出屏幕的部分也截到
+>
+>`viewRef` scrollView的引用
+>`imageName` 图片的名称，格式为png
+>`callback` 回调方法 **(bool isSuccess, String imagePath)**
+>
+>```js
+var findNodeHandle = require('findNodeHandle');
+var myScrollView = findNodeHandle(this.refs.myScrollView);
+MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
+    if (isSuccess) {
+        console.log(response);
+    }
+});
+>```
+>**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
+>
+>```js
+<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
+>```
 
