@@ -40,12 +40,13 @@ class ControlDemo extends React.Component {
 
   componentWillMount() {
 
-    MHPluginSDK.registerDeviceStatusProps(["rgb"]);
+    MHPluginSDK.registerDeviceStatusProps(["prop.on","prop.usb_on"]);
     this._deviceStatusListener = DeviceEventEmitter.addListener(
       MHPluginSDK.deviceStatusUpdatedEventName,
       (notification) => {
-        MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
+        MHPluginSDK.getDevicePropertyFromMemCache(["prop.on"], (props) => {
             ;
+          console.warn( 'zyz' + props["prop.on"]);
           if (props.rgb)
           {
             var sRGB = "#" + this.getNewRGB(props.rgb >> 16, (props.rgb >> 8) & 0x00ff, (props.rgb & 0x0000ff));

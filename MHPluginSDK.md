@@ -38,6 +38,24 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 >String
 
+#### *deviceExtra* `AL-[109,)`
+>设备 额外信息
+>
+>Object
+
+<<<<<<< HEAD
+#### *pageName* `AL-[110,)`
+> 页面 插件需要展示的页面
+>
+> String 
+> `main` 插件页的主页面
+> `connect` 插件页的快联页
+> `sence` 插件页的场景页
+> `setting` 插件的设置页面
+> 其它请按照`main`来处理
+
+=======
+>>>>>>> comaster
 #### *apiLevel*
 >当前米家 APP 的 API_Level
 >
@@ -85,12 +103,13 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >插件可以在该事件回调中进行相应的 state 设置，从而触发界面更新，来展示设备的最新状态。
 >
 >```js
-componentDidMount: function() {
-  // 指定发送 get_props 获取的属性集合
-  MHPluginSDK.registerDeviceStatusProps(["rgb"]);
-  // 订阅定期状态轮询的通知
-  var {DeviceEventEmitter} = require('react-native');
-  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+>componentDidMount: function() {
+>  // 指定发送 get_props 获取的属性集合
+>  MHPluginSDK.registerDeviceStatusProps(["rgb"]);
+>  // 订阅定期状态轮询的通知
+>  var {DeviceEventEmitter} = require('react-native');
+>  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+>```
     // 从device属性的内存缓存中拿到轮询的状态结果
     MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
       if (props.rgb)
@@ -113,7 +132,7 @@ componentDidMount: function() {
 >
 >米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert，插件会收到本通知，并触发通知的事件回调，携带参数在通知回调中给出。
 
-```js
+​```js
   var {DeviceEventEmitter} = require('react-native');
   var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegroundPushEventName,(notification) => {
     // 插件在前台收到push通知回调
@@ -151,9 +170,10 @@ componentDidMount: function() {
 >`propArr` 注册定时向发送 get_props 获取的属性名数组，具体参见该设备的 profile
 >
 >```js
-  // 假设灯的 profile 中有 power/brightness/color 几个属性
-  MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]); 
-  // APP会在插件运行时每6s获取一次灯的电源开关状态、亮度以及颜色值，插件通过监听 MHPluginSDK.deviceStatusUpdatedEventName 来处理回调。
+>  // 假设灯的 profile 中有 power/brightness/color 几个属性
+>  MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]); 
+>  // APP会在插件运行时每6s获取一次灯的电源开关状态、亮度以及颜色值，插件通过监听 MHPluginSDK.deviceStatusUpdatedEventName 来处理回调。
+>```
 ```
 
 #### *callMethod(method, params, extrainfo, callback)*
@@ -242,18 +262,19 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >```js
 >// 获取当前设备固件版本
-MHPluginSDK.getDevicePropertyFromMemCache(["version"], (props) => {
-  console.log("current version"+props.version);
-});
-// 获取最新固件版本（蓝牙设备）
-MHPluginSDK.callSmartHomeAPI("/home/latest_version", {"model":MHPluginSDK.deviceModel}, (response) => {
-  console.log("latest version"+JSON.stringify(response));
-});
-// 获取最新固件版本（WIFI设备）
-// pid 固定为0
-MHPluginSDK.callSmartHomeAPI("/home/checkversion", {"pid":0, "did":MHPluginSDK.deviceId}, (response) => {
-  console.log("latest version"+JSON.stringify(response));
-});
+>MHPluginSDK.getDevicePropertyFromMemCache(["version"], (props) => {
+>  console.log("current version"+props.version);
+>});
+>// 获取最新固件版本（蓝牙设备）
+>MHPluginSDK.callSmartHomeAPI("/home/latest_version", {"model":MHPluginSDK.deviceModel}, (response) => {
+>  console.log("latest version"+JSON.stringify(response));
+>});
+>// 获取最新固件版本（WIFI设备）
+>// pid 固定为0
+>MHPluginSDK.callSmartHomeAPI("/home/checkversion", {"pid":0, "did":MHPluginSDK.deviceId}, (response) => {
+>  console.log("latest version"+JSON.stringify(response));
+>});
+>```
 ```
 >
 >```js
@@ -274,9 +295,10 @@ MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
 >插件原则上不允许直接访问非米家后台的 API，如需访问第三方服务器（例如插件公司自己的服务器）的 API 必须通过米家后台中转。第三方对接米家云端的 API 将以异步的方式调用，细节对客户端透明，详细的服务器对接过程请与米家后台联系。
 >
 >```js
-MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, response) => {
-  AlertIOS.alert(JSON.stringify(response));
-});
+>MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, response) => {
+>  AlertIOS.alert(JSON.stringify(response));
+>});
+>```
 ```
 
 #### *updateDeviceInfoCallback(callback)* `AL-[107,)`
@@ -327,12 +349,13 @@ BOOL shareFlag;           //是否已分享
 >想要发送 RPC 指令给设备获取最新状态，请用 *callMethod(method, params, extraInfo, callback)* 方法，并发送 get_props 指令。
 >
 >```js
-componentDidMount: function() {
-  // 指定发送 get_props 获取的属性集合
-  MHPluginSDK.registerDeviceStatusProps(["rgb"]);
-  // 订阅定期状态轮询的通知
-  var {DeviceEventEmitter} = require('react-native');
-  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+>componentDidMount: function() {
+>  // 指定发送 get_props 获取的属性集合
+>  MHPluginSDK.registerDeviceStatusProps(["rgb"]);
+>  // 订阅定期状态轮询的通知
+>  var {DeviceEventEmitter} = require('react-native');
+>  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+>```
     // 从device属性的内存缓存中拿到轮询的状态结果
     MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
       if (props.rgb)
@@ -359,11 +382,19 @@ componentDidMount: function() {
 // 可以看做是一片内存缓存，能存储任何值，通常是设备相关的属性。
 MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 ```
+#### *getDevicePropertyFromSrvCache(keys, callback)* `AL-[108,)`
+>从服务器缓存中获取设备上报的属性值（会发送网络请求）
+>
+>`keys` 属性名数组
+>`callback` 回调方法 **(Object kvPairs)**
+>
+>**注意** 此方法并不会发送 RPC 指令给设备来获取最新状态，只是返回当前 Server 中存储的对应属性值，可获取的设备属性需要在设备的 profile 中任何合法的 key，实际上可以看作一片 key-value pair，每次调用都会重新拉去服务器中最新值。
+
 
 #### *openAddDeviceGroupPage*
 > 打开创建设备组页
 >
->**注意** 只有特定设备支持创建设备组统一管理，此方法目前只支持特定设备，使用请与米家联系。
+> **注意** 只有特定设备支持创建设备组统一管理，此方法目前只支持特定设备，使用请与米家联系。
 
 #### *openTimerSettingPage(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
 >提供设备定时设置的统一页面，用来让用户设置设备的定时开关。
@@ -392,26 +423,27 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >`offParam` 定时到时设备“关”执行的 RPC 指令参数，可以是字符串、数字、字典、数组
 >
 >```js
-MHPluginSDK.openTimerSettingPageWithVariousTypeParams(
-"set_power", ['on', 'smooth', 500], 
-"set_power", ['off', 'smooth', 500]);
+>MHPluginSDK.openTimerSettingPageWithVariousTypeParams(
+>"set_power", ['on', 'smooth', 500], 
+>"set_power", ['off', 'smooth', 500]);
 >```
 >如果只有“开”或者“关”，只需要把用不到的参数置为null。
 >
 >```js
-MHPluginSDK.openTimerSettingPageWithVariousTypeParams(
-null, null, 
-"set_power", ['off', 'smooth', 500]);//只有关
+>MHPluginSDK.openTimerSettingPageWithVariousTypeParams(
+>null, null, 
+>"set_power", ['off', 'smooth', 500]);//只有关
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
 #### *openDeviceUpgradePage*
 > 打开设备固件升级页面
 >
->**注意** 分享过来的设备是无法进行固件升级的，所以此时此方法无效。
+> **注意** 分享过来的设备是无法进行固件升级的，所以此时此方法无效。
 >
->```js
->MHPluginSDK.openDeviceUpgradePage();
+> ```js
+> MHPluginSDK.openDeviceUpgradePage();
+> ```
 ```
 
 #### *closeCurrentPage*
@@ -430,7 +462,8 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >显示一个失败的提示，时长1s
 >
 >```js
-MHPluginSDK.showFailTips("数据获取失败！");
+>MHPluginSDK.showFailTips("数据获取失败！");
+>```
 ```
 
 #### *showLoadingTips(content)*
@@ -470,9 +503,10 @@ MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
 >`callback` 回调方法 **(Object placeMark, Array loopbackParams)**
 >
 >```js
-MHPluginSDK.loadDeviceCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
-  console.log(plackMark);
-});
+>MHPluginSDK.loadDeviceCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
+>  console.log(plackMark);
+>});
+>```
 ```
 
 #### *addRecord(type, value, extra)*
@@ -495,7 +529,8 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >`url` 网页URL
 >
 >```js
-MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖", MHPluginSDK.basePath+"rockets.png", "http://open.home.mi.com");
+>MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖", MHPluginSDK.basePath+"rockets.png", "http://open.home.mi.com");
+>```
 ```
 
 #### *shareToWeChatSession(title, description, path, url)*
@@ -551,4 +586,101 @@ MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖"
 >
 >**注意** 此方法只在开发自定义智能场景插件 bundle 时使用，作用是插件自定义场景处理完成时将处理好的 payload 回传，请参见”开发自定义智能场景“章节
 >**注意** 此方法回传的payload会填到value字段里，无法自定义其它字段，已废弃，请使用finishCustomSceneSetupWithTrigger/Action方法替代
+
+```
+
+
+
+#### *onFinishing(devices, model, callback)* ` AL-[110,)`
+
+> 把设备添加到设备列表当中
+>
+> `devices`需要添加到设备列表的设备数组，如果是普通设备则传device id数组，如果是蓝牙设备则传identifier数组
+>
+> `model` 设备的model
+>
+> `callback(error, devices)` error表示错误信息，devices表示成功添加到设备列表的设备信息
+
+```javascript
+MHPluginSDK.onFinishing([peripheral.identifier], 'xiaomi.bledemo.v1', (error, body) => {
+      if (!error && body.model === 'xiaomi.bledemo.v1') {
+        var devices = body.devices;
+        for (const device of Object.values(devices)) {
+          if(device.peripheral === peripheral.identifier){
+            MHPluginSDK.openDevice(device.did, 'xiaomi.bledemo.v1', () => {
+            });
+            break;
+          }
+        }
+      }
+    });
+```
+
+
+
+#### *openDevice(did, model, callback)* ` AL-[110,)`
+
+> 打开某设备列表中的某个设备
+>
+> `did` 需要打开的设备的device id
+>
+> `model` 需要打开设备的model
+>
+> `callback(error, device)` error表示错误信息，device表示被打开的设备信息
+
+```javascript
+MHPluginSDK.openDevice(device.did, 'xiaomi.bledemo.v1', () => {});
+```
+
+
+
+#### *applyForDeviceIDAndToken(model, mac,callback)* ` AL-[110,)`
+
+> 未某设备向服务器申请did和token
+>
+> `model` 设备的model
+>
+> `mac` 设备的mac地址
+>
+> `callback(error, info, did, token)` error表示错误信息，info表示设备信息，did设备申请的did，token设备申请回来的token。
+
+```javascript
+MHPluginSDK.applyForDeviceIDAndToken('xiaomi.bledemo.v1', '23:23:93:a3:98', (error, info, did, token) => {
+  if(error){
+    MHPluginSDK.showFailTips('申请失败：'+error.message);
+  }else{
+    //do your work!
+  }
+});
+```
+
+
+
+#### *bindDevice(model, mac, did, token, name, passwd, callback)* ` AL-[110,)`
+
+> 绑定设备到米家客户端（云端绑定方式）
+>
+> `model` 设备的model
+>
+> `mac` 设备的mac地址
+>
+> `did` 设备从云端申请的的did
+>
+> `token` 设备从云端申请的token
+>
+> `name` 设备报给云端的设备名称
+>
+> `passwd` 设备的密码
+>
+> `callback(error, info)` error表示错误信息，info表示被绑定的设备信息
+
+```javascript
+MHPluginSDK.openDevice('xiaomi.bledemo.v1', '23:23:93:a3:98', '23fasdf3asd', 'asf2fje2iufsfyfds', '小米火箭筒', '123', (error, info) => {
+  if(error){
+    MHPluginSDK.showFailTips('绑定失败：'+error.message);
+  }else{
+    //do your work!
+  }
+});
+```
 

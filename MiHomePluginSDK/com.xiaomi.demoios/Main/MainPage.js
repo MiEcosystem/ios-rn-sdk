@@ -90,6 +90,21 @@ class MainPage extends React.Component {
       route.title = event.newName;
       this.forceUpdate();
     });
+
+    MHPluginSDK.registerDeviceStatusProps(["prop.on","prop.usb_on"]);
+    this._deviceStatusListener = DeviceEventEmitter.addListener(
+      MHPluginSDK.deviceStatusUpdatedEventName,
+      (notification) => {
+        console.warn("prop changes");
+        MHPluginSDK.getDevicePropertyFromMemCache(["prop.on"], (props) => {
+            ;
+            console.warn( 'zyz' + props["prop.on"]);
+
+        });
+      }
+    );
+
+
   }
 
   componentWillUnmount() {

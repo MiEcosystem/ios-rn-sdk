@@ -38,18 +38,11 @@ export default class BarChart extends Component<void, any, any> {
 		let minBound = this.props.minVerticalBound;
 		let maxBound = this.props.maxVerticalBound;
 
-		// For all same values, create a range anyway
-		if (minBound === maxBound) {
-			minBound -= this.props.verticalGridStep;
-			maxBound += this.props.verticalGridStep;
-		}
 
 		const data = this.props.data || [];
-		const width = (WIDTH / data.length * this.props.horizontalScale * 0.5) * widthPercent;
-		const divisor = (maxBound - minBound <= 0) ? 0.00001 : (maxBound - minBound);
-		const scale = HEIGHT / divisor;
-		let height = HEIGHT - ((minBound * scale) + (HEIGHT - (dataPoint * scale)));
-		// if (height <= 0) height = 20;
+		const width = this.props.barWidth || (WIDTH / data.length * 0.5) * widthPercent;
+		const scale = HEIGHT / maxBound;
+		let height = dataPoint * scale;
 		if (height <= 0) height = 0;//最低高度变为0，by heyalu
 		return (
 			<TouchableWithoutFeedback
@@ -71,6 +64,7 @@ export default class BarChart extends Component<void, any, any> {
 
 	render() {
 		const data = this.props.data || [];
+		if (data.length == 0) return null;//如果没有数据，则返回null, by heyalu
 		return (
 			<View ref="container" style={[styles.default]}>
 				<Grid {...this.props} />
