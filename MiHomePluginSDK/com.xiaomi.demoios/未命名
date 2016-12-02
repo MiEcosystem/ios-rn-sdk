@@ -1,0 +1,71 @@
+set -e
+
+export FRAMEWORK_LOCN="${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework"
+
+# Create the path to the real Headers die
+mkdir -p "${FRAMEWORK_LOCN}/Versions/A/Headers"
+
+# Create the required symlinks
+/bin/ln -sfh A "${FRAMEWORK_LOCN}/Versions/Current"
+/bin/ln -sfh Versions/Current/Headers "${FRAMEWORK_LOCN}/Headers"
+/bin/ln -sfh "Versions/Current/${PRODUCT_NAME}" \
+"${FRAMEWORK_LOCN}/${PRODUCT_NAME}"
+
+# Copy the public headers into the framework
+if [ ! -d "${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/" ]
+then
+    echo "file isnot exist"
+else
+/bin/cp -a "${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/" \
+"${FRAMEWORK_LOCN}/Versions/A/Headers"
+fi
+
+#copy networkFramework
+if [ ! -d "${TARGET_BUILD_DIR}/MiNetworkFramework/" ]
+then
+echo "networkFramework isnot exist"
+else
+/bin/cp -a "${TARGET_BUILD_DIR}/MiNetworkFramework/" \
+"${FRAMEWORK_LOCN}/Versions/A/Headers"
+fi
+
+#copy bluetoothDiscoveryFramework
+if [ ! -d "${TARGET_BUILD_DIR}/MiBluetoothDiscoveryFramework/" ]
+then
+echo "bluetoothDiscoveryFramework isnot exist"
+else
+/bin/cp -a "${TARGET_BUILD_DIR}/MiBluetoothDiscoveryFramework/MHBluetoothDiscovery.h" \
+"${TARGET_BUILD_DIR}/MiBluetoothDiscoveryFramework/MHBluetoothDevice.h" \
+"${TARGET_BUILD_DIR}/MiBluetoothDiscoveryFramework/MHBluetoothDeviceFactory.h" \
+"${TARGET_BUILD_DIR}/MiBluetoothDiscoveryFramework/MHBluetoothBroadcastPackage.h" \
+"${FRAMEWORK_LOCN}/Versions/A/Headers"
+fi
+
+#copy bluetoothFramework
+if [ ! -d "${TARGET_BUILD_DIR}/Debug_MiBluetoothFramework/" ]
+then
+echo "bluetoothFramework isnot exist"
+else
+/bin/cp -a "${TARGET_BUILD_DIR}/Debug_MiBluetoothFramework/MHComboConnectManager.h" \
+"${TARGET_BUILD_DIR}/Debug_MiBluetoothFramework/MHXiaoMiBluetoothDevice.h" \
+"${TARGET_BUILD_DIR}/Debug_MiBluetoothFramework/MHXiaoMiConnectManager.h" \
+"${FRAMEWORK_LOCN}/Versions/A/Headers"
+fi
+
+#copy wifiFramework
+if [ ! -d "${TARGET_BUILD_DIR}/MiWifiFramework/" ]
+then
+echo "wifiFramework isnot exist"
+else
+/bin/cp -a "${TARGET_BUILD_DIR}/MiWifiFramework/MHNetworkUntils.h" \
+"${FRAMEWORK_LOCN}/Versions/A/Headers"
+fi
+
+#copy deviceFramework
+if [ ! -d "${TARGET_BUILD_DIR}/Debug_MiDeviceFramework/" ]
+then
+echo "Debug_MiDeviceFramework isnot exist"
+else
+/bin/cp -a "${TARGET_BUILD_DIR}/Debug_MiDeviceFramework/MHDeviceSmartConfig.h" \
+"${FRAMEWORK_LOCN}/Versions/A/Headers"
+fi

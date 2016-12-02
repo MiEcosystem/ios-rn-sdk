@@ -1,0 +1,8 @@
+{
+  "package_name":"com.xiaomi.sqlitedemo.ios",
+  "developer_id":"your_developer_id",
+  "models":"xiaomi.demo.v1|xiaomi.demo.v2|xiaomi.dev.v1|xiaomi.dev.v3",
+  "min_api_level":"105",
+  "version":"1",
+  "platform":"iphone"
+}

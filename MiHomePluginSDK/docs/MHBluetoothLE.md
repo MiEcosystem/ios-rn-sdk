@@ -78,7 +78,7 @@ var events = MHPluginSDK.event;
    对应的 *M 事件* 为：
 
    ```javascript
-   MHBluetoothLE.centralManagerDidUpdateState
+   MHBluetoothLE.event.centralManagerDidUpdateState
    ```
 
 4. 多参数的 *CB 回调*，*M 事件*名称为每段*CB 回调*名以下划线"_"连接。如：
@@ -91,7 +91,7 @@ var events = MHPluginSDK.event;
    对应的 *M 事件* 为：
 
    ```javascript
-   MHBluetoothLE.centralManager_didDisconnectPeripheral_error
+   MHBluetoothLE.event.centralManager_didDisconnectPeripheral_error
    ```
 
 5. *CB 回调* 的参数，会通过 *M 事件* 携带在通知中广播给插件，但 centralManager 和 peripheral 参数会被过滤掉。
@@ -101,7 +101,7 @@ var events = MHPluginSDK.event;
 ```javascript
 // 监听事件示例代码
 var {DeviceEventEmitter} = require('react-native');
-var subscription = DeviceEventEmitter.addListener(MHBluetoothLE.peripheral_didDiscoverServices,(notification) => {
+var subscription = DeviceEventEmitter.addListener(MHBluetoothLE.event.peripheral_didDiscoverServices,(notification) => {
   console.log(JSON.stringify(notification));
   var error = notification[0];
   if(error) {
@@ -823,7 +823,7 @@ MHBluetoothLE.writeDescriptorValue(descriptor.peripheral, descriptor.service, de
 
 #### *callback和event*
 
-API中大部分接口的最后一个参数是callback，此callback来回传本次操作的结果，此callback仅对本次操作有效，所以对于有些设备分多次返回数据的情况则callback方式并不适用，建议使用监听消息方式来获取多次获取操作结果。例如`readValue()`,有些设备的数据过大，根据CoreBluetooth.framework文档，设备可能会分多次调用peripheral:didUpdateValueForCharacteristic:error代理, MHBluetoothLE模块的callback仅能获取第一次代理调用返回的数据，但是如果监听peripheral_didUpdateValueForCharacteristic_error事件就可以分多次获取全部数据。
+API中大部分接口的最后一个参数是callback，此callback来回传本次操作的结果，此callback仅对本次操作有效，所以对于有些设备分多次返回数据的情况则callback方式并不适用，建议使用监听消息方式来获取多次获取操作结果。例如`readValue()`,有些设备的数据过大，根据CoreBluetooth.framework文档，设备可能会分多次调用peripheral:didUpdateValueForCharacteristic:error代理, MHBluetoothLE模块的callback仅能获取第一次代理调用返回的数据，但是如果监听MHBluetoothLE.event.peripheral_didUpdateValueForCharacteristic_error事件就可以分多次获取全部数据。
 
 callback回调的参数一般是(error，forWho， result)三参数形式返回，error表示是否有错误，forWho表示操作的是哪个层级的对象(peripheral, service, characteristic,descriptor)，result是方法调用的结果
 

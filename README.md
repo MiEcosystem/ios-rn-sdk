@@ -174,18 +174,18 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 2.  进入 MiHomePluginSDK 所在目录。
 3.  启动 node 服务器：
 
-      ```
-      npm start --reset-cache
-      ```
+       ```
+       npm start --reset-cache
+       ```
 
-      **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
+       **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 4.  查看本机 IP 地址：
 
-      ```
-      ifconfig en0
-      ```
+       ```
+       ifconfig en0
+       ```
 
-      **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
+       **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
 
 5.  客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
 
@@ -272,18 +272,12 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 2. 进入 MiHomePluginSDK 目录
 3. 运行 packagePluginAndSign 脚本进行打包：
 
-<<<<<<< HEAD
-```sh
-python packagePluginAndSign plugin_name /path/to/private.pem /path/to/public.cer yourDeveloperId
-```
-   其中 plugin_name 是插件包的目录名，private.pem 和 public.cer 分别是准备好的私钥和公钥文件，yourDeveloperId 是开发此插件的米家开发者账号（数字小米ID）
-=======
 	```
 	python packagePluginAndSign plugin_name /path/to/private.pem /path/to/public.cer yourDeveloperId
 	```
 
 	其中 plugin_name 是插件包的目录名，private.pem 和 public.cer 分别是准备好的私钥和公钥文件，yourDeveloperId 是开发此插件的米家开发者账号（数字小米ID）
->>>>>>> comaster
+
 
 4. 签名过程中会要求输入私钥文件的密码。
 5. 打包成功后会在当前目录下生成 plugin_name.signed.zip 的已签名插件包。

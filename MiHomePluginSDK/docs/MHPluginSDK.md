@@ -44,6 +44,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >Object
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #### *pageName* `AL-[110,)`
 > 页面 插件需要展示的页面
 >
@@ -54,8 +55,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 > `setting` 插件的设置页面
 > 其它请按照`main`来处理
 
-=======
->>>>>>> comaster
+
 #### *apiLevel*
 >当前米家 APP 的 API_Level
 >
