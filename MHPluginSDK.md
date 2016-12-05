@@ -43,8 +43,6 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 >Object
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 #### *pageName* `AL-[110,)`
 > 页面 插件需要展示的页面
 >
@@ -109,19 +107,19 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >  // 订阅定期状态轮询的通知
 >  var {DeviceEventEmitter} = require('react-native');
 >  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+>    // 从device属性的内存缓存中拿到轮询的状态结果
+>    MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
+>      if (props.rgb)
+>      {
+>        var sRGB = "#" + this.getNewRGB(props.rgb >> 16, (props.rgb >> 8) & 0x00ff, (props.rgb & 0x0000ff));
+>        // 设置 state 刷新页面
+>        this.setState({"resultViewColor":sRGB});
+>      }
+>    });
+>  });
+>},
 >```
-    // 从device属性的内存缓存中拿到轮询的状态结果
-    MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
-      if (props.rgb)
-      {
-        var sRGB = "#" + this.getNewRGB(props.rgb >> 16, (props.rgb >> 8) & 0x00ff, (props.rgb & 0x0000ff));
-        // 设置 state 刷新页面
-        this.setState({"resultViewColor":sRGB});
-      }
-    });
-  });
-},
-```
+
 
 #### *onReceivingForegroundPushEventName*
 >插件在前台时收到 APNS 推送
@@ -132,15 +130,18 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 >米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert，插件会收到本通知，并触发通知的事件回调，携带参数在通知回调中给出。
 
-​```js
-  var {DeviceEventEmitter} = require('react-native');
-  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegroundPushEventName,(notification) => {
+```
+var {DeviceEventEmitter} = require('react-native');
+var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegroundPushEventName,(notification) => {
     // 插件在前台收到push通知回调
     console.log(JSON.stringify(notification));
   });
 ```
 
+
+
 ### 资源 URI
+
 #### *uriNaviBackButtonImage*
 >导航栏返回按钮
 >
@@ -148,15 +149,22 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >var imgPath = MHPluginSDK.uriNaviBackButtonImage;
 >```
 
+
+
 #### *uriNaviMoreButtonImage*
+
 >导航栏更多按钮
 >
 >```js
 >var imgPath = MHPluginSDK.uriNaviMoreButtonImage;
 >```
 
+
+
 ### API
+
 #### *sendEvent(eventName, body)*
+
 >发送一个事件。
 >
 >`eventName` 事件名字符串
@@ -164,7 +172,10 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 >其它模块可通过 DeviceEventEmitter.addListener 方法来注册并响应 sendEvent 发送的事件。
 
+
+
 #### *registerDeviceStatusProps(propArr)*
+
 >设置定时向设备RPC获取属性时的属性名集合
 >
 >`propArr` 注册定时向发送 get_props 获取的属性名数组，具体参见该设备的 profile
@@ -173,8 +184,9 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >  // 假设灯的 profile 中有 power/brightness/color 几个属性
 >  MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]); 
 >  // APP会在插件运行时每6s获取一次灯的电源开关状态、亮度以及颜色值，插件通过监听 MHPluginSDK.deviceStatusUpdatedEventName 来处理回调。
+>
 >```
-```
+
 
 #### *callMethod(method, params, extrainfo, callback)*
 >调用设备 RPC 指令接口
@@ -187,7 +199,8 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >米家APP会根据当时设备的情况选择是通过云端下发指令给设备，还是直接通过局域网向设备发送指令。设备接收的指令集请查阅该设备的 profile
 >**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档
 >
->```js
+
+```
 // toggle 命令切换插座的开关状态，该命令没有参数
 MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
   console.log("toggle result:"+isSuccess+json);
@@ -200,7 +213,10 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 });
 ```
 
+
+
 #### *callMethodForceWay(method, params, extrainfo, way, callback)* `AL-[109,)`
+
 >调用设备 RPC 指令接口，指定发送方式（云端、局域网）
 >
 >`method` 方法命令字字符串
@@ -212,26 +228,28 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 >**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档
 >
 >```js
-// toggle 命令切换插座的开关状态，该命令没有参数，强制走局域网RPC
-MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
-  console.log("toggle result:"+isSuccess+json);
-  if (isSuccess)
-  {
-    this.setState({
-      currentState: this.state.currentState == 'on' ? 'off' : 'on',
-    });
-  }
-});
-```
+>// toggle 命令切换插座的开关状态，该命令没有参数，强制走局域网RPC
+>MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
+>  console.log("toggle result:"+isSuccess+json);
+>  if (isSuccess)
+>  {
+>    this.setState({
+>  		currentState: this.state.currentState == 'on' ? 'off' : 'on',
+>	});
+>   }
+>});
+>```
+
 
 #### *localPingWithCallback(callback)* `AL-[109,)`
 >检测设备是否在局域网内（ping通）
 >
 >`callback` 回调方法 **(BOOL isLocal)**
 >
->**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档
+>**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档 
 >
->```js
+
+```
 // toggle 命令切换插座的开关状态，该命令没有参数，强制走局域网RPC
 MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
   console.log("toggle result:"+isSuccess+json);
@@ -244,7 +262,10 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 });
 ```
 
+
+
 #### *callSmartHomeAPI(api, params, callback)*
+
 >调用米家云端 API
 >
 >`api` 云端提供的 API 接口命令字字符串
@@ -274,15 +295,12 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >MHPluginSDK.callSmartHomeAPI("/home/checkversion", {"pid":0, "did":MHPluginSDK.deviceId}, (response) => {
 >  console.log("latest version"+JSON.stringify(response));
 >});
+>// 删除已经设置的定时
+>MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
+>  AlertIOS.alert(JSON.stringify(response));
+>});
 >```
-```
->
->```js
-// 删除已经设置的定时
-MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
-  AlertIOS.alert(JSON.stringify(response));
-});
-```
+
 
 #### *callThirdPartyAPI(serverAppId, dids, params, callback)* 
 >异步调用第三方对接米家云端的 API
@@ -299,30 +317,40 @@ MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
 >  AlertIOS.alert(JSON.stringify(response));
 >});
 >```
-```
+
 
 #### *updateDeviceInfoCallback(callback)* `AL-[107,)`
+
 >向云端请求一次当前设备的信息，其中包含了当前设备是否在线
 >
 >`callback` 回调方法 **(Object response)**
 >
 >可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被米家服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
 
+
+
 #### *postHTTP(url, params, callback)*
+
 >普通的 HTTP POST 请求，要求 response 为 JSON
 >
 >`url` 请求网址
 >`params` 参数字典
 >`callback` 回调方法 **(Object response)**
 
+
+
 #### *getHTTP(url, params, callback)*
+
 >普通的 HTTP GET 请求，要求 response 为 JSON
 >
 >`url` 请求网址
 >`params` 参数字典
 >`callback` 回调方法 **(Object response)**
 
+
+
 #### *getDevicePropertyFromMemCache(keys, callback)*
+
 >从内存缓存中获取设备属性当前值（不会发送网络请求）
 >
 >`keys` 属性名数组
@@ -332,7 +360,8 @@ MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
 >
 >可以用此方法获取一些设备属性，包括：
 >
->```js
+
+```
 NSString* mac;            //设备的mac地址                 
 NSString* version;        //设备当前固件版本 
 double longitude;         //上次绑定时的经度
@@ -355,19 +384,20 @@ BOOL shareFlag;           //是否已分享
 >  // 订阅定期状态轮询的通知
 >  var {DeviceEventEmitter} = require('react-native');
 >  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+>    // 从device属性的内存缓存中拿到轮询的状态结果
+>    MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
+>      if (props.rgb)
+>      {
+>        var sRGB = "#" + this.getNewRGB(props.rgb >> 16, (props.rgb >> 8) & 0x00ff, (props.rgb & 0x0000ff));
+>        // 设置 state 刷新页面
+>        this.setState({"resultViewColor":sRGB});
+>      }
+>    });
+>  });
+>},
+>
 >```
-    // 从device属性的内存缓存中拿到轮询的状态结果
-    MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
-      if (props.rgb)
-      {
-        var sRGB = "#" + this.getNewRGB(props.rgb >> 16, (props.rgb >> 8) & 0x00ff, (props.rgb & 0x0000ff));
-        // 设置 state 刷新页面
-        this.setState({"resultViewColor":sRGB});
-      }
-    });
-  });
-},
-```
+
 
 #### *setDevicePropertyToMemCache(kvPairs)*
 >向内存缓存中设置设备属性键值（不会发送网络请求）
@@ -378,11 +408,15 @@ BOOL shareFlag;           //是否已分享
 >
 >想要发送 RPC 指令给设备获取最新状态，请用 *callMethod(method, params, extraInfo, callback)* 方法
 >
->```js
+
+```
 // 可以看做是一片内存缓存，能存储任何值，通常是设备相关的属性。
 MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 ```
+
+
 #### *getDevicePropertyFromSrvCache(keys, callback)* `AL-[108,)`
+
 >从服务器缓存中获取设备上报的属性值（会发送网络请求）
 >
 >`keys` 属性名数组
@@ -391,12 +425,17 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >**注意** 此方法并不会发送 RPC 指令给设备来获取最新状态，只是返回当前 Server 中存储的对应属性值，可获取的设备属性需要在设备的 profile 中任何合法的 key，实际上可以看作一片 key-value pair，每次调用都会重新拉去服务器中最新值。
 
 
+
 #### *openAddDeviceGroupPage*
+
 > 打开创建设备组页
 >
 > **注意** 只有特定设备支持创建设备组统一管理，此方法目前只支持特定设备，使用请与米家联系。
 
+
+
 #### *openTimerSettingPage(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
+
 >提供设备定时设置的统一页面，用来让用户设置设备的定时开关。
 >
 >`onMethod` 定时到时设备“开”执行的 RPC 指令命令字字符串
@@ -414,7 +453,10 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
+
+
 #### *openTimerSettingPageWithVariousTypeParams(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
+
 >提供设备定时设置的统一页面，用来让用户设置设备的定时开关。
 >
 >`onMethod` 定时到时设备“开”执行的 RPC 指令命令字字符串
@@ -436,7 +478,10 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
+
+
 #### *openDeviceUpgradePage*
+
 > 打开设备固件升级页面
 >
 > **注意** 分享过来的设备是无法进行固件升级的，所以此时此方法无效。
@@ -444,60 +489,85 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > ```js
 > MHPluginSDK.openDeviceUpgradePage();
 > ```
-```
+
 
 #### *closeCurrentPage*
+
 >退出插件
 >
 >**注意** 如果在插件设置页，则会退出设置页。
 
+
+
 #### *showFinishTips(content)*
+
 >显示一个已完成提示，时长1秒
 >
->```js
+
+```
 MHPluginSDK.showFinishTips("数据获取成功！");
 ```
 
+
+
 #### *showFailTips(content)*
+
 >显示一个失败的提示，时长1s
 >
 >```js
 >MHPluginSDK.showFailTips("数据获取失败！");
 >```
-```
+
 
 #### *showLoadingTips(content)*
+
 >显示一个正在加载提示，一直存在直到调用 *dismissTips*
 
+
+
 #### *dismissTips()*
+
 >使提示消失
 
+
+
 #### *saveInfo(info)*
+
 >使用 NSUserDefaults 缓存一个字典
 >
 >`info` 字典，值只能是简单数据类型
 >
 >**注意** 使用 NSUserDefaults 存储，退出插件不会消失，适合做轻量级数据的本地化存储。大数据量请使用 MHPluginFS 模块。
 
+
+
 #### *loadInfoCallback(callback)*
+
 >读取缓存在 NSUserDefaults 中的信息，（使用 *saveInfo(info)* 存储的）
 >
 >`callback` 回调方法 **(Object info)**
 >
 >**注意** 使用 NSUserDefaults 存储，退出插件不会消失，适合做轻量级数据的本地化存储。大数据量请使用 MHPluginFS 模块。
 
+
+
 #### *loadCurrentPlaceMarkCallback(callback)*
+
 >读取当前位置的省市信息（手机）
 >
 >`callback` 回调方法 **(Object placeMark, Array loopbackParams)**
 >
->```js
+
+```
 MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
   console.log(plackMark);
 });
 ```
 
+
+
 #### *loadDeviceCurrentPlaceMarkCallback(callback)*
+
 >读取当前位置的省市信息（设备上一次绑定的位置）
 >
 >`callback` 回调方法 **(Object placeMark, Array loopbackParams)**
@@ -507,20 +577,24 @@ MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
 >  console.log(plackMark);
 >});
 >```
-```
+
 
 #### *addRecord(type, value, extra)*
+
 > 添加插件自定义统计事件点
-> 
+>
 > `type` 自定义事件类型字符串
 > `value` 自定义值字典
 > `extra` 附加字典，一般传空{}
->
->```js
+
+```
 MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 ```
 
+
+
 #### *openShareListBar(title, description, path, url)*
+
 >打开外链分享界面，用户可以选择分享到微信、朋友圈、米聊或QQ
 >
 >`title` 标题
@@ -531,15 +605,18 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >```js
 >MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖", MHPluginSDK.basePath+"rockets.png", "http://open.home.mi.com");
 >```
-```
+
 
 #### *shareToWeChatSession(title, description, path, url)*
+
 >直接分享到微信聊天
 >
 >`title` 标题
 >`description` 说明
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
+
+
 
 #### *shareToWeChatMoment(title, description, path, url)*
 >直接分享到微信朋友圈
@@ -549,6 +626,8 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
 
+
+
 #### *shareToWB(title, description, path, url)*
 >直接分享到微博
 >
@@ -556,6 +635,8 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >`description` 说明
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
+
+
 
 #### *shareToML(title, description, path, url)*
 >直接分享到米聊
@@ -565,12 +646,16 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
 
+
+
 #### *finishCustomSceneSetupWithTrigger(trigger)* `AL-[107,)`
 >完成场景设置，回传设置后的 trigger</b>
 >
 >`trigger` 设置后的自定义场景trigger
 >
 >**注意** 此方法只在开发自定义智能场景触发条件时使用，作用是插件自定义场景处理完成时将处理好的 trigger 回传，请参见”开发自定义智能场景“章节
+
+
 
 #### *finishCustomSceneSetupWithAction(action)* `AL-[107,)`
 >完成场景设置，回传设置后的 action</b>
@@ -579,6 +664,8 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >
 >**注意** 此方法只在开发自定义智能场景动作时使用，作用是插件自定义场景处理完成时将处理好的 action 回传，请参见”开发自定义智能场景“章节
 
+
+
 #### *finishCustomSceneSetup(payload)* `AL-[100,106](deprecated)`
 >完成场景设置，回传设置后的 payload</b>
 >
@@ -586,8 +673,6 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >
 >**注意** 此方法只在开发自定义智能场景插件 bundle 时使用，作用是插件自定义场景处理完成时将处理好的 payload 回传，请参见”开发自定义智能场景“章节
 >**注意** 此方法回传的payload会填到value字段里，无法自定义其它字段，已废弃，请使用finishCustomSceneSetupWithTrigger/Action方法替代
-
-```
 
 
 
