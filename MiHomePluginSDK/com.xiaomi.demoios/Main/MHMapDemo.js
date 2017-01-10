@@ -73,6 +73,8 @@ class MHMapDemo extends Component {
           onUpdateUserLocation={this._onUpdateUserLocation.bind(this)}
           circles={this.state.circles}
           polylines={this.state.polylines}
+          multiPolylines={this.state.multiPolylines}
+          mapType={1}
         />
         <TouchableOpacity style={styles.walkingRouteSearch} onPress={this._walkingRouteSearchButtonClicked.bind(this)}>
           <Text style={{fontSize: 20}}>步行路径规划</Text>
@@ -152,15 +154,23 @@ class MHMapDemo extends Component {
           var polylines = [];
           for (var i = 0; i < steps.length; i++) {
             var coordinates = this.coordinatesForPolyline(steps[i].polyline);
-            var polyline = {
-              'id': 'polyline' + i,
-              'coordinates': coordinates,
+            // var polyline = {
+            //   'id': 'polyline' + i,
+            //   'coordinates': coordinates,
+            // };
+            var multiPolyline = {
+              'id':'multiPolyline' + i,
+              'coordinates':coordinates,
+              'drawStyleIndexes':[0,1,2],
+              'renderGradient':true,
+              'renderLineWidth':12,
+              'colors':[0xff0096ff,0xfff6c623,0xffff6600]
             };
-            polylines.push(polyline);
+            polylines.push(multiPolyline);
           }
           // console.log(polylines);
           this.setState({
-            polylines: polylines,
+            multiPolylines: polylines,
           });
         }
       }

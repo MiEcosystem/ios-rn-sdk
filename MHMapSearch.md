@@ -24,7 +24,8 @@ var MHMapSearch = require('NativeModules').MHMapSearch;
 >`callback` 回调方法 **(BOOL isSuccess, Object json)**
 >
 >```js
-var coordinate = {
+>var coordinate = {
+>```
 	'latitude': 40.0000,
 	'longitude': 110.0000,
 }
@@ -70,7 +71,8 @@ MHMapSearch.poiAroundSearch(coordinate, keyword, (isSuccess, json)=>{
 >`callback` 回调方法 **(BOOL isSuccess, Array json)**
 >
 >```js
-MHMapSearch.poiKeywordsSearch('北京', '吃饭', true, (isSuccess, json)=>{
+>MHMapSearch.poiKeywordsSearch('北京', '吃饭', true, (isSuccess, json)=>{
+>```
 	if (isSuccess) {
 		console.log(json);
 	}
@@ -108,7 +110,8 @@ MHMapSearch.poiIDSearch('B000A8WXY0', (isSuccess, json)=>{
 >`callback` 回调方法 **(BOOL isSuccess, Object json)**
 >
 >```js
-var originCoordinate = {
+>var originCoordinate = {
+>```
 	'latitude': 40.0000,
 	'longitude': 120.0000,
 };
@@ -154,3 +157,22 @@ MHMapSearch.walkingRouteSearch(originCoordinate, destinationCoordinate, 0,(isSuc
 ```
 
 
+## MHMapView文档 `AL-[112,)`
+
+MHMapView是封装的高德地图view组件，具体的使用demo在sdk中**com.xiaomi.demoios插件中的MHMapDemo.js**中，MHMapView.js为组件的封装。
+
+### 属性
+mapType    number  0为普通地图，1卫星地图
+multiPolylines array 
+```javascript
+            var multiPolyline = {
+              'id':'multiPolyline' + i,
+              'coordinates':coordinates,// 经纬度的object数组，key分别为 "longitude"、"latitude"
+              'drawStyleIndexes':[0,1,2],//和下面的colors数组对应，具体看高德地图api
+              'renderGradient':true,
+              'renderLineWidth':12,
+              'colors':[0xff0096ff,0xfff6c623,0xffff6600]
+            };
+            
+            polylines.push(multiPolyline);
+```

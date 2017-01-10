@@ -9,6 +9,7 @@ class MHMapView extends React.Component {
 }
 
 MHMapView.propTypes = {
+  mapType: React.PropTypes.number,//0普通地图，1卫星地图
   distanceFilter: React.PropTypes.number,
   zoomLevel: React.PropTypes.number,
   showsUserLocation: React.PropTypes.bool,
@@ -68,6 +69,7 @@ MHMapView.propTypes = {
   */
   annotations: React.PropTypes.array,
   polylines: React.PropTypes.array,
+  multiPolylines: React.PropTypes.array,
   /*
   circles
     [{coordinate: object //中心点坐标，包含latitude和longitude两个key

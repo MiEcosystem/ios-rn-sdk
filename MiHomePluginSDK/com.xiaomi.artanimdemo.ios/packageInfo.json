@@ -1,0 +1,8 @@
+{
+  "package_name":"com.xiaomi.artanimdemo.ios",
+  "developer_id":"12345678",
+  "models":"xiaomi.demo.v1",
+  "min_api_level":"105",
+  "version":"1",
+  "platform":"iphone"
+}

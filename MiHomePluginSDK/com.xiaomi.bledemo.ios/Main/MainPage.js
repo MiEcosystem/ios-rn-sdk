@@ -76,7 +76,23 @@ var MainPage = React.createClass({
         alert(JSON.stringify(notification));
     });
 
-    MHBluetooth.discoverServices();
+
+    // MHBluetooth.scanAndConnectForSeconds(10,(nothing) => {
+    //   // MHBluetooth.discoverServices();
+    // },(error) => {
+    //   // alert(error);
+    // },(nothing) => {
+    //   alert("timeout");
+    // });
+    MHBluetooth.scanAndConnectForSeconds(10, (error)=>{
+      if (error.code == 200) {
+        alert("连接成功");
+      }else if (error.code == 404) {
+        alert("超时");
+      }else if (error.code == 3) {
+        alert("需要去register");
+      }
+    });//, function() {}, function() {}, function() {});
   },
 
   componentWillUnmount: function() {

@@ -92,6 +92,13 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >`.sysName` 系统名称
 >`.sysVersion` 系统版本
 
+#### *isVoiceDevice*
+>当前的设备是不是语音设备
+>
+>BOOL
+>
+
+
 ### 可以在插件端监听的事件
 #### *deviceStatusUpdatedEventName*
 >设备状态更新
@@ -162,6 +169,12 @@ var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegro
 
 
 ### API
+
+#### *keepScreenNotLock(flag)* `AL-[112,)`
+
+>保持屏幕常亮，flag为true 或者 false
+>不需要时需要设置回去！！！
+
 
 #### *sendEvent(eventName, body)*
 
@@ -326,26 +339,6 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >`callback` 回调方法 **(Object response)**
 >
 >可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被米家服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
-
-
-
-#### *postHTTP(url, params, callback)*
-
->普通的 HTTP POST 请求，要求 response 为 JSON
->
->`url` 请求网址
->`params` 参数字典
->`callback` 回调方法 **(Object response)**
-
-
-
-#### *getHTTP(url, params, callback)*
-
->普通的 HTTP GET 请求，要求 response 为 JSON
->
->`url` 请求网址
->`params` 参数字典
->`callback` 回调方法 **(Object response)**
 
 
 
@@ -769,3 +762,40 @@ MHPluginSDK.openDevice('xiaomi.bledemo.v1', '23:23:93:a3:98', '23fasdf3asd', 'as
 });
 ```
 
+
+#### *openAuthSettingPage* `AL-[110,)`
+
+>以push的方式打开授权页面
+>
+
+
+
+#### *getAuthSateCallback(callback)* `AL-[110,)`
+
+>获取当前device的授权状态，以回调的方式返回；
+>
+>`callback` 回调方法 **(Object response)**
+>
+>4种状态：
+>
+>`authStateNotFound`: 没有找到当前设备的状态；
+>
+>`authStateNoAuth`: 当前设备还没进行过授权；
+>
+>`authStateAuthValid`: 进行过授权但已经过期；
+>
+>`authStateAuthExpired`: 进行过授权而且还在有效期内；
+
+#### *getDevicesWithModel(model, callback)* `AL-[113,)`
+
+>获取设备列表中指定model的设备信息
+>`callback` 回调方法 (success, devices) success 为true时devices中存储设备信息数组
+
+```javascript
+MHPluginSDK.getDevicesWithModel("xiaomi.watch.band2",(success,devices) =>{
+            if (success) {
+              alert(JSON.stringify(devices));
+            }
+
+          })
+```

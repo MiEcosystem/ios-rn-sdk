@@ -141,6 +141,17 @@ class MoreMenu extends Component {
           this.props.navigator.push(VideoDemo.route);
         }
       },
+      {
+        'name':'获取设备列表数据',
+        'func':() =>{
+          MHPluginSDK.getDevicesWithModel("xiaomi.watch.band2",(success,devices) =>{
+            if (success) {
+              alert(JSON.stringify(devices));
+            }
+
+          })
+        }
+      }
     ];
     this._menuData = commonMenuData.concat(specificMenuData);
   }

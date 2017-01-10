@@ -25,30 +25,30 @@ var MHBluetooth = require('NativeModules').MHBluetooth;
 1. CBCentralManagerDelegate 以及 CBPeripheralDelegate 中的大部分回调方法（简称 *CB 回调* ）在 MHBluetooth 中都有对应的通知事件（简称 *M 事件* ）。**目前有部分不常用的方法没有对应的通知事件**
 2. *M 事件* 与其对应的 *CB 回调* 的含义、功能以及调用时机完全相同。
 3. 单参数的 *CB 回调*，*M 事件* 名称与 *CB 回调* 名相同（字母、大小写均相同）。如：
-	*CB 回调* ：
-	
-	```oc
-	- (void)centralManagerDidUpdateState:(CBCentralManager *)central
-	```
-	
-	对应的 *M 事件* 为：
-	
-	```js
-	MHBluetooth.centralManagerDidUpdateState
-	```
+   *CB 回调* ：
+
+   ```oc
+   - (void)centralManagerDidUpdateState:(CBCentralManager *)central
+   ```
+
+   对应的 *M 事件* 为：
+
+   ```js
+   MHBluetooth.centralManagerDidUpdateState
+   ```
 
 4. 多参数的 *CB 回调*，*M 事件*名称为每段*CB 回调*名以下划线"_"连接。如：
-	*CB 回调* ：
-	
-	```oc
-	- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
-	```
-	
-	对应的 *M 事件* 为：
-	
-	```js
-	MHBluetooth.centralManager_didDisconnectPeripheral_error
-	```
+   *CB 回调* ：
+
+   ```oc
+   - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
+   ```
+
+   对应的 *M 事件* 为：
+
+   ```js
+   MHBluetooth.centralManager_didDisconnectPeripheral_error
+   ```
 
 5. *CB 回调* 的参数，会通过 *M 事件* 携带在通知中广播给插件，但 centralManager 和 peripheral 参数会被过滤掉。
 
@@ -120,10 +120,11 @@ componentWillUnmount() {
 >发现当前设备peripheral的services。
 >
 >```js
-var {DeviceEventEmitter} = require('react-native');
-var subscription = DeviceEventEmitter.addListener(MHBluetooth.peripheral_didDiscoverServices,(notification) => {
-  console.log(JSON.stringify(notification));
-  MHBluetooth.serviceUUIDsWithCallback((uuids) => {
+>var {DeviceEventEmitter} = require('react-native');
+>var subscription = DeviceEventEmitter.addListener(MHBluetooth.peripheral_didDiscoverServices,(notification) => {
+>  console.log(JSON.stringify(notification));
+>  MHBluetooth.serviceUUIDsWithCallback((uuids) => {
+>```
     console.log(uuids);
   });
 });
@@ -188,6 +189,14 @@ MHBluetooth.readBase64DataWithCallback("0001", "fe95", (isSuccess, loopbackParam
 
 #### *startListeningBroadcast()*
 >开始监听当前设备的广播
+>
+>可通过监听MHBluetooth.receivedBroadcastEventName事件收到广播中的数据
+
+#### *startListeningBroadcastWithoutDuplicatedPeripheral()*  `AL-[112,)`
+>开始监听当前设备的广播(重复的peripheral只回调一次)
+>
+>可通过监听MHBluetooth.receivedBroadcastEventName事件收到广播中的数据
+
 
 #### *stopListeningBroadcast()*
 >停止监听当前设备的广播
@@ -200,5 +209,45 @@ MHBluetooth.readBase64DataWithCallback("0001", "fe95", (isSuccess, loopbackParam
 #### *disconnectDevice()*
 >断开设备
 
+#### *scanDeviceWithCallback(callback)*
+>非小米协议的蓝牙设备扫描发现
+>callback 回调方法**(error.code)** 200为成功发现，404为未发现，其他为错误码
+
+#### *scanAndConnectForSeconds(double seconds, callback)*
+>seconds 超时时间秒数
+>callback 回调方法**(error.code)** 200为成功发现，404为未发现，其他为错误码，错误码为3时需要重新注册
+
+#### *registerWithCallback(callback)*
+>小米协议的蓝牙设备注册
+>callback 回调方法**(error.code)** 200为成功发现，404为未发现，其他为错误码
+
+#### *base64ManufactureDataWithCallback(callback)*
+>获取自定义数据
+>callback 回调方法**(base64ManufaxtureData)** 自定义数据的base64编码值
+
+#### *setOfflineStatusDescription(desc)*
+>设置设备列表离线状态（蓝牙未连接）副标题
+>desc 字符串
+
+#### *setOnlineStatusDescription(desc)*
+>设置设备列表在线状态（蓝牙连接）副标题
+>desc 字符串
+
+#### *setStatusDescription(desc)*
+>设置设备列表默认副标题
+>desc 字符串
+
+#### *getBluetoothStateCallback(callback)* `AL-[112,)`
+>获取蓝牙状态
+```javascript
+MHBluetooth.getBluetoothStateCallback((state)=>{
+	//CBManagerStateUnknown = 0,
+	//CBManagerStateResetting,
+	//CBManagerStateUnsupported,
+	//CBManagerStateUnauthorized,
+	//CBManagerStatePoweredOff,
+	//CBManagerStatePoweredOn,
+});
+```
 
 
