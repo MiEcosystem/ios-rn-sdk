@@ -6,17 +6,17 @@
 
 MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
-**当前版本: 3.1**
+**当前版本: 3.2**
 
-**发布时间: 2016-11-7**
+**发布时间: 2017-1-10**
 
-**文档修改日期: 2016-11-7**
+**文档修改日期: 2017-1-10**
 
 **React Native引擎版本: 0.25.1**
 
-**Release API Level 108 -> App 3.4.0**
+**Release API Level 111 -> App 3.8.1**
 
-**Max API Level 109 -> App 3.4.1**
+**Max API Level 112 -> App 3.9.0**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
@@ -45,8 +45,9 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 
 ## 最近更新
 
-1. 添加强制局域网或云端发送RPC的API
-2. 长截屏API，用于截scrollView
+1. 通过设备model获得设备列表中设备信息（mac等信息）
+2. 高德地图支持multipolyline的绘制
+3. 获得蓝牙的状态（开启、关闭等）
 
 ## 开发前必读
 
@@ -174,18 +175,18 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 2.  进入 MiHomePluginSDK 所在目录。
 3.  启动 node 服务器：
 
-        ​```
-        npm start --reset-cache
-        ​```
-        
-        **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
+         ​```
+         npm start --reset-cache
+         ​```
+         
+         **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 4.  查看本机 IP 地址：
 
-        ​```
-        ifconfig en0
-        ​```
-        
-        **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
+         ​```
+         ifconfig en0
+         ​```
+         
+         **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
 
 5.  客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
 

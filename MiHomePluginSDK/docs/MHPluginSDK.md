@@ -786,7 +786,7 @@ MHPluginSDK.openDevice('xiaomi.bledemo.v1', '23:23:93:a3:98', '23fasdf3asd', 'as
 >
 >`authStateAuthExpired`: 进行过授权而且还在有效期内；
 
-#### *getDevicesWithModel(model, callback)* `AL-[113,)`
+#### *getDevicesWithModel(model, callback)* `AL-[112,)`
 
 >获取设备列表中指定model的设备信息
 >`callback` 回调方法 (success, devices) success 为true时devices中存储设备信息数组
