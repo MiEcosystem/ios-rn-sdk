@@ -31,8 +31,9 @@ var MHPluginFS = require('NativeModules').MHPluginFS;
 >`callback` 回调方法 **(BOOL isSuccess, Array result)**
 >
 >```js
-MHPluginFS.readFileList((isSuccess, result) => {
-  result.forEach(function(e){  
+>MHPluginFS.readFileList((isSuccess, result) => {
+>  result.forEach(function(e){  
+>```
     console.log(e.name);  
   });
 });
@@ -129,8 +130,9 @@ MHPluginFS.uploadFile(params, (c, response) => {
 >
 >```js
 > MHPluginSDK.callSmartHomeAPI("/home/genpresignedurl", {"did":MHPluginSDK.deviceId,"suffix":"png"}, (response) => {
-  // console.log("+++++++++++++++++++++++"+JSON.stringify(response));
-  if (response !== null && response.code === 0 && result !== null ) {
+>  // console.log("+++++++++++++++++++++++"+JSON.stringify(response));
+>  if (response !== null && response.code === 0 && result !== null ) {
+>```
     var result = response.result;
     if (result.hasOwnProperty('png') && result.png !== null) {
       var png = result.png;
@@ -234,7 +236,8 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 >**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
 >
 >```js
-MHPluginFS.screenShot('test1.png', (isSuccess, response) => {
+>MHPluginFS.screenShot('test1.png', (isSuccess, response) => {
+>```
 	if (isSuccess) {
 		console.log(response);
 	}
@@ -243,8 +246,8 @@ MHPluginFS.screenShot('test1.png', (isSuccess, response) => {
 >
 >**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
 >
->```js
-<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
+>​```js
+><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
 #### *screenShotInRect(imageName, rect, callback)* `AL-[106,)`
@@ -255,7 +258,8 @@ MHPluginFS.screenShot('test1.png', (isSuccess, response) => {
 >`callback` 回调方法 **(bool isSuccess, String imagePath)**
 >
 >```js
-var rect = {
+>var rect = {
+>```
         l: 0,
         t: 0,
         w: 414,
@@ -269,8 +273,8 @@ var rect = {
 >```
 >**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
 >
->```js
-<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
+>​```js
+><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
 #### *longScreenShot(viewRef, imageName, callback)* `AL-[108,)`
@@ -281,17 +285,43 @@ var rect = {
 >`callback` 回调方法 **(bool isSuccess, String imagePath)**
 >
 >```js
-var findNodeHandle = require('findNodeHandle');
-var myScrollView = findNodeHandle(this.refs.myScrollView);
-MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
+>var findNodeHandle = require('findNodeHandle');
+>var myScrollView = findNodeHandle(this.refs.myScrollView);
+>MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
+>```
     if (isSuccess) {
         console.log(response);
     }
-});
+
 >```
 >**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
 >
->```js
-<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
+```js
+<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
+```
+
+#### *amapScreenShot(viewRef, imageName, callback)* `AL-[114,)`
+>长截屏，用来截scrollView，会把超出屏幕的部分也截到
+>
+>`viewRef` scrollView的引用
+>`imageName` 图片的名称，格式为png
+>`callback` 回调方法 **(bool isSuccess, String imagePath)**
+>
+>```js
+>var findNodeHandle = require('findNodeHandle');
+>var myScrollView = findNodeHandle(this.refs.myScrollView);
+>MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
+>```
+    if (isSuccess) {
+        console.log(response);
+    }
+
+>```
+>**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
+>
+>```
+```js
+<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
+```
 

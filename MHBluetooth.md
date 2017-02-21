@@ -168,6 +168,18 @@ MHBluetooth.readBase64DataWithCallback("0001", "fe95", (isSuccess, loopbackParam
 >
 >**注意** 该方法的 callback 并不能返回设备侧是否写入成功，只是返回APP侧写入命令执行是否成功，与 CoreBluetooth 一样，会通过对应的回调方法返回写入成功（ type=0 的情况下）。
 
+#### *writeHexDataWithCallback(hexString, characteristicUUID, serviceUUID, type, callback)*   `AL-[113,)`
+>向当前设备peripheral的指定characteristic写入值（16进制字符串格式）
+>
+>`data` 写入的数据，用16进制字符串格式，写入时会自动解码
+>`characteristicUUID` 指定characteristic的UUID字符串
+>`serviceUUID` 指定service的UUID字符串
+>`type` 写入方式（0=需要response, 1=不需要response）
+>`callback` 回调方法 **(bool isSuccess, [data, characteristicUUID, serviceUUID, type])**
+>
+>**注意** 该方法的 callback 并不能返回设备侧是否写入成功，只是返回APP侧写入命令执行是否成功，与 CoreBluetooth 一样，会通过对应的回调方法返回写入成功（ type=0 的情况下）。
+
+
 #### *setNotifyWithCallback(needNotify, characteristicUUID, serviceUUID, callback)*
 >设置当前设备peripheral的指定characteristic的通知状态
 >

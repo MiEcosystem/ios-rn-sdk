@@ -176,3 +176,11 @@ multiPolylines array
             
             polylines.push(multiPolyline);
 ```
+
+### 属性
+pausesLocationUpdatesAutomatically, BOOL
+allowsBackgroundLocationUpdates, BOOL
+desiredAccuracy, double
+headingFilter, double
+`AL-[114,)`
+

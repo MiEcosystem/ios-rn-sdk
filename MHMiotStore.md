@@ -15,9 +15,9 @@ var MHMiotStore = require('NativeModules').MHMiotStore;
 
 ### API
 
-#### *openURL(url, callback)*
+#### *openURL(url, callback)*  `AL-[113,)`
 
-描述：打开商城某页面
+描述：打开商城某页面, 低于113的app会存在阻塞现象
 
 参数：
 
