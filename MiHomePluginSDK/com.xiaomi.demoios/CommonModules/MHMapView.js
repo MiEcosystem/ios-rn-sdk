@@ -13,6 +13,10 @@ MHMapView.propTypes = {
   distanceFilter: React.PropTypes.number,
   zoomLevel: React.PropTypes.number,
   showsUserLocation: React.PropTypes.bool,
+  desiredAccuracy: React.PropTypes.number,
+  allowsBackgroundLocationUpdates:React.PropTypes.bool,
+  pausesLocationUpdatesAutomatically:React.PropTypes.bool,
+  headingFilter:React.PropTypes.number,
   /*
   userTrackingMode对应native端的MAUserTrackingMode，具体如下：
     "none": MAUserTrackingModeNone,
