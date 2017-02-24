@@ -287,7 +287,7 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 >```js
 >var findNodeHandle = require('findNodeHandle');
 >var myScrollView = findNodeHandle(this.refs.myScrollView);
->MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
+>MHPluginFS.screenShotInRect(myScrollView,'test2.png', (isSuccess, response) => {
 >```
     if (isSuccess) {
         console.log(response);
@@ -295,33 +295,47 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 
 >```
 >**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
->
 >```
+>
 ```js
 <Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 ```
+
+
 
 #### *amapScreenShot(viewRef, imageName, callback)* `AL-[114,)`
->长截屏，用来截scrollView，会把超出屏幕的部分也截到
+>高德地图截屏
 >
->`viewRef` scrollView的引用
->`imageName` 图片的名称，格式为png
+>`viewRef` MAMapView(MHMapView的父类)的引用
+>`imageName` 截取图片的存储名称，格式为png，会自动添加后缀.png
 >`callback` 回调方法 **(bool isSuccess, String imagePath)**
 >
->```js
->var findNodeHandle = require('findNodeHandle');
->var myScrollView = findNodeHandle(this.refs.myScrollView);
->MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
->```
-    if (isSuccess) {
-        console.log(response);
-    }
-
->```
->**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
->
->```
 ```js
-<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
-```
+var findNodeHandle = require('findNodeHandle');
+var myMapViewRef = findNodeHandle(this.refs.myMapView);
+MHPluginFS.amapScreenShot(myMapViewRef, 'mapToShare.png',  (isSuccess, imagePath) => {
 
+    if (isSuccess) {
+        console.log(imagePath);
+    }
+}
+//  imagePath是存储图片的全路径，加载图片的时候直接使用即可
+```
+#### *getRGBAValueFromImageAtPath(imagePath, points, callback)* `AL-[115,)`
+>获取图片指定点的色值
+>
+>`imagePath` 图片文件路径
+>`points` 位置数组，传空数组将返回所有点的色值(数据量太大会很慢)
+>`callback` 回调方法 **(bool isSuccess, Array colorValues)** 
+>
+>colorValues 为色值的数组，如果points参数不为空，为各个点的色值，rgba值组成的数组，[0, 255]；如果points为空，则返回色值的二维数组，大小为所有像素点,长宽的乘积
+```js
+var fsSDK = require('NativeModules').MHPluginFS;   fsSDK.getRGBAValueFromImageAtPath(this.props.app.sourceOfImage("hello_raise.jpg").uri,[{x:20,y:20},{x:40,y:60}],(success,rgba) =>{
+      if (success) {
+        console.warn("第一个点色值" + rgba[0]);
+        console.warn("第二个点色值" + rgba[1]);
+      }
+
+    });
+    
+```
