@@ -13,7 +13,7 @@ def fail_and_exit(message, clean=True):
 def shell_dir():
     path = sys.path[0]
     if os.path.isdir(path):
-        return path 
+        return path
     elif os.path.isfile(path):
         return os.path.dirname(path)
 
@@ -37,6 +37,9 @@ if (r!=0):
     fail_and_exit("shell structure incomplete, please re-download SDK")
 
 r = os.system("cp -r "+shellDir+"/structure/Resources ./"+pluginName+"/")
+if (r!=0):
+    fail_and_exit("shell structure incomplete, please re-download SDK")
+r = os.system("cp -r "+shellDir+"/structure/Assets ./"+pluginName+"/")
 if (r!=0):
     fail_and_exit("shell structure incomplete, please re-download SDK")
 

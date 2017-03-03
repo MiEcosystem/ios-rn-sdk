@@ -119,12 +119,11 @@ componentWillUnmount() {
 #### *discoverServices()*
 >发现当前设备peripheral的services。
 >
->```js
->var {DeviceEventEmitter} = require('react-native');
->var subscription = DeviceEventEmitter.addListener(MHBluetooth.peripheral_didDiscoverServices,(notification) => {
->  console.log(JSON.stringify(notification));
->  MHBluetooth.serviceUUIDsWithCallback((uuids) => {
->```
+```js
+var {DeviceEventEmitter} = require('react-native');
+var subscription = DeviceEventEmitter.addListener(MHBluetooth.peripheral_didDiscoverServices,(notification) => {
+  console.log(JSON.stringify(notification));
+  MHBluetooth.serviceUUIDsWithCallback((uuids) => {
     console.log(uuids);
   });
 });
@@ -146,16 +145,16 @@ MHBluetooth.discoverServices();
 >**注意** 该方法的 callback 并不能返回数据，只是返回读取是否成功，数据的返回与 CoreBluetooth 一样，会通过对应的回调方法。
 >
 >```js
-var {DeviceEventEmitter} = require('react-native');
-// 订阅特征值更新通知
-var subscription = DeviceEventEmitter.addListener(MHBluetooth.peripheral_didUpdateValueForCharacteristic_error,(notification) => {
-  console.log(JSON.stringify(notification));
-});
-// 读取特征值
-MHBluetooth.readBase64DataWithCallback("0001", "fe95", (isSuccess, loopbackParams) => {
-  //
-});
-```
+>var {DeviceEventEmitter} = require('react-native');
+>// 订阅特征值更新通知
+>var subscription = DeviceEventEmitter.addListener(MHBluetooth.peripheral_didUpdateValueForCharacteristic_error,(notification) => {
+>  console.log(JSON.stringify(notification));
+>});
+>// 读取特征值
+>MHBluetooth.readBase64DataWithCallback("0001", "fe95", (isSuccess, loopbackParams) => {
+>  //
+>});
+>```
 
 #### *writeBase64DataWithCallback(data, characteristicUUID, serviceUUID, type, callback)*
 >向当前设备peripheral的指定characteristic写入值（base64编码）
@@ -253,6 +252,7 @@ MHBluetooth.readBase64DataWithCallback("0001", "fe95", (isSuccess, loopbackParam
 >获取蓝牙状态
 ```javascript
 MHBluetooth.getBluetoothStateCallback((state)=>{
+
 	//CBManagerStateUnknown = 0,
 	//CBManagerStateResetting,
 	//CBManagerStateUnsupported,
@@ -262,4 +262,24 @@ MHBluetooth.getBluetoothStateCallback((state)=>{
 });
 ```
 
+#### *getPeripheralInfo:(callback)* `AL-[116,)`
+>获取蓝牙peripheral信息
+```javascript
+MHBluetooth.getPeripheralInfo((success,peripheral)=>{
+	if(success){
+      console.warn(peripheral);
+	}
+});
+```
+#### *readRSSI* `AL-[116,)`
+>获取蓝牙peripheral rssi信息
+>
+>peripheral_didReadRSSI_error 通过此事件监听rssi值回调
+>
+>peripheralDidUpdateRSSI_error 通过此事件监听rssi error信息
+```javascript
+//添加监听
+...
 
+MHBluetooth.readRSSI();
+```

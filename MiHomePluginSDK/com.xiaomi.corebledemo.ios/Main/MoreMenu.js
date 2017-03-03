@@ -4,7 +4,7 @@ var React = require('react-native');
 var ActionSheetIOS = require('ActionSheetIOS');
 var HelloDeveloper = require('../CommonModules/HelloDeveloper');
 var HelloReactART = require('../CommonModules/HelloReactART');
-
+var NewStructureTest = require('./NewStructureTest');
 var {
   StyleSheet,
   Text,
@@ -110,6 +110,12 @@ class MoreMenu extends Component {
           //        MHPluginSDK.shareToML("小米智能家庭", "小米智能家庭", this.props.app.pathForResource("icon_demo.png"), "http://open.home.mi.com");
           // 分享到朋友圈
           //        MHPluginSDK.shareToWeChatMoment("小米智能家庭", "小米智能家庭", this.props.app.pathForResource("icon_demo.png"), "http://open.home.mi.com");
+        }
+      },
+      {
+        'name':'新目录结构获取图片方式测试',
+        'func':() =>{
+          this.props.navigator.push(NewStructureTest.route);
         }
       },
     ];

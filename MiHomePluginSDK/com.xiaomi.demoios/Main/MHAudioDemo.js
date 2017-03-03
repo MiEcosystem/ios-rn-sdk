@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 var MHAudio = require('NativeModules').MHAudio;
+var MHPluginSDK = require('NativeModules').MHPluginSDK;
 const audioPlayerUid = 'com.xiaomi.demoios';
 
 class MHAudioDemo extends Component {
@@ -102,7 +103,7 @@ class MHAudioDemo extends Component {
       'audioPlayerUid': audioPlayerUid,
     };
 
-    MHAudio.startPlay(MHAudio.docPath+'test.wav', params, (isSuccess, response)=>{
+    MHAudio.startPlay(MHPluginSDK.basePath+'mp3/lovewholelife.mp3', params, (isSuccess, response)=>{
       if (isSuccess) {
         alert('sucess');
         var duration = response.duration;

@@ -5,7 +5,7 @@
 	<key>pluginFetchPropStatusMode</key>
 	<integer>1</integer>
 	<key>pluginStructureVersion</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>noFrameworkCode</key>
 	<true/>
 	<key>deviceStatusRefreshInterval</key>

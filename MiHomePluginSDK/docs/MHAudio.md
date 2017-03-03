@@ -9,16 +9,9 @@ var MHAudio = require('NativeModules').MHAudio;
 ```
 
 ### 常量
-#### *docPath*
->沙盒里面Document的路径
->
->String
->
->插件端可以拼接doc里面的一个文件，来组成一个全路径；
->
-```js
-var wavPath = MHAudio.docPath + 'test.wav';
-```
+#### 无
+
+
 
 ### 可以在插件端监听的事件
 #### *updateAudioPlayerTimeEvent*
@@ -56,7 +49,9 @@ componentWillMount() {
 ```
 
 ### 资源 URI
+####音频文件路径获取
 
+>音频资源文件放在Resources目录下，用MHPluginSDK.basePath+"path/to/audio.mp3"的拼接方式，其中path/to/audio.mp3为Resources目录下的路径
 
 ### API
 #### *startRecord:(audioName, settings, callback)*
@@ -111,9 +106,8 @@ _stopRecordButtonClicked() {
 >开始播放。
 >
 >`audioName` 要播放的文件的名字，包括格式；
->`params` 播放相关的参数，包括播放器的uid，播放时间刷新的间隔，播放是否可以快进等。
+>`params` 播放相关的参数，包括播放器的uid，播放时间刷新的间隔，播放是否可以快进等。params 的key：numberOfLoops，audioPlayerUid(回调中会带着此参数区分是哪个播放器的回调)，updateAudioPlayerTimeInterval，forceStopPreAudio(强制上一个播放失效，默认为false) forceStopPreAudio 生效从apilevel 116开始
 >`callback` 播放开始操作是否成功的回调，除了是否成功之外，还返回将要播放的文件的时间长度；
->
 ```js
 _startPlayButtonClicked() {
     var params = {
@@ -142,7 +136,7 @@ _startPlayButtonClicked() {
 >
 ```js
 _stopPlayButtonClicked() {
-    MHAudio.stopPlay('test.wav', (isSuccess, response)=>{
+    MHAudio.stopPlay( (isSuccess, response)=>{
       if (isSuccess) {
         alert('sucess');
       }

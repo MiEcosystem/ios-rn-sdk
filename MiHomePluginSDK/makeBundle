@@ -11,8 +11,8 @@ else
   noframework="false"
 fi
 
-rm -rf $2 
-mkdir $2 
+rm -rf $2
+mkdir $2
 
 cd $1
 
@@ -27,13 +27,16 @@ do
         elif [ $file == "Resources" ]
         then
             echo "copy resources"
-            cp -r $file/* ../$2
+            cp -r $file ../$2
+        elif [ $file == "Assets" ]
+        then
+            echo "not copy Assets"
         elif [ $file != "CommonModules" ]
         then
-            echo "making bundle for page:"$file 
+            echo "making bundle for page:"$file
             cd ..
             mkdir iOS
-            react-native bundle --root $1/$file --entry-file $1/$file/index.ios.js --platform ios --bundle-output iOS/main.jsbundle --reset-cache --dev false --noframework $noframework 
+            react-native bundle --root $1/$file --entry-file $1/$file/index.ios.js --platform ios --bundle-output iOS/main.jsbundle --reset-cache --dev false --noframework $noframework --assets-dest $2
             str=` echo $file| tr '[A-Z]' '[a-z]' `
             mv iOS/main.jsbundle ./$str.jsbundle
             rm -rf iOS
@@ -56,7 +59,7 @@ cd ..
 #rm *.js
 
 # copy main bundle
-cp *.jsbundle $2 
+cp *.jsbundle $2
 rm *.jsbundle
 
 # make setting bundle
@@ -68,10 +71,8 @@ rm *.jsbundle
 #rm *.js
 
 #copy setting bundle
-#cp *.jsbundle $2 
+#cp *.jsbundle $2
 #rm *.jsbundle
 
 #copy resources
-#cp -r ./$1/Resources/* $2 
-
-
+#cp -r ./$1/Resources/* $2

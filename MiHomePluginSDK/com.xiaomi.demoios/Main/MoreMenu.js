@@ -8,6 +8,7 @@ var ChartDemo = require('./ChartDemo');
 var MHMapDemo = require('./MHMapDemo');
 var MHAudioDemo = require('./MHAudioDemo');
 var VideoDemo = require('./VideoDemo');
+var NewStructureTest = require('./NewStructureTest');
 
 var {
   StyleSheet,
@@ -151,7 +152,13 @@ class MoreMenu extends Component {
 
           })
         }
-      }
+      },
+      {
+        'name':'新目录结构获取图片方式测试',
+        'func':() =>{
+          this.props.navigator.push(NewStructureTest.route);
+        }
+      },
     ];
     this._menuData = commonMenuData.concat(specificMenuData);
   }

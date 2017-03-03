@@ -321,7 +321,10 @@ MHPluginFS.amapScreenShot(myMapViewRef, 'mapToShare.png',  (isSuccess, imagePath
 }
 //  imagePath是存储图片的全路径，加载图片的时候直接使用即可
 ```
+
+
 #### *getRGBAValueFromImageAtPath(imagePath, points, callback)* `AL-[115,)`
+
 >获取图片指定点的色值
 >
 >`imagePath` 图片文件路径
