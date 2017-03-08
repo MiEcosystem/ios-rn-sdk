@@ -10,13 +10,13 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 
 **发布时间: 2017-2-24**
 
-**文档修改日期: 2017-2-24**
+**文档修改日期: 2017-3-8**
 
 **React Native引擎版本: 0.25.1**
 
 **Release API Level 113 -> App 3.9.2**
 
-**Max API Level 114 -> App 3.9.3**
+**Max API Level 114  -> App 3.9.3**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
@@ -34,6 +34,8 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 - [使用 React Native 第三方开源组件](./library.md)
 - [插件页面和组件代码说明](./code.md)
 - [widget配置说明](./widgetConfig.md)
+- [rn升级蓝牙设备固件的说明文档](./blernfirmwareupdate.md)
+- [rn开发非小米协议蓝牙设备说明文档](./bleScanOCEmbed.md)
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
@@ -42,12 +44,14 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 - 一个有关动画的示例插件，SDK目录中 com.xiaomi.artanimdemo.ios 目录
 - 一个粒子系统的示例插件，SDK目录中 com.xiaomi.particledemo.ios 目录
 - 支持普通蓝牙设备开发示例插件，SDK目录中com.xiaomi.corebledemo.ios 目录
+- 一个rn开发非小米协议蓝牙设备的示例oc嵌入文件，在SDK目录中RNNormalBlePlugin目录
 
 ## 最近更新
 
 1. 获取色值的API
 2. 高德地图支持截图API
 3. 获取登录国家的信息API
+4. 添加插件 `viewWillAppear` 的监听事件
 
 ## 开发前必读
 
@@ -176,18 +180,18 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 2.  进入 MiHomePluginSDK 所在目录。
 3.  启动 node 服务器：
 
-           ​```
-           npm start --reset-cache
-           ​```
-           
-           **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
+             ​```
+             npm start --reset-cache
+             ​```
+             
+             **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 4.  查看本机 IP 地址：
 
-           ​```
-           ifconfig en0
-           ​```
-           
-           **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
+             ​```
+             ifconfig en0
+             ​```
+             
+             **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
 
 5.  客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
 

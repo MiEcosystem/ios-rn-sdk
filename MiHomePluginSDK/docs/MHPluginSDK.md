@@ -145,6 +145,26 @@ var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegro
   });
 ```
 
+#### *viewWillAppear* `AL-[115,)`
+>从 Native 界面返回到插件
+>
+>在插件页面 **push** 打开一个 native 的 viewController，然后再 **pop** 回插件页面时，会触发一个 *viewWillAppear* 事件。
+>
+>可以通过监听此事件更新已加载过的视图，或进行相应的事件处理。
+>
+
+``` js
+componentWillMount() {
+    this._viewWillAppearListener = DeviceEventEmitter.addListener(MHPluginSDK.viewWillAppear, (event) => {
+    // 参数: event; { eventName: 'viewWillAppear', animated: true / false }
+    // Todo:
+    });
+}
+
+componentWillUnmount() {
+    this._viewWillAppearListener.remove();
+}
+```
 
 
 ### 资源 URI
@@ -799,3 +819,39 @@ MHPluginSDK.getDevicesWithModel("xiaomi.watch.band2",(success,devices) =>{
 
           })
 ```
+#### *firmwareNotCheckUpdate(notCheckUpdateFlag, callback)* `AL-[116,)`
+
+>设置设备控制页不检查固件升级
+>`callback` 回调方法 (success, message) 
+
+```javascript
+//设置不检查更新
+MHPluginSDK.firmwareNotCheckUpdate(true,(success,message) =>{
+            if (success) {
+              alert(message);
+            }
+
+          })
+//检查更新则设置回来 
+MHPluginSDK.firmwareNotCheckUpdate(false,(success,message) =>{
+            if (success) {
+              alert(message);
+            }
+
+          })
+```
+
+#### *getCurrentCountryInfoCallback(callback)* `AL-[115,)`
+>获取当前登录的国家/地区
+>`callback` 回调方法 (success, countryInfo) ，success 为 *true* 时表示成功获取
+>`countryInfo`： countryName: 国家 / 地区名称;  countryCode: 国家 / 地区代码
+
+```javascript
+MHPluginSDK.getCurrentCountryInfoCallback((success, countryInfo) => {
+    if (success) {
+        console.log(countryInfo);
+    }
+})
+```
+
+

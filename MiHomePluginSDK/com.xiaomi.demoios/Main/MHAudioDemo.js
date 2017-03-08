@@ -34,9 +34,18 @@ class MHAudioDemo extends Component {
     });
     this.audioPlayerDidFinishPlayingListener = DeviceEventEmitter.addListener(MHAudio.audioPlayerDidFinishPlayingEvent, (event) => {
       if (event.audioPlayerUid === audioPlayerUid) {
-        alert('播放完成');
+        console.warn("播放完成,再次播放");
+        this._startPlayButtonClicked();
       }
     });
+    this.audioPlayerDidStartPlayingListener = DeviceEventEmitter.addListener('audioPlayerDidStartPlaying', (event) => {
+      if (event.audioPlayerUid === audioPlayerUid) {
+        alert('播放开始');
+        console.warn(JSON.stringify(event));
+      }
+    });
+
+
   }
 
   componentWillUnmount() {
@@ -103,17 +112,8 @@ class MHAudioDemo extends Component {
       'audioPlayerUid': audioPlayerUid,
     };
 
-    MHAudio.startPlay(MHPluginSDK.basePath+'mp3/lovewholelife.mp3', params, (isSuccess, response)=>{
-      if (isSuccess) {
-        alert('sucess');
-        var duration = response.duration;
-      }
-      else {
-        console.log(response);
-      }
-    });
-  }
-
+    MHAudio.startPlayWithEventCallback(MHPluginSDK.basePath+'mp3/lovewholelife.mp3', params);
+}
   _stopPlayButtonClicked() {
     MHAudio.stopPlay((isSuccess, response)=>{
       if (isSuccess) {
