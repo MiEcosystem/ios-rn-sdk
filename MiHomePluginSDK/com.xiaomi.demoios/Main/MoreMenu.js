@@ -159,6 +159,12 @@ class MoreMenu extends Component {
           this.props.navigator.push(NewStructureTest.route);
         }
       },
+      {
+        'name':'打开自动化界面',
+        'func':() =>{
+          MHPluginSDK.openPageWithClassName("MHIFTTTMySceneViewController");
+        }
+      },
     ];
     this._menuData = commonMenuData.concat(specificMenuData);
   }

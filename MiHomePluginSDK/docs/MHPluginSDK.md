@@ -853,5 +853,13 @@ MHPluginSDK.getCurrentCountryInfoCallback((success, countryInfo) => {
     }
 })
 ```
+#### *openPageWithClassName(className)* `AL-[116,)`
 
+>打开一个原生类
+>`className` ，界面类类名
+>**注意** 用此方法打开的vc初始化时不需要传参数，需要传参的viewController暂时还需要手动导出
+
+```javascript
+MHPluginSDK.openPageWithClassName("MHIFTTTMySceneViewController");
+```
 
