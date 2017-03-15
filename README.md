@@ -4,19 +4,19 @@
 
 [wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)
 
-MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
+MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
-**当前版本: 3.3**
+**当前版本: 3.4**
 
-**发布时间: 2017-2-24**
+**发布时间: 2017-3-15**
 
-**文档修改日期: 2017-3-14**
+**文档修改日期: 2017-3-15**
 
 **React Native引擎版本: 0.25.1**
 
 **Release API Level 113 -> App 3.9.2**
 
-**Max API Level 115  -> App 3.10.0**
+**Max API Level 115  -> App 3.11.0**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
@@ -29,7 +29,7 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 - [MHPluginFS 模块文档](./MHPluginFS.md)
 - [MHMapSearch 模块文档（高德地图）](./MHMapSearch.md)
 - [MHAudio 模块文档（音频）](./MHAudio.md)
-- [使用 MHJSPatch 辅助开发插件](./MHJSPatch.md)
+- [使用 MHJSPatch 辅助开发插件](./MHJSPatch.md) （暂时弃用）
 - [插件的多语言化](./localization.md)
 - [使用 React Native 第三方开源组件](./library.md)
 - [插件页面和组件代码说明](./code.md)
@@ -48,7 +48,7 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 
 ## 最近更新
 
-1. 插件打包脚本已更新到structure2，用之前sdk创建的插件包，打包前需要将config.plist中的
+1. 插件打包脚本已更新到structure2，用之前sdk创建的插件包，打包前需要将config.plist中的pluginStructureVersion更新为2，packageInfo.json 中min_api_level改为116
 
 ## 开发前必读
 
@@ -177,18 +177,18 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 2.  进入 MiHomePluginSDK 所在目录。
 3.  启动 node 服务器：
 
-              ​```
-              npm start --reset-cache
-              ​```
-              
-              **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
+               ​```
+               npm start --reset-cache
+               ​```
+               
+               **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 4.  查看本机 IP 地址：
 
-              ​```
-              ifconfig en0
-              ​```
-              
-              **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
+               ​```
+               ifconfig en0
+               ​```
+               
+               **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
 
 5.  客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
 
