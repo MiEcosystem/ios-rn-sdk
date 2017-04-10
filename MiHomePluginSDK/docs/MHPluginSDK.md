@@ -841,7 +841,7 @@ MHPluginSDK.firmwareNotCheckUpdate(false,(success,message) =>{
           })
 ```
 
-#### *getCurrentCountryInfoCallback(callback)* `AL-[115,)`
+#### *getCurrentCountryInfoCallback(callback)* `AL-[117,)`
 >获取当前登录的国家/地区
 >`callback` 回调方法 (success, countryInfo) ，success 为 *true* 时表示成功获取
 >`countryInfo`： countryName: 国家 / 地区名称;  countryCode: 国家 / 地区代码

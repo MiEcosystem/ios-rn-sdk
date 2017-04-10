@@ -6,17 +6,17 @@
 
 MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
-**当前版本: 3.4**
+**当前版本: 3.5**
 
-**发布时间: 2017-3-15**
+**发布时间: 2017-4-10**
 
-**文档修改日期: 2017-3-15**
+**文档修改日期: 2017-4-10**
 
 **React Native引擎版本: 0.25.1**
 
-**Release API Level 113 -> App 3.9.2**
+**Release API Level 118 -> App 3.13.2**
 
-**Max API Level 115  -> App 3.11.0**
+**Max API Level 118  -> App 3.13.2**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
@@ -36,6 +36,7 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 - [widget配置说明](./widgetConfig.md)
 - [rn升级蓝牙设备固件的说明文档](./blernfirmwareupdate.md)
 - [rn开发非小米协议蓝牙设备说明文档](./bleScanOCEmbed.md)
+- [rn借助chrome进行调试文档](./rn-chrome-debug.md)
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
@@ -48,7 +49,8 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 
 ## 最近更新
 
-1. 插件打包脚本已更新到structure2，用之前sdk创建的插件包，打包前需要将config.plist中的pluginStructureVersion更新为2，packageInfo.json 中min_api_level改为116
+1. 支持用chrome调试rn代码（需要向米家工作人员要一个debug版本的ipa，App Store版本不支持，具体操作见文档）
+2. 修复蓝牙设备的插件内绑定逻辑
 
 ## 开发前必读
 
@@ -88,14 +90,14 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 
 ## 开发环境
 
-1. [React Native](https://facebook.github.io/react-native/)（以下简称RN）: RN 的安装过程参见该项目主页。**注意** 目前米家 iOS 客户端中内置的RN引擎版本为 **0.24.0**。MiHomePluginSDK 中已经携带，开发机上安装的 RN 版本并不影响插件的开发，0.24.0以后版本RN的新功能暂时不能使用。
+1. [React Native](https://facebook.github.io/react-native/)（以下简称RN）: RN 的安装过程参见该项目主页。**注意** 目前米家 iOS 客户端中内置的RN引擎版本为 **0.25.1**。MiHomePluginSDK 中已经携带，开发机上安装的 RN 版本并不影响插件的开发，0.25.1以后版本RN的新功能暂时不能使用。
 2. MiHomePluginSDK: SDK可以通过[Github项目主页](https://github.com/MiEcosystem/ios-rn-sdk)下载。
 3. openSSL: 为了保证插件包在网络传输中的安全，防止伪造，插件包需要经过开发者签名，签名过程需要 keyTool (OS X 自带) 以及 openSSL 工具。可以通过 [Homebrew](http://brew.sh) 进行安装:
 
    ```
    brew install openssl
    ```
-4. iPhone真机: 由于要使用appstore版本的米家APP进行调试，所以不能使用模拟器开发，必须使用一部 iOS7.0 以上系统的 iPhone 真机。
+4. iPhone真机: 由于要使用appstore版本的米家APP进行调试(如果想获得调试便利，需要向米家工作人员要一个debug版本的米家ipa，rn的调试选项在release模式下禁用了)，所以不能使用模拟器开发，必须使用一部 iOS7.0 以上系统的 iPhone 真机。
 
 ## 插件的申请与创建
 
@@ -148,7 +150,7 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 
 ## 智能设备的发现与连接
 
-1.  米家 iOS 使用 appstore 版本的客户端进行智能设备插件的开发与调试，在开发与调试之前，需要将设备连接到米家 iOS 客户端中。目前支持使用以下几种设备进行 iOS 插件的开发和调试：
+1.  米家 iOS 使用 appstore 版本的客户端（或者debug版本的ipa）进行智能设备插件的开发与调试，在开发与调试之前，需要将设备连接到米家 iOS 客户端中。目前支持使用以下几种设备进行 iOS 插件的开发和调试：
 
     1. 已经接入米家android的智能设备
        2. 正在开发的米家设备开发板
@@ -177,18 +179,18 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 2.  进入 MiHomePluginSDK 所在目录。
 3.  启动 node 服务器：
 
-               ​```
-               npm start --reset-cache
-               ​```
-               
-               **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
+                  ​```
+                  npm start --reset-cache
+                  ​```
+                  
+                  **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 4.  查看本机 IP 地址：
 
-               ​```
-               ifconfig en0
-               ​```
-               
-               **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
+                  ​```
+                  ifconfig en0
+                  ​```
+                  
+                  **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
 
 5.  客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
 

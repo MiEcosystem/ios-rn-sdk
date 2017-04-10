@@ -5,6 +5,8 @@ var ActionSheetIOS = require('ActionSheetIOS');
 var HelloDeveloper = require('../CommonModules/HelloDeveloper');
 var HelloReactART = require('../CommonModules/HelloReactART');
 var NewStructureTest = require('./NewStructureTest');
+var ScreenShot = require('./ScreenShot');
+var MultiLanguage = require('./MultiLanguage');
 var {
   StyleSheet,
   Text,
@@ -70,6 +72,12 @@ class MoreMenu extends Component {
             MHPluginSDK.openFeedback();
           }
         },
+        {
+          'name': '截图',
+          'func': () => {
+            this.screenShot();
+          }
+        },
       ];
     }
 
@@ -96,6 +104,12 @@ class MoreMenu extends Component {
         'name': 'REACT-ART',
         'func': () => {
           this.showReactART();
+        }
+      },
+      {
+        'name': '多语言测试',
+        'func': () => {
+          this.showMultiLanguage();
         }
       },
       {
@@ -158,6 +172,12 @@ class MoreMenu extends Component {
     this.props.navigator.push(HelloReactART.route);
   }
 
+  showMultiLanguage(){
+    this.props.navigator.push(MultiLanguage.route);
+  }
+  screenShot(){
+    this.props.navigator.push(ScreenShot.route);
+  }
   showActionSheet() {
     ActionSheetIOS.showActionSheetWithOptions({
           options: BUTTONS,
