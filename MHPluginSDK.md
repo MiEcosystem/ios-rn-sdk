@@ -862,4 +862,19 @@ MHPluginSDK.getCurrentCountryInfoCallback((success, countryInfo) => {
 ```javascript
 MHPluginSDK.openPageWithClassName("MHIFTTTMySceneViewController");
 ```
+#### *getMiWatchConfigWithCallback(callback)* `AL-[119,)`
 
+>华米watch配置使用
+>`callback` ，结果回调
+
+
+```javascript
+MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
+            if (success) {
+              console.log(JSON.stringify(config));
+            }else {
+            //config is a error object
+              console.log(JSON.stringify(config));
+            }
+          });
+```
