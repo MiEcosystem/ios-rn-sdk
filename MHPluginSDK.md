@@ -878,3 +878,40 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
             }
           });
 ```
+#### *openRoomManagementPage* `AL-[119,)`
+
+> 打开位置管理页面
+>
+> **注意** 分享过来的设备是无法进行位置管理的，所以此时此方法无效。
+>
+> ```js
+> MHPluginSDK.openRoomManagementPage();
+> ```
+
+#### *openIftttAutoPage* `AL-[119,)`
+
+> 打开自动化页面
+>
+> **注意** 分享过来的设备是无法进行自动化管理的，所以此时此方法无效。
+>
+> ```js
+> MHPluginSDK.openIftttAutoPage();
+> ```
+
+#### *openNewMorePage* `AL-[119,)`
+
+> 打开更多设置页面(包括安全设置等设置)
+>
+> **注意** 分享过来的设备是无法进行安全设置的，所以此时此方法无效。
+>
+> ```js
+> MHPluginSDK.openNewMorePage();
+> ```
+
+#### *openAddToDesktopPage* `AL-[119,)`
+
+> 打开添加到桌面设置页面
+>
+> ```js
+> MHPluginSDK.openAddToDesktopPage();
+> ```
