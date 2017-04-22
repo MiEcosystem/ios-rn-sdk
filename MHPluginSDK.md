@@ -915,3 +915,44 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 > ```js
 > MHPluginSDK.openAddToDesktopPage();
 > ```
+
+#### *actualIconUrlForModel(model,callback)* `AL-[119,)`
+
+> 获取设备实物图
+>
+> ```js
+> MHPluginSDK.actualIconUrlForModel("xiaomi.demo.v1",(success, url)=>{
+>     if(success){
+> 			alert(url);
+>     }
+> });
+> ```
+
+#### *getUserConfigs(componentId,keys,callback)* `AL-[119,)`
+
+> 获取存储的userConfig
+>
+> ```js
+> MHPluginSDK.getUserConfigs(1, [0,1,2], (success, config, error)=>{
+>     if(success){
+> 			alert(JSON.stringify(config));
+>     }else{
+>           alert(JSON.stringify(error));
+>     }
+> });
+> ```
+
+
+#### *getUserConfigs(componentId,keys,callback)* `AL-[119,)`
+
+> 获取存储的userConfig
+>
+> ```js
+> MHPluginSDK.setUserConfigs(1, {0:{},1:{}}, (success, config, error)=>{
+>     if(success){
+> 			alert(JSON.stringify(config));
+>     }else{
+>           alert(JSON.stringify(error));
+>     }
+> });
+> ```
