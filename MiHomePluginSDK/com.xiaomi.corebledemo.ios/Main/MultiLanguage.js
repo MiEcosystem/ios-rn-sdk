@@ -19,7 +19,7 @@ var {
 
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 var ImageButton = require('../CommonModules/ImageButton');
-var LocalizedStrings = require("../CommonModules/LocalizedStrings");
+// var LocalizedStrings = require("../CommonModules/LocalizedStrings");
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 
 

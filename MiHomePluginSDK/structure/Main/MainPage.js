@@ -19,7 +19,7 @@ var {
 
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 
-var MoreMenu = require('./MoreMenu');
+var Setting = require('./MHSetting');
 
 var ControlDemo = require('./ControlDemo');
 var MyProduct = require('./MyProduct');
@@ -159,7 +159,7 @@ const KEY_OF_MAINPAGE = 'MainPage';
 
 // 打开更多菜单
 var openMorePage = function (navigator) {
-  navigator.push(MoreMenu.route);
+  navigator.push(Setting.route);
 };
 
 // 每个页面export自己的route

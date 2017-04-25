@@ -6,17 +6,17 @@
 
 MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
-**当前版本: 3.5**
+**当前版本: 3.6**
 
-**发布时间: 2017-4-10**
+**发布时间: 2017-4-25**
 
-**文档修改日期: 2017-4-10**
+**文档修改日期: 2017-4-25**
 
 **React Native引擎版本: 0.25.1**
 
-**Release API Level 118 -> App 3.13.2**
+**Release API Level 119 -> App 3.14.0**
 
-**Max API Level 118  -> App 3.13.2**
+**Max API Level 119  -> App 3.14.0**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
 
@@ -50,7 +50,7 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 ## 最近更新
 
 1. 支持用chrome调试rn代码（需要向米家工作人员要一个debug版本的ipa，App Store版本不支持，具体操作见文档）
-2. 修复蓝牙设备的插件内绑定逻辑
+2. 新的设置页，修改MHSetting.js自定义设置项
 
 ## 开发前必读
 
@@ -182,14 +182,14 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
                   ​```
                   npm start --reset-cache
                   ​```
-                  
+
                   **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 4.  查看本机 IP 地址：
 
                   ​```
                   ifconfig en0
                   ​```
-                  
+
                   **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
 
 5.  客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
@@ -291,5 +291,3 @@ MiHomePluginSDK 支持自定义智能场景的开发（支持自定义场景条�
 
 ## 插件的测试和发布
 1. 插件的测试和发布流程请联系米家的工作人员。
-
-
