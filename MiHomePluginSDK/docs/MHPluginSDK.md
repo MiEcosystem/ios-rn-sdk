@@ -103,19 +103,23 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 #### *deviceStatusUpdatedEventName*
 >设备状态更新
 >
->在插件运行在前台时，米家APP会定期（默认每 6s 一次，可通过 config.plist 中的配置项进行调整）向设备发送 get_props 请求来获取设备指定属性集合的最新状态。之后插件会接收到本事件，触发事件回调。
+>在插件运行在前台时，可以通过调用 registerDeviceStatusProps 方法（见下文档）注册属性值变化的监听，注册分两种，轮询获取属性或订阅（mipush的推送），推荐使用订阅方式。方式的选择可以通过config.plist中的pluginFetchPropStatusMode key设置
+>
+>当采用轮询方式时，APP会定期（默认每 6s 一次，可通过 config.plist 中的配置项进行调整）向设备发送 get_props 请求来获取设备指定属性集合的最新状态。之后插件会接收到本事件，触发事件回调。
 >
 >插件可以在该事件回调中进行相应的 state 设置，从而触发界面更新，来展示设备的最新状态。
 >
 >```js
 >componentDidMount: function() {
 >  // 指定发送 get_props 获取的属性集合
->  MHPluginSDK.registerDeviceStatusProps(["rgb"]);
+>  MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power"]);
+>  // 如采用轮询，则为 
+>  //MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
 >  // 订阅定期状态轮询的通知
 >  var {DeviceEventEmitter} = require('react-native');
 >  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
 >    // 从device属性的内存缓存中拿到轮询的状态结果
->    MHPluginSDK.getDevicePropertyFromMemCache(["rgb"], (props) => {
+>    MHPluginSDK.getDevicePropertyFromMemCache(["rgb","power"], (props) => {
 >      if (props.rgb)
 >      {
 >        var sRGB = "#" + this.getNewRGB(props.rgb >> 16, (props.rgb >> 8) & 0x00ff, (props.rgb & 0x0000ff));
@@ -215,9 +219,12 @@ componentWillUnmount() {
 >
 >```js
 >  // 假设灯的 profile 中有 power/brightness/color 几个属性
->  MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]); 
->  // APP会在插件运行时每6s获取一次灯的电源开关状态、亮度以及颜色值，插件通过监听 MHPluginSDK.deviceStatusUpdatedEventName 来处理回调。
+>  MHPluginSDK.registerDeviceStatusProps(["prop.power", "prop.brightness", "prop.color"]); 
 >
+>  //如果是轮询方式
+>  //MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]);
+>
+>  // APP会在插件运行时每6s获取一次灯的电源开关状态、亮度以及颜色值，插件通过监听 MHPluginSDK.deviceStatusUpdatedEventName 来处理回调。
 >```
 
 
@@ -445,6 +452,26 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >
 > **注意** 只有特定设备支持创建设备组统一管理，此方法目前只支持特定设备，使用请与米家联系。
 
+#### *openEditDeviceGroupPage(dids)* `AL-[120,)`
+
+> 打开编辑设备组页
+> dids 组内现有设备的did数组(字符串数组)
+>
+> 获取设备组中设备did的方法如下
+>
+> ```javascript
+> MHPluginSDK.callSmartHomeAPI('/home/virtualdevicectr',
+>                              {"type":"get","masterDid":"virtual.138195"},
+>                              (response) => {console.log(JSON.stringify(response));}
+>                             );
+> ```
+>
+> 
+>
+> **注意** 只有特定设备支持编辑设备组统一管理，此方法目前只支持特定设备，使用请与米家联系。
+```js
+    MHPluginSDK.openEditDeviceGroupPage(["12345","67890"]);
+```
 
 
 #### *openTimerSettingPage(onMethod, onParam, offMethod, offParam)* `AL-[101,)`

@@ -25,7 +25,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 ```
 
 #### *pluginStructureVersion*
->插件结构版本（当前2.x的SDK固定为1）
+>插件结构版本（当前2.x的SDK固定为2）
 
 #### *deviceStatusRefreshInterval*
 >插件页设备状态轮询间隔。
@@ -53,3 +53,14 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 > 蓝牙插件快联是否需要被代理扫描蓝牙设备
 >
 > Boolean 
+
+#### *pluginFetchPropStatusMode*
+
+> 获取属性变化的监听方式
+> integer<!-- 0 polling, 1 subscribe, 2 not get-->
+>
+> 0 轮询方式，设备需在1秒内给出返回，否则超时错误
+>
+> 1 订阅方式，通过mipush实现，前提是设备需把属性值上报后台
+>
+> 2 不获取，则调用相关注册函数被忽略，不获取属性值
