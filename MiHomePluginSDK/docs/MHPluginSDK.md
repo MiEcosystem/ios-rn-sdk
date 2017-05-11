@@ -955,12 +955,16 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 > });
 > ```
 
-#### *getUserConfigs(componentId,keys,callback)* `AL-[119,)`
+#### *getUserConfigs(componentId,keys,callback)* `AL-[121,)`
 
 > 获取存储的userConfig
 >
+> 注意：componentId需要向米家后台申请，不用用未申请的componentId，破坏其他插件的数据
+>
+> 
+>
 > ```js
-> MHPluginSDK.getUserConfigs(1, [0,1,2], (success, config, error)=>{
+> MHPluginSDK.getUserConfigs(20000, [0,100], (success, config, error)=>{
 >     if(success){
 > 			alert(JSON.stringify(config));
 >     }else{
@@ -970,16 +974,23 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 > ```
 
 
-#### *getUserConfigs(componentId,keys,callback)* `AL-[119,)`
+#### *setUserConfigs(componentId,data,callback)* `AL-[121,)`
 
-> 获取存储的userConfig
+> 存储信息
+>
+> 注意：componentId需要向米家后台申请，不用用未申请的componentId，破坏其他插件的数据
+>
+> data中key （例子中是0、100）要间隔开，底层会根据数据大小分包存储，建议隔100一个key，key的最大值为3万多
 >
 > ```js
-> MHPluginSDK.setUserConfigs(1, {0:{},1:{}}, (success, config, error)=>{
->     if(success){
-> 			alert(JSON.stringify(config));
->     }else{
->           alert(JSON.stringify(error));
->     }
-> });
+> MHPluginSDK.setUserConfigs(20000,{0:{"data":"value"},100:{"data100":"value100"}},(success, error) => {
+>         if (success) {
+>             console.log("success set");
+>             MHPluginSDK.getUserConfigs(20000,[0,100],(success, config,error) => {
+>                console.log('success' + success+"config" + JSON.stringify(config) + "error" + error);
+>             });
+>         }else {
+>             console.log(JSON.stringify(error));
+>           }
+>     });
 > ```
