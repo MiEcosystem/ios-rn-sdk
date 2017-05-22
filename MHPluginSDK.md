@@ -493,7 +493,20 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
+#### *openCMTimerSettingPage(onMethod, onParam, offMethod, offParam, plugInterface)* `AL-[122,)`
 
+>创米插排专用定时接口
+>
+>`onMethod` 定时到时设备“开”执行的 RPC 指令命令字字符串
+>`onParam` 定时到时设备“开”执行的 RPC 指令参数字符串（目前仅支持单参数）
+>`offMethod` 定时到时设备“关”执行的 RPC 指令命令字字符串
+>`offParam` 定时到时设备“关”执行的 RPC 指令参数字符串（目前仅支持单参数）
+>
+>plugInterface：0位电源，1为usb
+>
+>```js
+>MHPluginSDK.openCMTimerSettingPage("set_usb_on", null, "set_usb_off",null,1);//usb定时
+>```
 
 #### *openTimerSettingPageWithVariousTypeParams(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
 
@@ -993,4 +1006,15 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 >             console.log(JSON.stringify(error));
 >           }
 >     });
+> ```
+
+#### *getSystemTimezoneNameWithCallback* `AL-[122,)`
+
+> 获取系统时区名字
+>
+> ```js
+>  MHPluginSDK.getSystemTimezoneNameWithCallback((success, timezoneName)  => {
+>            console.log(JSON.stringify(timezoneName));
+>          });
+>
 > ```
