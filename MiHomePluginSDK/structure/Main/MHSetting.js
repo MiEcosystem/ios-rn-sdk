@@ -69,7 +69,7 @@ class Setting extends Component {
       commonMenuData = [
         {
           // 'name': LocalizedStrings.how,
-          'name':'设备名称',
+          'name':LocalizedStrings.deviceName,
           'subtitle':MHGlobal.deviceName,
           'func': () => {
             MHPluginSDK.openChangeDeviceName();
@@ -77,37 +77,37 @@ class Setting extends Component {
         },
         {
           // 'name': LocalizedStrings.how,
-          'name':'位置管理',
+          'name':LocalizedStrings.locationManagement,
           'func': () => {
             MHPluginSDK.openRoomManagementPage();
           }
         },
         {
-          'name': '设备共享',
+          'name': LocalizedStrings.shareDevice,
           'func': () => {
             MHPluginSDK.openShareDevicePage();
           }
         },
         {
-          'name': '自动化',
+          'name': LocalizedStrings.ifttt,
           'func': () => {
             MHPluginSDK.openIftttAutoPage();
           }
         },
         {
-          'name': '检查固件升级',
+          'name': LocalizedStrings.firmwareUpgrate,
           'func': () => {
             MHPluginSDK.openDeviceUpgradePage();
           }
         },
         {
-          'name': '更多设置',
+          'name': LocalizedStrings.moreSetting,
           'func': () => {
             MHPluginSDK.openNewMorePage();
           }
         },
         {
-          'name': '添加到桌面',
+          'name': LocalizedStrings.addToDesktop,
           'func': () => {
             MHPluginSDK.openAddToDesktopPage();
           }
@@ -126,7 +126,7 @@ class Setting extends Component {
 
       resetMenuData = [
         {
-          'name': '重置设备',
+          'name': LocalizedStrings.resetDevice,
           'func': () => {
             MHPluginSDK.openDeleteDevice();
           }
@@ -258,7 +258,7 @@ var styles = StyleSheet.create({
     // alignSelf: 'stretch',
     fontSize: 16,
     // alignItems: 'center',
-    flex: 1,
+    flex: 2,
     // height:49,
   },
   reset: {
@@ -281,8 +281,8 @@ var styles = StyleSheet.create({
 
   },
   subArrow: {
-     width: 9,
-     height: 18,
+     width: 6.5,
+     height: 13,
   },
   separator: {
   	height: 0.75,
