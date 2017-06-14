@@ -23,6 +23,12 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 >String
 
+#### *avatarURL* `AL-[122,)`
+>当前登录用户的昵称
+>
+>String
+
+
 #### *ownerId*
 >设备拥有者小米id，被分享的设备为分享来源，自己的设备为当前userId
 >

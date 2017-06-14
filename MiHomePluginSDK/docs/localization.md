@@ -35,5 +35,37 @@ iOS9及以后的版本，系统的语言 key 包含了手机的地区信息，�
   //繁体中文（台湾）
 }
 ```
+### 常量
+
+```javascript
+var ReactLocalization = require("NativeModules").ReactLocalization;
+console.warn(""constants:" + ReactLocalization.systemLanguage+"\n");
+```
+
+
+
+> language  米家中设置的语言
+>
+> systemLanguage 系统语言
+
+###方法
+
+- getLanguage(callback)  `AL-[123,)`
+
+  ```javascript
+  var ReactLocalization = require("NativeModules").ReactLocalization;
+
+  ReactLocalization.getLanguage((error, currentLanguage, systemLanguage) => {
+    //error:是否出错
+    //currentLanguage: 米家app内用户设置的语言，字符串
+    //systemLanguage: 系统的当前语言字符串
+    if(!error){
+      console.warn("currentLanguage:" + currentLanguage +"\n" + "systemLanguage:" + systemLanguage + "\n"+"constants:" + ReactLocalization.systemLanguage+"\n");
+    }
+  })
+  ```
+
+  ​
+
 
 
