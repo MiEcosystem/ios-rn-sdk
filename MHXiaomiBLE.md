@@ -140,9 +140,52 @@ MHXiaomiBLE.bindXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) => {
 
 例子：
 
-```
+```javascript
 MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) => {
   
 });
 ```
 
+#### encryptMessageXiaoMiBLE(*message*,  *callback*)
+
+描述：支持小米加密芯片的蓝牙设备，使用此方法将明文加密为密文后，可发送给设备
+
+参数：
+
+- `message` 待加密的明文
+
+- `callback(error,encrypted)` 加密回调，error 表示是否成功，encrypted 表示加密后的数据
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.encryptMessageXiaoMiBLE(msg,(error,encrypted)=>{
+    if (error) {
+      // 出错
+      return;
+    }
+    //console.log(encrypted.string);
+  });
+  ```
+
+#### decryptMessageXiaoMiBLE(*encrypted*, *callback*)
+
+描述：支持小米加密芯片的蓝牙设备，使用此方法，可将从设备接收的密文解密
+
+参数：
+
+- `encrypted` 待解密密文
+
+- `callback(error,message)` 解密回调，error 表示是否成功，message 表示解密后的数据
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.decryptMessageXiaoMiBLE(message,(error,decrypted)=>{
+    if (error) {
+      //出错
+      return;
+    }
+    //console.log("解密消息内容为 " + JSON.stringify(decrypted));
+  });
+  ```
