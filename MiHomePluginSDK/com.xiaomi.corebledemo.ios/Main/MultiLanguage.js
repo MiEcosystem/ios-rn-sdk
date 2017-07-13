@@ -19,7 +19,7 @@ var {
 
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 var ImageButton = require('../CommonModules/ImageButton');
-// var LocalizedStrings = require("../CommonModules/LocalizedStrings");
+var LocalizedStrings = require("../CommonModules/LocalizedStrings");
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 
 
@@ -89,7 +89,7 @@ var styles = StyleSheet.create({
     alignSelf: 'center'
   },
 });
-let strings = new LocalizedStrings({
+var strings = new LocalizedStrings({
  "en":{
    how:"en",
    boiledEgg:"Boiled egg",

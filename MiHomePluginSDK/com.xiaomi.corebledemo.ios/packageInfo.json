@@ -2,7 +2,7 @@
   "package_name":"com.xiaomi.corebledemo.ios",
   "developer_id":"894158105",
   "models":"xiaomi.bledemo.v1",
-  "min_api_level":"116",
-  "version":"6",
+  "min_api_level":"125",
+  "version":"9",
   "platform":"iphone"
 }
