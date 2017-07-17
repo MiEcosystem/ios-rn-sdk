@@ -1028,7 +1028,7 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 
 #### *openNewSettingPage* 
 
-> 打开设置压面
+> 打开设置界面
 >
 > ```js
 > MHPluginSDK.openNewSettingPage();
