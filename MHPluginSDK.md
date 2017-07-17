@@ -1024,3 +1024,25 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 >          });
 >
 > ```
+
+
+#### *openNewSettingPage* 
+
+> 打开设置压面
+>
+> ```js
+> MHPluginSDK.openNewSettingPage();
+>
+> ```
+
+
+#### *openFeedbackInput* 
+
+> 打开反馈输入界面
+>
+> ```js
+> MHPluginSDK.openFeedbackInput();
+>
+> ```
+
+
