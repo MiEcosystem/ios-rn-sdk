@@ -1045,4 +1045,25 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 >
 > ```
 
+#### *getUserDeviceData 获取设备列表
 
+/**   @brief <b>获取设备属性和事件历史记录 [10,)</b>
+
+ @param model 设别model
+ @param did 设备的ID
+ @param type 查询属性type 用 prop， 查询事件type 用event
+ @param key 属性名，不需要用prop 或者 event 前缀
+ @param timeStart 起始时间，单位为秒
+ @param timeEnd 解释时间，单位为秒
+ @param callback 回调
+ */
+```
+MHPluginSDK.getUserDeviceData(MHPluginSDK.deviceModel,MHPluginSDK.deviceId,'prop','power',1500083422,1500383422,(response,err)=>{
+      console.log("🔴 getUserDeviceData");
+      if(err){
+        console.log("error");
+        return;
+      }
+      console.log(response)
+    });
+```
