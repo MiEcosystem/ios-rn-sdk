@@ -31,8 +31,8 @@ class XiaoMiBLEMainPage extends React.Component {
 
   constructor(props, context) {
     super(props, context);
-    this.basePath = MHPluginSDK.basePath;
 
+    this.basePath = MHPluginSDK.basePath;
     this.state = {
       bledColor: '#330000',
       device: false,
@@ -46,23 +46,15 @@ class XiaoMiBLEMainPage extends React.Component {
   }
 
   componentWillMount() {
-    //获取已连接的设备信息
+    //获取当前的设备信息
     MHXiaomiBLE.getDefaultDevice((error, device) => {
       if (!error) {
         MHPluginSDK.showLoadingTips('连接设备中');
         MHXiaomiBLE.loginXiaoMiBLE(device.did, device.mac, 4, (error, result) => {
           MHPluginSDK.dismissTips();
           if (!error) {
-            MHBluetoothLE.getDefaultDevice((error, device) => {
-              if (!error) {
-                this.state.device = device;
-                this._initDevice(device);
-              }
-              else {
-                MHPluginSDK.showFailTips("连接设备失败，BluetoothLE无法获取设备");
-                this.props.navigator.pop();
-              }
-            });
+            this.state.device = result.device;
+            this._initDevice();
           }
           else {
             MHPluginSDK.showFailTips("连接设备失败，XiaomiBLE无法登录");
@@ -115,9 +107,8 @@ class XiaoMiBLEMainPage extends React.Component {
 
   }
 
-  _initDevice(device) {
+  _initDevice() {
     //读取设备的服务特征
-    console.log("init device");
     if (this.state.device) {
       if (!this.state.device.peripheral.services[UUID_SERVICE]) {
         console.log("搜索设备的服务");
