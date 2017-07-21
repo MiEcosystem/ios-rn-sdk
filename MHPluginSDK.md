@@ -828,30 +828,6 @@ MHPluginSDK.openDevice('xiaomi.bledemo.v1', '23:23:93:a3:98', '23fasdf3asd', 'as
 });
 ```
 
-
-#### *openAuthSettingPage* `AL-[110,)`
-
->以push的方式打开授权页面
->
-
-
-
-#### *getAuthSateCallback(callback)* `AL-[110,)`
-
->获取当前device的授权状态，以回调的方式返回；
->
->`callback` 回调方法 **(Object response)**
->
->4种状态：
->
->`authStateNotFound`: 没有找到当前设备的状态；
->
->`authStateNoAuth`: 当前设备还没进行过授权；
->
->`authStateAuthValid`: 进行过授权但已经过期；
->
->`authStateAuthExpired`: 进行过授权而且还在有效期内；
-
 #### *getDevicesWithModel(model, callback)* `AL-[112,)`
 
 >获取设备列表中指定model的设备信息
