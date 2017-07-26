@@ -1047,3 +1047,18 @@ MHPluginSDK.getUserDeviceData(MHPluginSDK.deviceModel,MHPluginSDK.deviceId,'prop
       console.log(response)
     });
 ```
+
+
+#### *addCustomSettingItemWithTitle*
+
+>添加自定义设置项 的文字和事件：
+
+>第一个参数为设置项的名字
+>
+>第二个参数为设置项包含的事件（相当于NSNotification 中的key，这个函数就相当于
+>post 通知）
+
+```
+MHPluginSDK.addCustomSettingItemWithTitle('custom setting','custom.setting');
+  
+```
