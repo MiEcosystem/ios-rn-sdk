@@ -65,6 +65,9 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 >
 > 2 不获取，则调用相关注册函数被忽略，不获取属性值
 
+
+### 设置页面的配置项目
+
 #### *onMoreMenuHideCustom*
 
 > 作用：是否显示“功能设置”
@@ -76,6 +79,58 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 > 设置为YES，强制隐藏"功能设置"项目。
 >
 > 如果“功能设置“最终还是需要显示，请在插件中提供你自己设置的页面。
+
+
+####*onMoreMenuHideFeedback*
+
+> “ 反馈 ”
+> 
+>  类型： bool
+> 
+>  设置为YES， 不显示"反馈"
+
+####*onMoreMenuHideDeleteDevice*
+
+> “ 解除连接 ”
+> 
+>  类型： bool
+> 
+>  设置为YES， 不显示"解除连接"
+
+
+####*onMoreMenuHideUpgradeDevice*
+
+> “ 检查固件升级”
+> 
+>  类型： bool
+> 
+>  设置为YES， 则不显示"检查固件升级"
+> 
+>  要显示“检查固件升级”，需保证：设备不是共享的且不是虚拟设备
+
+####*onMoreMenuHideChangeDeviceName*
+
+> “ 设备名称”
+> 
+>  类型： bool
+> 
+>  设置为YES， 则不显示"设备名称"
+> 
+>  要显示“设备名称”，需保证：设备不是被分享过来的
+
+
+####*onMoreMenuHideShare*
+
+> “ 设备共享”
+> 
+>  类型： bool
+> 
+>  设置为YES， 则不显示"设备共享"
+> 
+>  要显示“设备共享”，需保证：设备不是被共享的过来的。
+
+
+
 
 
 
