@@ -81,7 +81,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 > 如果“功能设置“最终还是需要显示，请在插件中提供你自己设置的页面。
 
 
-####*onMoreMenuHideFeedback*
+#### *onMoreMenuHideFeedback*
 
 > “ 反馈 ”
 > 
@@ -89,7 +89,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 > 
 >  设置为YES， 不显示"反馈"
 
-####*onMoreMenuHideDeleteDevice*
+#### *onMoreMenuHideDeleteDevice*
 
 > “ 解除连接 ”
 > 
@@ -98,7 +98,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 >  设置为YES， 不显示"解除连接"
 
 
-####*onMoreMenuHideUpgradeDevice*
+#### *onMoreMenuHideUpgradeDevice*
 
 > “ 检查固件升级”
 > 
@@ -108,7 +108,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 > 
 >  要显示“检查固件升级”，需保证：设备不是共享的且不是虚拟设备
 
-####*onMoreMenuHideChangeDeviceName*
+#### *onMoreMenuHideChangeDeviceName*
 
 > “ 设备名称”
 > 
@@ -119,7 +119,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 >  要显示“设备名称”，需保证：设备不是被分享过来的
 
 
-####*onMoreMenuHideShare*
+#### *onMoreMenuHideShare*
 
 > “ 设备共享”
 > 
