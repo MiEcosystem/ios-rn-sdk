@@ -1062,3 +1062,103 @@ MHPluginSDK.getUserDeviceData(MHPluginSDK.deviceModel,MHPluginSDK.deviceId,'prop
 MHPluginSDK.addCustomSettingItemWithTitle('custom setting','custom.setting');
   
 ```
+
+#### *shareSecureKey* `AL-[125,)`
+
+> 分享设备电子钥匙，支持安全芯片的设备可调用
+
+>  @param did 分享设备的did
+>
+>  @param shareUid 分享目标的uid
+>
+>  @param status 分享类别，1：暂时，2：周期，3：永久
+>
+>  @param activeTime 生效时间 UTC时间戳，单位为s
+>
+>  @param expireTime 过期时间 UTC时间戳，单位为s
+>
+>  @param week 生效日期（星期几，例如周一和周三对应1和3，[1, 3]），仅在status=2时不可为空
+>
+>   @param callback
+
+```javascript
+var now = Math.floor(Date.now() / 1000);
+
+MHPluginSDK.shareSecureKey(MHPlugin.deviceId,"someone's mi id", 1, now, now + 3600,[],(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success
+});
+  
+```
+
+#### *updateSecureKey*`AL-[125,)`
+
+> 更新已分享的设备电子钥匙，支持安全芯片的设备可调用
+
+>   @param did 分享设备的did
+>
+>  @param keyid 电子钥匙id，可通过 *getSecureKey* 方法获取
+>
+>   @param status 分享类别，1：暂时，2：周期，3：永久
+>
+>  @param activeTime 生效时间 UTC时间戳，单位为s
+>
+>  @param expireTime 过期时间 UTC时间戳，单位为s
+>
+>  @param week 生效日期（星期几，例如周一和周三对应1和3，[1, 3]），仅在status=2时不可为空
+>
+>  @param callback
+
+```javascript
+var now = Math.floor(Date.now() / 1000);
+
+MHPluginSDK.updateSecureKey(MHPlugin.deviceId,"someone's keyid", 1, now, now + 3600,[],(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success
+});
+  
+```
+
+#### *deleteSecureKey*`AL-[125,)`
+
+> 删除已分享的设备电子钥匙，支持安全芯片的设备可调用
+
+>  @param did 分享设备的did
+>
+>  @param keyid 电子钥匙id
+>
+>  @param callback
+
+```javascript
+MHPluginSDK.deleteSecureKey(MHPlugin.deviceId,"someone's keyid",(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success
+});
+```
+
+#### *getSecureKey*`AL-[125,)`
+
+> 获取当前设备所有分享出去的电子钥匙，支持安全芯片的设备可调用
+
+>  @param did 分享设备的did
+>
+>  @param callback
+
+```javascript
+MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success, get all the keyid of the device
+});
+```
