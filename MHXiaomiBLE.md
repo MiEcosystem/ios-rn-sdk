@@ -146,7 +146,7 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
 });
 ```
 
-#### encryptMessageXiaoMiBLE(*message*,  *callback*)
+#### encryptMessageXiaoMiBLE(*message*,  *callback*) `AL-[125,)`
 
 描述：支持小米加密芯片的蓝牙设备，使用此方法将明文加密为密文后，可发送给设备
 
@@ -168,7 +168,7 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
   });
   ```
 
-#### decryptMessageXiaoMiBLE(*encrypted*, *callback*)
+#### decryptMessageXiaoMiBLE(*encrypted*, *callback*) `AL-[125,)`
 
 描述：支持小米加密芯片的蓝牙设备，使用此方法，可将从设备接收的密文解密
 
@@ -187,5 +187,27 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
       return;
     }
     //console.log("解密消息内容为 " + JSON.stringify(decrypted));
+  });
+  ```
+
+#### *toggleLockXiaoMiBLE(cmd, callback)* `AL-[125,)`
+
+描述：小米安全芯片门锁便捷开关
+
+参数：
+
+- `cmd` 操作命令，可传入 `0` ，`1` ，`2`三个 int 值，分别代表 关锁，开锁，反锁
+
+- `callback(error,message)` 回调，error 表示是否成功
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.toggleLockXiaoMiBLE(1,(error, message)=>{
+    if (error) {
+      //出错
+      return;
+    }
+    //console.log("开锁成功");
   });
   ```
