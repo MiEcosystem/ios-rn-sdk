@@ -40,6 +40,8 @@ var DoubleLineArrowCell = require('./Cells/DoubleLineArrowCell');
 
 var MHBluetoothLE = require('NativeModules').MHBluetoothLE;
 
+var SecureKey = require('./SecureKey');
+
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
 
 var discoverPeripherals = {};
@@ -52,7 +54,7 @@ class MainPage extends React.Component {
       dataSource: ds.cloneWithRows([
         {name: '小米蓝牙开发板', page: {}, key: 'XiaoMiBLE'},
         {name: '周围蓝牙设备列表', page: BluetoothDevicePage, key: 'BluetoothDevicePage'},
-        {name: 'Ninebot平衡车(如果你有)', page: {}, key: 'Ninebot'},
+        {name: '电子钥匙', page: SecureKey, key: 'SecureKey'},
       ]),
     };
   }
@@ -81,19 +83,16 @@ class MainPage extends React.Component {
   }
 
   _onOpenSubPage(subPageComponent) {
-    if (subPageComponent.key === 'Ninebot') {
-      if(MHPluginSDK.pageName === 'connect'){
-        subPageComponent = NinebotSearchPage;
-      }else {
-        subPageComponent = NinebotPage;
-      };
-    }else if (subPageComponent.key === 'XiaoMiBLE') {
+    if (subPageComponent.key === 'XiaoMiBLE') {
       if(MHPluginSDK.pageName === 'connect'){
         subPageComponent = XiaoMiBLEConnectPage;
       }else {
         subPageComponent = XiaoMiBLEMainPage;
       };
-    }else {
+    }else if (subPageComponent.key === 'SecureKey') {
+      subPageComponent = SecureKey;
+    }
+    else {
       subPageComponent = BluetoothDevicePage;
     }
     function subPage() {

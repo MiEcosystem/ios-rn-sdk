@@ -90,7 +90,7 @@ class BluetoothDevicePage extends React.Component {
     return subPage;
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this._deviceNameChangedListener = DeviceEventEmitter.addListener(MHPluginSDK.deviceNameChangedEvent, (event) => {
       route.title = event.newName;
       this.forceUpdate();

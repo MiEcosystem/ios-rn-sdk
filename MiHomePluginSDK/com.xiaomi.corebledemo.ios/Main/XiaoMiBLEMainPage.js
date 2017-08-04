@@ -45,7 +45,7 @@ class XiaoMiBLEMainPage extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     //获取当前的设备信息
     MHXiaomiBLE.getDefaultDevice((error, device) => {
       if (!error) {
@@ -139,8 +139,8 @@ class XiaoMiBLEMainPage extends React.Component {
 
   _discoverCharacteristis(serivceUUID, characteristicUUIDs) {
     MHBluetoothLE.discoverCharacteristics(this.state.device.peripheral.identifier, serivceUUID, characteristicUUIDs, (error, serivce, characteristics) => {
-      if (!error) {
-        //通知是否被打开
+      if (!error) 
+{        //通知是否被打开
         if(characteristics[UUID_BUTTON_READ_WRITE_NOTIFY]){
           this.setState({
             isNotifying: characteristics[UUID_BUTTON_READ_WRITE_NOTIFY].isNotifying,
@@ -158,10 +158,6 @@ class XiaoMiBLEMainPage extends React.Component {
     });
   }
 
-  componentDidMount() {
-
-  }
-
   componentWillUnmount() {
      this._didDisconnectPeripheralListener.remove();
      this._didUpdateValueForCharacteristicListener.remove();
@@ -172,10 +168,10 @@ class XiaoMiBLEMainPage extends React.Component {
      }
      clearInterval(this._getRSSITimer);
   }
+  
   render() {
     return (
       <View style={styles.containerAll}>
-        <StatusBar barStyle='default' />
         <View style={styles.containerIconDemo}>
           <View style={[styles.RGBResultViewButton, {backgroundColor: this.state.bledColor}]}></View>
           <Image style={styles.iconDemo} source={{uri:this.basePath + "control_home.png"}} >
@@ -415,6 +411,15 @@ var route = {
   key: 'XiaoMiBLEMainPage',
   title: '小米蓝牙开发板控制示例',
   component: XiaoMiBLEMainPage,
+  navBarStyle: {
+    backgroundColor:'#0f4287',
+  },
+  navLeftButtonStyle: {
+    tintColor:'#ffffff',
+  },
+  navTitleStyle: {
+    color:'#ffffff',
+  },
 };
 
 module.exports = {
