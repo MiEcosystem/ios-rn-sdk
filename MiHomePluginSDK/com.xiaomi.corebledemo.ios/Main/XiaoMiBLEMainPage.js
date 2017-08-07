@@ -190,7 +190,7 @@ class XiaoMiBLEMainPage extends React.Component {
                 this._changeNotifyState(this.state.bledCharacteristic, isOn);
               }
             }}/>
-          <SingleLineSwitchCell title='打开闪灯' description='' showLine={true} isOn={this.state.isGlitter} key='light'
+          <SingleLineSwitchCell title='开关闪灯' description='' showLine={true} isOn={this.state.isGlitter} key='light'
             ref={(lightSwitch) => {
               this._lightSwitch = lightSwitch;
             }}
@@ -264,13 +264,24 @@ class XiaoMiBLEMainPage extends React.Component {
       msg = '00000000';
     }
 
-    //如果消息加密发送给带加密芯片设备
-    MHXiaomiBLE.encryptMessageXiaoMiBLE(msg,(error,encrypted)=>{
+    //使用标准安全芯片开关接口
+    var cmd = 0;
+    if (isOn) {
+      cmd = 1;
+    }
+    MHXiaomiBLE.toggleLockXiaoMiBLE(cmd,(error,response)=>{
       if (error) {
-        return;
+        MHPluginSDK.showFailTips("操作失败");
       }
-      this._writeValue(characteristic,encrypted.string,isOn);
     });
+
+    //如果消息加密发送给带加密芯片设备
+    // MHXiaomiBLE.encryptMessageXiaoMiBLE(msg,(error,encrypted)=>{
+    //   if (error) {
+    //     return;
+    //   }
+    //   this._writeValue(characteristic,encrypted.string,isOn);
+    // });
 
     //不加密
     // this._writeValue(characteristic,msg,isOn);
