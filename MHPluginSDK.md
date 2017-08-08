@@ -364,6 +364,24 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >});
 >```
 
+#### *fetchUserInfo(uids,  callback)*`AL-[125,)`
+
+> 获取小米账户的小米id、头像、昵称信息
+>
+> `uids` 数组，需要查询信息的小米id
+> `callback` 回调方法 **(Bool isSuccess,Array response)**
+>
+> 该方法支持批量查询，传入的`uids`为数组，查询的结果按序返回。当`uids`个数为 1 时，支持传入用户小米id、绑定的电话号码或邮箱；当`uids`个数大于 1 时，只支持传入小米 id
+>
+> ```javascript
+> MHPluginSDK.fetchUserInfo([uid_A,uid_B,uid_C,uid_D],(isSuccess,response)=>{
+>   if(!isSuccess){
+> 	//so bad. what can i do ?
+>     return;
+>   }
+>   //console.log(JSON.stringify(response));
+> });
+> ```
 
 #### *updateDeviceInfoCallback(callback)* `AL-[107,)`
 
@@ -1063,7 +1081,7 @@ MHPluginSDK.addCustomSettingItemWithTitle('custom setting','custom.setting');
   
 ```
 
-#### *shareSecureKey* `AL-[125,)`
+#### *shareSecureKey(did,shareUid,status,activeTime,expireTime,week,callback)* `AL-[125,)`
 
 > 分享设备电子钥匙，支持安全芯片的设备可调用
 
@@ -1094,23 +1112,23 @@ MHPluginSDK.shareSecureKey(MHPlugin.deviceId,"someone's mi id", 1, now, now + 36
   
 ```
 
-#### *updateSecureKey*`AL-[125,)`
+#### *updateSecureKey(did,keyId,status,activeTime,expireTime,week,callback)*`AL-[125,)`
 
 > 更新已分享的设备电子钥匙，支持安全芯片的设备可调用
 
 >   @param did 分享设备的did
 >
->  @param keyid 电子钥匙id，可通过 *getSecureKey* 方法获取
+>   @param keyid 电子钥匙id，可通过 *getSecureKey* 方法获取
 >
 >   @param status 分享类别，1：暂时，2：周期，3：永久
 >
->  @param activeTime 生效时间 UTC时间戳，单位为s
+>   @param activeTime 生效时间 UTC时间戳，单位为s
 >
->  @param expireTime 过期时间 UTC时间戳，单位为s
+>   @param expireTime 过期时间 UTC时间戳，单位为s
 >
->  @param week 生效日期（星期几，例如周一和周三对应1和3，[1, 3]），仅在status=2时不可为空
+>   @param week 生效日期（星期几，例如周一和周三对应1和3，[1, 3]），仅在status=2时不可为空
 >
->  @param callback
+>   @param callback
 
 ```javascript
 var now = Math.floor(Date.now() / 1000);
@@ -1125,7 +1143,7 @@ MHPluginSDK.updateSecureKey(MHPlugin.deviceId,"someone's keyid", 1, now, now + 3
   
 ```
 
-#### *deleteSecureKey*`AL-[125,)`
+#### *deleteSecureKey(did,keyId,callback)*`AL-[125,)`
 
 > 删除已分享的设备电子钥匙，支持安全芯片的设备可调用
 
@@ -1145,7 +1163,7 @@ MHPluginSDK.deleteSecureKey(MHPlugin.deviceId,"someone's keyid",(isSuccess,respo
 });
 ```
 
-#### *getSecureKey*`AL-[125,)`
+#### *getSecureKey(did,callback)*`AL-[125,)`
 
 > 获取当前设备所有分享出去的电子钥匙，支持安全芯片的设备可调用
 
