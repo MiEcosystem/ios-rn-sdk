@@ -501,7 +501,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 
 #### *openCMTimerSettingPage(onMethod, onParam, offMethod, offParam, plugInterface)* `AL-[122,)`
 
->创米插排专用定时接口
+>创米插排专用定时接口，只为了兼容早期的创米大插座，新产品建议采用openTimerSettingPage接口
 >
 >`onMethod` 定时到时设备“开”执行的 RPC 指令命令字字符串
 >`onParam` 定时到时设备“开”执行的 RPC 指令参数字符串（目前仅支持单参数）
