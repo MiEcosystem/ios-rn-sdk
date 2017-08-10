@@ -347,23 +347,6 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >});
 >```
 
-
-#### *callThirdPartyAPI(serverAppId, dids, params, callback)* 
->异步调用第三方对接米家云端的 API
->
->`serverAppId` 米家云端分配的 appId
->`dids` 设备 id 数组（可为空，若不为空则后台会对数组中的设备做校验）
->`params` 参数字典
->`callback` 回调方法 **(Int errorCode, Object response)**
->
->插件原则上不允许直接访问非米家后台的 API，如需访问第三方服务器（例如插件公司自己的服务器）的 API 必须通过米家后台中转。第三方对接米家云端的 API 将以异步的方式调用，细节对客户端透明，详细的服务器对接过程请与米家后台联系。
->
->```js
->MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, response) => {
->  AlertIOS.alert(JSON.stringify(response));
->});
->```
-
 #### *fetchUserInfo(uids,  callback)*`AL-[125,)`
 
 > 获取小米账户的小米id、头像、昵称信息
