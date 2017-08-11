@@ -1163,3 +1163,12 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
   //success, get all the keyid of the device
 });
 ```
+
+#### *onShare*  pre-release
+
+> 全屏截图并分享到社交媒体
+>
+> MHPluginSDK.onShare();
+>
+>
+>
