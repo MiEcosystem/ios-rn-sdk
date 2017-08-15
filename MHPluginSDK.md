@@ -1164,7 +1164,7 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 });
 ```
 
-#### *onShare*  pre-release
+#### *onShare*  `AL-[125,)`
 
 > 全屏截图并分享到社交媒体
 >
