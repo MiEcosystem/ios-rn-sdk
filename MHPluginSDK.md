@@ -1165,3 +1165,12 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
   //success, get all the keyid of the device
 });
 ```
+
+#### *onShare*  `AL-[125,)`
+
+> 全屏截图并分享到社交媒体
+>
+> MHPluginSDK.onShare();
+>
+>
+>
