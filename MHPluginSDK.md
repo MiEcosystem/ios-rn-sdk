@@ -1064,7 +1064,7 @@ MHPluginSDK.addCustomSettingItemWithTitle('custom setting','custom.setting');
   
 ```
 
-#### *shareSecureKey(did,shareUid,status,activeTime,expireTime,week,callback)* `AL-[125,)`
+#### *shareSecureKey(did,shareUid,status,activeTime,expireTime,week,readonly,callback)* `AL-[125,)`
 
 > 分享设备电子钥匙，支持安全芯片的设备可调用
 
@@ -1080,12 +1080,14 @@ MHPluginSDK.addCustomSettingItemWithTitle('custom setting','custom.setting');
 >
 >  @param week 生效日期（星期几，例如周一和周三对应1和3，[1, 3]），仅在status=2时不可为空
 >
+>  @param readonly 被分享人是否接受设备push，为 false 时接受，为 true 则不接受
+>
 >   @param callback
 
 ```javascript
 var now = Math.floor(Date.now() / 1000);
 
-MHPluginSDK.shareSecureKey(MHPlugin.deviceId,"someone's mi id", 1, now, now + 3600,[],(isSuccess,response)=>{
+MHPluginSDK.shareSecureKey(MHPluginSDK.deviceId,"someone's mi id", 1, now, now + 3600,[],false,(isSuccess,response)=>{
   if(!isSuccess){
     console.log("some error " + JSON.stringify(response));
     return;
