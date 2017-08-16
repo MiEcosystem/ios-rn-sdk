@@ -338,7 +338,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >- ​	`/app/user/get_user_device_data`  读取与时间相关数据，请求参数示例：
 >
->```json
+>```javascript
 >    {
 >      "did":"123",   //设备 id
 >      "uid":'123',   //要查询的用户 uid 
@@ -357,7 +357,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >`/app/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
 >
->```json
+>```javascript
 >{
 >  "0": {
 >    "uid": "xxx", //用户 uid
