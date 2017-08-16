@@ -353,7 +353,18 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >- ​	`/app/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
 >
->
+>```javascript
+>{
+>  "0":{
+>    "did":"311223", //设备 id
+>    "props":["prop.usb_on","prop.on"]
+>  },
+>   "1":{
+>     "did":"311304",
+>     "props":["prop.usb_on","prop.on"]
+>  }
+>}
+>```
 >
 >`/app/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
 >
