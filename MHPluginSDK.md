@@ -318,7 +318,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >`params` 参数字典或数组（视具体 API 而定）
 >`callback` 回调方法 **(Object response)**
 >
->具体不同设备开放的云端接口请参照米家云端文档或咨询米家后台。
+>具体不同设备开放的云端接口请参照与米家云端对接时提供的文档或说明，以云端给出的信息为准。
 >
 >**支持的部分云端 API：**
 >
@@ -332,11 +332,55 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >`/home/checkversion` {"pid":0, "did":did} 获取最新固件版本（WIFI设备）
 >
->插件获取设备上报给蓝牙网关数据的相关接口：
 >
->`/app/user/get_user_device_data`  读取与时间相关数据，`"data":{"uid":"XXX","did":"XXX","time":1490900914,"key":"XXX","type":"XXX","limit",20}`
 >
->`/app/device/batchdevicedatas` 读取与时间无关数据，`"data":{"0":{"did":"xxx","props":["prop.temperature","prop.humidity"]},"1":{"did":"xxx","props":["prop.temperature","prop.humidity"]}...}`
+>插件获取设备上报给米家云端的 属性 与 事件 接口（包含蓝牙设备通过蓝牙网关上报的数据）：
+>
+>- ​	`/app/user/get_user_device_data`  读取与时间相关数据，请求参数示例：
+>
+>```json
+>    {
+>      "did":"123",   //设备 id
+>      "uid":'123',   //要查询的用户 uid 
+>      "key":"power", //与上报时一致
+>      "type":"prop", //与上报时一致，属性 为 prop ，事件为 event
+>      "time_start":"1473841870", //数据起点时间，单位为秒
+>      "time_end":"1473841880", //数据终点时间，单位为为秒
+>      "group": //返回数据的方式，默认 raw , 可选值为 hour、day、week、 month。
+>      "limit": //返回数据的条数，默认 20，最大 1000
+>    }
+>```
+>
+>-  	`/app/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
+>
+>  ​
+>
+>`/app/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
+>
+>```json
+>{
+>  "0": {
+>    "uid": "xxx", //用户 uid
+>    "did": "123", //设备id
+>    "time": "1473841870", //时间戳，单位为秒
+>    "type": "prop", // 属性为 prop，事件为 event
+>    "key": "power",
+>    "value": {} 
+>  },
+>  "1": {
+>    "uid": "xxx",
+>    "did": "456",
+>    "time": '1473841888',
+>    "type": "prop",
+>    "key": "power",
+>    "value": {}
+>  }
+>}
+>```
+>
+>*注：米家服务器不解析该 `value` 故可按照自身需要定义内部格式，只要保证 `value` 最终是 `string` 即可。*	
+
+示例：
 
 >```js
 >// 获取当前设备固件版本
@@ -354,6 +398,10 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >});
 >// 删除已经设置的定时
 >MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
+>  AlertIOS.alert(JSON.stringify(response));
+>});
+>// 获取设备上报数据
+>MHPluginSDK.callSmartHomeAPI('/app/user/get_user_device_data',{"did":MHPluginSDK.deviceId,"uid":MHPluginSDK.ownerId,"key":"power","type":"prop","time_start":"1473841870","time_end":"1473841880"}, (response) => {
 >  AlertIOS.alert(JSON.stringify(response));
 >});
 >```
@@ -1033,31 +1081,31 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 >
 > ```
 
-#### getUserDeviceData 获取设备属性和事件历史记录
+#### getUserDeviceData 获取设备上报的属性和事件历史记录
 
 > @param model 设别model
 >
 > @param did 设备的ID
 >
-> @param type 查询属性type 用 prop， 查询事件type 用event
+> @param type 查询属性 type 用 prop， 查询事件 type 用event
 >
-> @param key 属性名，不需要用prop 或者 event 前缀
+> @param key 属性名，不需要用 prop 或者 event  前缀
 >
-> @param timeStart 起始时间，单位为秒
+> @param timeStart 起点时间，单位为秒
 >
-> @param timeEnd 解释时间，单位为秒
+> @param timeEnd 终点时间，单位为秒
 >
 > @param callback 回调
 
-```
+```javascript
 MHPluginSDK.getUserDeviceData(MHPluginSDK.deviceModel,MHPluginSDK.deviceId,'prop','power',1500083422,1500383422,(response,err)=>{
-      console.log("🔴 getUserDeviceData");
-      if(err){
-        console.log("error");
-        return;
-      }
-      console.log(response)
-    });
+  console.log("🔴 getUserDeviceData");
+  if(err){
+    console.log("error");
+    return;
+  }
+  console.log(response)
+});
 ```
 
 
