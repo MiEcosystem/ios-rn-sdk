@@ -320,13 +320,24 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >具体不同设备开放的云端接口请参照米家云端文档或咨询米家后台。
 >
->支持的部分云端 API：
+>**支持的部分云端 API：**
+>
 >`/scene/list` 获取设备定时列表
+>
 >`/scene/delete` 删除设备定时
+>
 >`/scene/edit` 创建（编辑）设备定时
+>
 >`/home/latest_version` {"model": model} 获取最新固件版本（蓝牙设备）
+>
 >`/home/checkversion` {"pid":0, "did":did} 获取最新固件版本（WIFI设备）
 >
+>插件获取设备上报给蓝牙网关数据的相关接口：
+>
+>`/app/user/get_user_device_data`  读取与时间相关数据，`"data":{"uid":"XXX","did":"XXX","time":1490900914,"key":"XXX","type":"XXX","limit",20}`
+>
+>`app/device/batchdevicedatas` 读取与时间无关数据，`"data":{"0":{"did":"xxx","props":["prop.temperature","prop.humidity"]},"1":{"did":"xxx","props":["prop.temperature","prop.humidity"]}...}`
+
 >```js
 >// 获取当前设备固件版本
 >MHPluginSDK.getDevicePropertyFromMemCache(["version"], (props) => {
@@ -1172,5 +1183,5 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 >
 > MHPluginSDK.onShare();
 >
->
+> 
 >
