@@ -336,7 +336,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >`/app/user/get_user_device_data`  读取与时间相关数据，`"data":{"uid":"XXX","did":"XXX","time":1490900914,"key":"XXX","type":"XXX","limit",20}`
 >
->`app/device/batchdevicedatas` 读取与时间无关数据，`"data":{"0":{"did":"xxx","props":["prop.temperature","prop.humidity"]},"1":{"did":"xxx","props":["prop.temperature","prop.humidity"]}...}`
+>`/app/device/batchdevicedatas` 读取与时间无关数据，`"data":{"0":{"did":"xxx","props":["prop.temperature","prop.humidity"]},"1":{"did":"xxx","props":["prop.temperature","prop.humidity"]}...}`
 
 >```js
 >// 获取当前设备固件版本
