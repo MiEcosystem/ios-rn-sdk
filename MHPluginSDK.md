@@ -351,9 +351,9 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >    }
 >```
 >
->-  	`/app/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
+>- ​	`/app/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
 >
->  ​
+>
 >
 >`/app/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
 >
@@ -370,7 +370,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >  "1": {
 >    "uid": "xxx",
 >    "did": "456",
->    "time": '1473841888',
+>    "time": "1473841888",
 >    "type": "prop",
 >    "key": "power",
 >    "value": {}
