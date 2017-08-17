@@ -521,9 +521,13 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >
 >**注意** 此方法并不会发送 RPC 指令给设备来获取最新状态，只是返回当前 Server 中存储的对应属性值，可获取的设备属性需要在设备的 profile 中任何合法的 key，实际上可以看作一片 key-value pair，每次调用都会重新拉去服务器中最新值。
 
+#### *getUTCFromServer(callback)* `AL-[125,)`
 
+> 从米家服务器获取当前UTC时间戳（会发送网络请求）
+>
+> `callback` 回调方法 **(Object kvPairs)**
 
-#### *openAddDeviceGroupPage*
+#### openAddDeviceGroupPage*
 
 > 打开创建设备组页
 >
