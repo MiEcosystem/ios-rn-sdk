@@ -336,7 +336,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >插件获取设备上报给米家云端的 属性 与 事件 接口（包含蓝牙设备通过蓝牙网关上报的数据）：
 >
->- ​	`/app/user/get_user_device_data`  读取与时间相关数据，请求参数示例：
+>- ​	`/user/get_user_device_data`  读取与时间相关数据，请求参数示例：
 >
 >```javascript
 >    {
@@ -351,7 +351,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >    }
 >```
 >
->- ​	`/app/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
+>- ​	`/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
 >
 >```javascript
 >{
@@ -366,7 +366,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >}
 >```
 >
->`/app/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
+>`/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
 >
 >```javascript
 >{
@@ -412,7 +412,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >  AlertIOS.alert(JSON.stringify(response));
 >});
 >// 获取设备上报数据
->MHPluginSDK.callSmartHomeAPI('/app/user/get_user_device_data',{"did":MHPluginSDK.deviceId,"uid":MHPluginSDK.ownerId,"key":"power","type":"prop","time_start":"1473841870","time_end":"1473841880"}, (response) => {
+>MHPluginSDK.callSmartHomeAPI('/user/get_user_device_data',{"did":MHPluginSDK.deviceId,"uid":MHPluginSDK.ownerId,"key":"power","type":"prop","time_start":"1473841870","time_end":"1473841880"}, (response) => {
 >  AlertIOS.alert(JSON.stringify(response));
 >});
 >```
