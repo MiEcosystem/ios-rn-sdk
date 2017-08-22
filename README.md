@@ -37,6 +37,7 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 - [rn升级蓝牙设备固件的说明文档](./blernfirmwareupdate.md)
 - [rn开发非小米协议蓝牙设备说明文档](./bleScanOCEmbed.md)
 - [rn借助chrome进行调试文档](./rn-chrome-debug.md)
+- [插件的生命周期说明文档](./lifeCycleDiscussion.md)
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
