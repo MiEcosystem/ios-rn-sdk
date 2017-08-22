@@ -1077,7 +1077,7 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 > ```
 
 
-#### *openNewSettingPage* 
+#### ~~*openNewSettingPage*~~  (废弃)
 
 > 打开设置界面
 >
