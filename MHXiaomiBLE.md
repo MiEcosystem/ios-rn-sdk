@@ -146,7 +146,7 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
 });
 ```
 
-#### encryptMessageXiaoMiBLE(*message*,  *callback*) `AL-[125,)`
+#### *encryptMessageXiaoMiBLE*(*message*,  *callback*) `AL-[125,)`
 
 描述：支持小米加密芯片的蓝牙设备，使用此方法将明文加密为密文后，可发送给设备
 
@@ -168,7 +168,7 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
   });
   ```
 
-#### decryptMessageXiaoMiBLE(*encrypted*, *callback*) `AL-[125,)`
+#### *decryptMessageXiaoMiBLE*(*encrypted*, *callback*) `AL-[125,)`
 
 描述：支持小米加密芯片的蓝牙设备，使用此方法，可将从设备接收的密文解密
 
@@ -211,3 +211,28 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
     //console.log("开锁成功");
   });
   ```
+
+
+#### *secureTokenMD5(callback)*`AL-[125,)`
+
+描述：支持小米加密芯片的蓝牙设备，使用此方法，可获得设备注册后，生成的 token 的 MD5 值
+
+- `callback(error,message)` 回调，error 表示错误，message 表示获取的数据
+
+#### *isShareSecureKeyValid(callback)*`AL-[125,)`
+
+描述：支持小米加密芯片的蓝牙设备，在被分享的设备中，调用此方法，可判断分享的电子钥匙是否过期
+
+- `callback(error,message)` 回调，error 表示错误，message 表示获取的数据
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.isShareSecureKeyValid((error,message)=>{
+  	if(!error){
+  		//根据 message 中的 ’valid‘ 字段判断，1 -- 有效；0 -- 无效（已经过期）
+  	}
+  })
+  ```
+
+  ​
