@@ -1248,3 +1248,10 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 >
 > 
 >
+
+
+#### *openPrivacyPage*  pre-release
+
+> 打开隐私协议弹窗
+>
+> MHPluginSDK.openPrivacyPage("deviceName","detail of policy")
