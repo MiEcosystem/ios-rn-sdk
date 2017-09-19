@@ -322,16 +322,23 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >**支持的部分云端 API：**
 >
->`/scene/list` 获取设备定时列表
+>- `/scene/list` 获取设备定时列表
 >
->`/scene/delete` 删除设备定时
 >
->`/scene/edit` 创建（编辑）设备定时
 >
->`/home/latest_version` {"model": model} 获取最新固件版本（蓝牙设备）
+>- `/scene/delete` 删除设备定时
 >
->`/home/checkversion` {"pid":0, "did":did} 获取最新固件版本（WIFI设备）
 >
+>
+>- `/scene/edit` 创建（编辑）设备定时
+>
+>
+>
+>- `/home/latest_version` {"model": model} 获取最新固件版本（蓝牙设备）
+>
+>
+>
+>- `/home/checkversion` {"pid":0, "did":did} 获取最新固件版本（WIFI设备）
 >
 >
 >插件获取设备上报给米家云端的 属性 与 事件 接口（包含蓝牙设备通过蓝牙网关上报的数据）：
@@ -366,7 +373,8 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >}
 >```
 >
->`/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
+>- `/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
+>
 >
 >```javascript
 >{
@@ -390,6 +398,28 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >```
 >
 >*注：米家服务器不解析该 `value` 故可按照自身需要定义内部格式，只要保证 `value` 最终是 `string` 即可。*	
+>
+>插件存取跟设备相关数据，设备解绑（被用户删除）时，数据会被服务器自动清理
+>
+>- `/device/getsetting` 获取数据，参数示例：
+>
+>  ```json
+>  {
+>  "did":xxx,
+>  "settings":["keyid_xxx_data"]
+>  }
+>  ```
+>
+>- `/device/setsetting` 设置数据，参数示例：
+>
+>  ```json
+>  {
+>   "did":xxx,
+>   "settings":{
+>      "keyid_xxx_data": "value1"
+>   }
+>  }
+>  ```
 
 示例：
 
