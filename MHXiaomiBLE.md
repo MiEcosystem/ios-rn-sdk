@@ -208,7 +208,7 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
       //出错
       return;
     }
-    //console.log("上锁成功");
+    //console.log("上锁成功");
   });
   ```
 
