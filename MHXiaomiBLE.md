@@ -196,7 +196,7 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
 
 参数：
 
-- `cmd` 操作命令，可传入 `0` ，`1` ，`2`三个 int 值，分别代表 关锁，开锁，反锁
+- `cmd` 操作命令，可传入 `0` ，`1` ，`2`三个 int 值，分别代表 开锁，关锁，反锁
 
 - `callback(error,message)` 回调，error 表示是否成功
 
