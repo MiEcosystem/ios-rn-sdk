@@ -190,7 +190,7 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
   });
   ```
 
-#### *toggleLockXiaoMiBLE(cmd, callback)* `AL-[125,)`
+#### *toggleLockXiaoMiBLE(cmd,timeoutInterval,callback)* `AL-[125,)`
 
 描述：小米安全芯片门锁便捷开关
 
