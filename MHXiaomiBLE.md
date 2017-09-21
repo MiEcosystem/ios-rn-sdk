@@ -198,12 +198,14 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
 
 - `cmd` 操作命令，可传入 `0` ，`1` ，`2`三个 int 值，分别代表 开锁，上锁，反锁
 
+- `timeoutInterval` 超时时间，类型为 float，单位为秒，若对应时间过去后仍没有回到设备的开关锁回复，则 callback 返回超时 error
+
 - `callback(error,message)` 回调，error 表示是否成功
 
   例子：
 
   ```javascript
-  MHXiaomiBLE.toggleLockXiaoMiBLE(1,(error, message)=>{
+  MHXiaomiBLE.toggleLockXiaoMiBLE(1,2.0,(error, message)=>{
     if (error) {
       //出错
       return;
