@@ -668,7 +668,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeleteDevice();
 > ```
 
-#### *openDeleteDeviceWithCustomMessage(message)* `AL-[107,)`
+#### *openDeleteDeviceWithCustomMessage(message)* `AL-[126,)`
 
 > 功能同`openDeleteDevice`，支持自定义解绑时弹出确认框中的文字提示
 >
