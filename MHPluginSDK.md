@@ -642,9 +642,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
-
-
-#### *openDeviceUpgradePage*
+#### *openDeviceUpgradePage()*
 
 > 打开设备固件升级页面
 >
@@ -654,14 +652,31 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeviceUpgradePage();
 > ```
 
-
-#### *closeCurrentPage*
+#### *closeCurrentPage()*
 
 >退出插件
 >
 >**注意** 如果在插件设置页，则会退出设置页。
 
+#### *openDeleteDevice()* `AL-[107,)`
 
+> 解除设备绑定，设备会从用户的设备列表中删除，断开连接
+>
+> **注意** 调用后，插件会立即退出
+>
+> ```javascript
+> MHPluginSDK.openDeleteDevice();
+> ```
+
+#### *openDeleteDeviceWithCustomMessage(message)* `AL-[107,)`
+
+> 功能同`openDeleteDevice`，支持自定义解绑时弹出确认框中的文字提示
+>
+> **注意** 调用后，插件会立即退出
+>
+> ```javascript
+> MHPluginSDK.openDeleteDeviceWithCustomMessage("some tips");
+> ```
 
 #### *showFinishTips(content)*
 
