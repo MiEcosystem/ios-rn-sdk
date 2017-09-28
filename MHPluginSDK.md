@@ -986,7 +986,7 @@ MHPluginSDK.firmwareNotCheckUpdate(false,(success,message) =>{
 #### *getCurrentCountryInfoCallback(callback)* `AL-[117,)`
 >获取当前登录的国家/地区
 >`callback` 回调方法 (success, countryInfo) ，success 为 *true* 时表示成功获取
->`countryInfo`： countryName: 国家 / 地区名称;  countryCode: 国家 / 地区代码 ;serverCode: 服务器代码(pre-release)
+>`countryInfo`： countryName: 国家 / 地区名称;  countryCode: 国家 / 地区代码 ;serverCode: 服务器代码 `AL-[126,)`
 
 ```javascript
 MHPluginSDK.getCurrentCountryInfoCallback((success, countryInfo) => {
@@ -1285,7 +1285,7 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 });
 ```
 
-#### *onShare*  pre-release
+#### *onShare* `AL-[125,)` 
 
 > 全屏截图并分享到社交媒体
 >
@@ -1295,8 +1295,17 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 >
 
 
-#### *openPrivacyPage*  pre-release
+#### *openPrivacyPage*  `AL-[126,)`
 
 > 打开隐私协议弹窗
+> 
+>  @param license  软件许可以及使用协议的名称
 >
-> MHPluginSDK.openPrivacyPage("deviceName","detail of policy")
+>  @param licenseURL 软件许可以及使用协议的详细内容 的url 
+>
+>  @param policy 用户隐私协议的名称
+>
+>  @param policyURL  用户隐私协议的详细url
+>
+>
+> MHPluginSDK.openLicense("license","license url","policy", "policyURL");
