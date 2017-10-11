@@ -805,6 +805,10 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
 
+#### *openShareDevicePage()*
+>分享设备
+>
+
 
 
 #### *shareToWB(title, description, path, url)*
