@@ -1299,7 +1299,7 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 >
 
 
-#### *openPrivacyPage*  `AL-[126,)`
+#### *openLicense*  `AL-[126,)`
 
 > 打开隐私协议弹窗
 > 
