@@ -1046,9 +1046,9 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 
 #### *openNewMorePage* `AL-[119,)`
 
-> 打开更多设置页面(包括安全设置等设置)
+> 打开更多设置页面（通常包括安全设置，常见问题与用户反馈）
 >
-> **注意** 分享过来的设备是无法进行安全设置的，所以此时此方法无效。
+> **注意** API Level 小于 `127` 时，被分享的设备无法调用此接口；被分享者调用此接口时，不提供安全设置项
 >
 > ```js
 > MHPluginSDK.openNewMorePage();
@@ -1302,7 +1302,7 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 #### *openLicense*  `AL-[126,)`
 
 > 打开隐私协议弹窗
-> 
+>
 >  @param license  软件许可以及使用协议的名称
 >
 >  @param licenseURL 软件许可以及使用协议的详细内容 的url 
