@@ -121,6 +121,10 @@ MHXiaomiBLE.loginXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', 10, (error, info) => 
 
 `6` —  **设备被重置，有安全风险，请提醒用户使用 APP 解绑设备，并重新添加**
 
+`7` — 未获取到有效的电子钥匙
+
+`8` — 设备数字证书不可信
+
 
 #### *bindXiaoMiBLE(did,mac, callback)*
 
