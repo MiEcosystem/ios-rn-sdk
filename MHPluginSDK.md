@@ -1,10 +1,12 @@
 # MiHomePlugin API参考文档
-### 目录
+# 目录
+
+- [常量](#常量)
 ## MHPluginSDK模块 `AL-[100,)`
 
 MHPluginSDK 模块主要提供插件与米家主APP、智能设备，以及米家云端交互的API。包括获取设备信息、设置设备属性、向设备发送指令、访问米家云端接口、访问特定UI资源等等。
 
-```js
+```
 // 模块初始化
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 ```
@@ -15,9 +17,8 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 >String
 >
->```js
 >var userId = MHPluginSDK.userId;
->```
+>
 
 #### *userName* 
 >当前登录用户的昵称
