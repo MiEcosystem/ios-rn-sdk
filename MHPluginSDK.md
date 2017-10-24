@@ -15,6 +15,8 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 - [常量](#常量)
 - [可以在插件端监听的事件](#可以在插件端监听的事件)
 - [应用内可引用图片](#应用内可引用图片)
+- [RPC相关](#RPC相关)
+- [云端相关](#云端相关)
 ### 常量
 #### *userId*
 >当前登录用户的小米id
@@ -204,13 +206,7 @@ componentWillUnmount() {
 
 
 
-### API
-
-#### *keepScreenNotLock(flag)* `AL-[112,)`
-
->保持屏幕常亮，flag为true 或者 false
->不需要时需要设置回去！！！
-
+### RPC相关
 
 #### *sendEvent(eventName, body)*
 
@@ -315,7 +311,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 ```
 
 
-
+## 云端相关
 #### *callSmartHomeAPI(api, params, callback)*
 
 >调用米家云端 API
@@ -1319,3 +1315,9 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 >
 >
 > MHPluginSDK.openLicense("license","license url","policy", "policyURL");
+
+
+#### *keepScreenNotLock(flag)* `AL-[112,)`
+
+>保持屏幕常亮，flag为true 或者 false
+>不需要时需要设置回去！！！
