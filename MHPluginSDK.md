@@ -18,7 +18,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 - [RPC相关](#RPC相关)
 - [云端相关](#云端相关)
 - [通用UI模块](#通用UI模块)
-### 常量
+## 常量
 #### *userId*
 >当前登录用户的小米id
 >
@@ -114,7 +114,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 
 
-### 可以在插件端监听的事件
+## 可以在插件端监听的事件
 #### *deviceStatusUpdatedEventName*
 >设备状态更新
 >
@@ -207,7 +207,7 @@ componentWillUnmount() {
 
 
 
-## RPC相关
+### RPC相关
 
 #### *sendEvent(eventName, body)*
 
@@ -686,12 +686,9 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 
 >显示一个已完成提示，时长1秒
 >
-
 ```
 MHPluginSDK.showFinishTips("数据获取成功！");
 ```
-
-
 
 #### *showFailTips(content)*
 
