@@ -17,6 +17,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 - [应用内可引用图片](#应用内可引用图片)
 - [RPC相关](#RPC相关)
 - [云端相关](#云端相关)
+- [通用UI模块](#通用UI模块)
 ### 常量
 #### *userId*
 >当前登录用户的小米id
@@ -206,7 +207,7 @@ componentWillUnmount() {
 
 
 
-### RPC相关
+## RPC相关
 
 #### *sendEvent(eventName, body)*
 
@@ -680,6 +681,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeleteDeviceWithCustomMessage("some tips");
 > ```
 
+## 通用UI模块
 #### *showFinishTips(content)*
 
 >显示一个已完成提示，时长1秒
@@ -709,69 +711,6 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 #### *dismissTips()*
 
 >使提示消失
-
-
-
-#### *saveInfo(info)*
-
->使用 NSUserDefaults 缓存一个字典
->
->`info` 字典，值只能是简单数据类型
->
->**注意** 使用 NSUserDefaults 存储，退出插件不会消失，适合做轻量级数据的本地化存储。大数据量请使用 MHPluginFS 模块。
-
-
-
-#### *loadInfoCallback(callback)*
-
->读取缓存在 NSUserDefaults 中的信息，（使用 *saveInfo(info)* 存储的）
->
->`callback` 回调方法 **(Object info)**
->
->**注意** 使用 NSUserDefaults 存储，退出插件不会消失，适合做轻量级数据的本地化存储。大数据量请使用 MHPluginFS 模块。
-
-
-
-#### *loadCurrentPlaceMarkCallback(callback)*
-
->读取当前位置的省市信息（手机）
->
->`callback` 回调方法 **(Object placeMark, Array loopbackParams)**
->
-
-```
-MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
-  console.log(plackMark);
-});
-```
-
-
-
-#### *loadDeviceCurrentPlaceMarkCallback(callback)*
-
->读取当前位置的省市信息（设备上一次绑定的位置）
->
->`callback` 回调方法 **(Object placeMark, Array loopbackParams)**
->
->```js
->MHPluginSDK.loadDeviceCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
->  console.log(plackMark);
->});
->```
-
-
-#### *addRecord(type, value, extra)*
-
-> 添加插件自定义统计事件点
->
-> `type` 自定义事件类型字符串
-> `value` 自定义值字典
-> `extra` 附加字典，一般传空{}
-
-```
-MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
-```
-
 
 
 #### *openShareListBar(title, description, path, url)*
@@ -830,6 +769,93 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 >`description` 说明
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
+
+
+#### *onShare* `AL-[125,)` 
+
+> 全屏截图并分享到社交媒体
+>
+> MHPluginSDK.onShare();
+>
+> 
+>
+
+#### *openLicense*  `AL-[126,)`
+
+> 打开隐私协议弹窗
+>
+>  @param license  软件许可以及使用协议的名称
+>
+>  @param licenseURL 软件许可以及使用协议的详细内容 的url 
+>
+>  @param policy 用户隐私协议的名称
+>
+>  @param policyURL  用户隐私协议的详细url
+>
+>
+> MHPluginSDK.openLicense("license","license url","policy", "policyURL");
+
+
+#### *saveInfo(info)*
+
+>使用 NSUserDefaults 缓存一个字典
+>
+>`info` 字典，值只能是简单数据类型
+>
+>**注意** 使用 NSUserDefaults 存储，退出插件不会消失，适合做轻量级数据的本地化存储。大数据量请使用 MHPluginFS 模块。
+
+
+#### *loadInfoCallback(callback)*
+
+>读取缓存在 NSUserDefaults 中的信息，（使用 *saveInfo(info)* 存储的）
+>
+>`callback` 回调方法 **(Object info)**
+>
+>**注意** 使用 NSUserDefaults 存储，退出插件不会消失，适合做轻量级数据的本地化存储。大数据量请使用 MHPluginFS 模块。
+
+
+
+#### *loadCurrentPlaceMarkCallback(callback)*
+
+>读取当前位置的省市信息（手机）
+>
+>`callback` 回调方法 **(Object placeMark, Array loopbackParams)**
+>
+
+```
+MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
+  console.log(plackMark);
+});
+```
+
+
+
+#### *loadDeviceCurrentPlaceMarkCallback(callback)*
+
+>读取当前位置的省市信息（设备上一次绑定的位置）
+>
+>`callback` 回调方法 **(Object placeMark, Array loopbackParams)**
+>
+>```js
+>MHPluginSDK.loadDeviceCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
+>  console.log(plackMark);
+>});
+>```
+
+
+#### *addRecord(type, value, extra)*
+
+> 添加插件自定义统计事件点
+>
+> `type` 自定义事件类型字符串
+> `value` 自定义值字典
+> `extra` 附加字典，一般传空{}
+
+```
+MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
+```
+
+
 
 
 
@@ -1290,31 +1316,6 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
   //success, get all the keyid of the device
 });
 ```
-
-#### *onShare* `AL-[125,)` 
-
-> 全屏截图并分享到社交媒体
->
-> MHPluginSDK.onShare();
->
-> 
->
-
-
-#### *openLicense*  `AL-[126,)`
-
-> 打开隐私协议弹窗
->
->  @param license  软件许可以及使用协议的名称
->
->  @param licenseURL 软件许可以及使用协议的详细内容 的url 
->
->  @param policy 用户隐私协议的名称
->
->  @param policyURL  用户隐私协议的详细url
->
->
-> MHPluginSDK.openLicense("license","license url","policy", "policyURL");
 
 
 #### *keepScreenNotLock(flag)* `AL-[112,)`
