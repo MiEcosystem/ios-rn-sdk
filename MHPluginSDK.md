@@ -23,8 +23,11 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 - [应用内可引用图片](#应用内可引用图片)
 - [远程过程调用相关](#远程过程调用相关)
 - [云端相关](#云端相关)
-- [通用界面](#通用界面)
+- [属性相关](#属性相关)
 - [定时器相关](#定时器相关)
+- [弹窗](#弹窗)
+- [分享相关](#分享相关)
+
 ## 常量
 #### *userId*
 >当前登录用户的小米id
@@ -484,7 +487,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被米家服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
 
-
+### 属性相关
 
 #### *getDevicePropertyFromMemCache(keys, callback)*
 
@@ -688,7 +691,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeleteDeviceWithCustomMessage("some tips");
 > ```
 
-### 通用界面
+### 弹窗
 #### *showFinishTips(content)*
 
 >显示一个已完成提示，时长1秒
@@ -717,6 +720,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >使提示消失
 
 
+### 分享相关
 #### *openShareListBar(title, description, path, url)*
 
 >打开外链分享界面，用户可以选择分享到微信、朋友圈、米聊或QQ
