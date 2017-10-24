@@ -15,9 +15,9 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 - [常量](#常量)
 - [可以在插件端监听的事件](#可以在插件端监听的事件)
 - [应用内可引用图片](#应用内可引用图片)
-- [RPC相关](#RPC相关)
+- [远程过程调用相关](#远程过程调用相关)
 - [云端相关](#云端相关)
-- [通用UI模块](#通用UI模块)
+- [通用界面](#通用界面)
 ## 常量
 #### *userId*
 >当前登录用户的小米id
@@ -207,7 +207,7 @@ componentWillUnmount() {
 
 
 
-### RPC相关
+### 远程过程调用相关
 
 #### *sendEvent(eventName, body)*
 
@@ -681,7 +681,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeleteDeviceWithCustomMessage("some tips");
 > ```
 
-## 通用UI模块
+### 通用界面
 #### *showFinishTips(content)*
 
 >显示一个已完成提示，时长1秒
