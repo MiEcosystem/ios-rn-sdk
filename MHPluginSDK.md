@@ -3,7 +3,8 @@
 ------------
 
 API Level
-<img src="img/api_level.PNG" />
+
+<img src="img/api_level.png" />
 
 
 ## MHPluginSDK模块 `AL-[100,)`
@@ -23,6 +24,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 - [远程过程调用相关](#远程过程调用相关)
 - [云端相关](#云端相关)
 - [通用界面](#通用界面)
+- [定时器相关](#定时器相关)
 ## 常量
 #### *userId*
 >当前登录用户的小米id
@@ -592,7 +594,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
     MHPluginSDK.openEditDeviceGroupPage(["12345","67890"]);
 ```
 
-
+### 定时器相关
 #### *openTimerSettingPage(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
 
 >提供设备定时设置的统一页面，用来让用户设置设备的定时开关。
