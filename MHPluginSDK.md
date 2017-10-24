@@ -13,8 +13,8 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 # 目录
 ------------
 - [常量](#常量)
-
-
+- [可以在插件端监听的事件](#可以在插件端监听的事件)
+- [应用内可引用图片](#应用内可引用图片)
 ### 常量
 #### *userId*
 >当前登录用户的小米id
@@ -183,7 +183,7 @@ componentWillUnmount() {
 ```
 
 
-### 资源 URI
+### 应用内可引用图片
 
 #### *uriNaviBackButtonImage*
 >导航栏返回按钮
