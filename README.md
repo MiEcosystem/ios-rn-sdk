@@ -4,6 +4,25 @@
 
 [wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)
 
+# 目录
+
+- [概要](#概要)
+- [各个功能模块文档](#各个功能模块文档)
+- [示例代码](#示例代码)
+- [最近更新](#最近更新)
+- [开发前必读](#开发前必读)
+- [开发环境](#开发环境)
+- [米家开放平台上插件的申请与创建](#米家开放平台上插件的申请与创建)
+- [开始写插件代码](#开始写插件代码)
+- [插件包min_api_level的确定](#min_api_level)
+- [插件目录结构及文件含义](#插件目录结构及文件含义)
+- [智能设备的发现与连接](#智能设备的发现与连接)
+- [调试本地插件](调试本地插件)
+- [开发自定义自动化（原智能场景）](#开发自定义自动化)
+- [调试本地插件自动化](#调试本地插件自动化)
+- [插件的打包和签名](#插件的打包和签名)
+- [插件的测试和发布](#插件的测试和发布)
+# 概要
 MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
 **当前版本: 3.6**
@@ -19,6 +38,8 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 **Max API Level 119  -> App 3.14.0**
 
 **本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
+
+# 各个功能模块文档
 
 - [config.plist 配置项含义](./config.md)
 - [MHPluginSDK 模块文档](./MHPluginSDK.md)
@@ -38,7 +59,9 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 - [rn开发非小米协议蓝牙设备说明文档](./bleScanOCEmbed.md)
 - [rn借助chrome进行调试文档](./rn-chrome-debug.md)
 - [插件的生命周期说明文档](./lifeCycleDiscussion.md)
-- wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 目录
+
+#  示例代码 
+- wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 
 - 支持小米协议的蓝牙设备开发示例插件，SDK 目录中 com.xiaomi.bledemo.ios 目录
 - 一个完整的真实 wifi 设备插件，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
 - 一个支持横竖屏切换展示的示例插件，SDK目录中 com.xiaomi.orientationdemo.ios 目录
@@ -100,12 +123,12 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
    ```
 4. iPhone真机: 由于要使用appstore版本的米家APP进行调试(如果想获得调试便利，需要向米家工作人员要一个debug版本的米家ipa，rn的调试选项在release模式下禁用了)，所以不能使用模拟器开发，必须使用一部 iOS7.0 以上系统的 iPhone 真机。
 
-## 插件的申请与创建
+## 米家开放平台上插件的申请与创建
 
 1. 在[米家开放平台](http://open.home.mi.com)上注册一个开发者账号（智能设备硬件、iOS插件、android插件使用同一个开发者账号）并等待审核通过。
 2. 创建智能设备的插件。创建插件的过程中需要填写一个插件包名，命名规则一般为：若开发者标识为 *aaa*，设备 model 为*aaa.bbb.v1*，则 iOS 插件包名一般为 *com.aaa.bbb.ios* 。例如，*xiaomi* 公司开发了一款火箭筒，设备 *model* 为 *xiaomi.rocketlauncher.v1*，则该火箭筒在米家iOS客户端中的插件包名为 *com.xiaomi.rocketlauncher.ios*
 
-## 开始制作一个新的插件
+## 开始写插件代码
 
 1. 进入 MiHomePluginSDK 所在目录
 2. 运行 createPlugin 脚本创建一个新的本地插件包：
@@ -132,7 +155,7 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 
    **注意** 每次打包上传插件包时，都要检查 version 字段是否递增了
 
-## 插件包 min_api_level 的确定
+## min_api_level
 
 1. 米家 iOS 客户端的功能随着版本的变化也在发生变化，开放给插件的 API 也在逐渐增加（极少数情况下也会废弃），每一个版本的客户端都有一个 API_Level，代表了客户端支持的 API 集合，随版本升高和 API 的引入而增加。
 2. 每个模块或 API 的文档中标明了其引入时米家 iOS 客户端的 API_Level，例如 AL[7,] 表示这个模块或 API 只有在运行的客户端 API_Level >= 7 的情况下才可以使用，若运行在旧版本的米家客户端，则有可能造成 crash。（ API 未标明 Level 的默认与该 API 所在模块的 Level 一致），
@@ -213,7 +236,7 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
 9. 如果需要查看本地调试插件输出的 console.log 信息，可以用 XCode 连接 iPhone，Command+Shift+2 打开 Devices 菜单并选择该 iPhone，之后可以在右侧区域看到 React 通过应用 MiHome 输出的的调试信息，以[REACT]开头。
 10. 插件代码错误不会导致APP崩溃，而是会弹出一个页面提示错误原因，并可以勾选将错误日志上报。当插件正式上线后，可以在米家开放平台看到用户上报的插件崩溃日志。
 
-## 开发自定义自动化（原智能场景）
+## 开发自定义自动化
 MiHomePluginSDK 支持自定义自动化的开发（支持自定义场景条件或动作页面），具体步骤如下：
 
 1. 在插件包的 config.plist 里，用 customSceneTriggerIds或 customSceneActionIds 的 key 指明该插件包支持哪些自定义智能场景条件或动作的 sc_id/sa_id 字符串。**注意** 如果不清楚sc_id和sa_id的含义，请与米家工作人员联系。
