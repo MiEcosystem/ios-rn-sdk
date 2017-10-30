@@ -227,4 +227,4 @@ var styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('com.xiaomi.artdemo.ios', () => PluginApp);
+AppRegistry.registerComponent('com.xiaomi.artanimdemo.ios', () => PluginApp);
