@@ -824,7 +824,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
     } else {
       
     }
-  })>
+  })
 ```
 
 #### *saveInfo(info)*
