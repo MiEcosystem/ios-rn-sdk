@@ -804,6 +804,29 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 > MHPluginSDK.openLicense("license","license url","policy", "policyURL");
 
 
+### *openPrivacyLicense*
+
+>
+>  @param license  软件许可以及使用协议的名称
+>
+>  @param licenseURL 软件许可以及使用协议的详细内容 的url 
+>
+>  @param policy 用户隐私协议的名称
+>
+>  @param policyURL  用户隐私协议的详细url
+>
+>  @param callBack   callback 
+>
+```
+  MHPluginSDK.openPrivacyLicense("license","licenseURL","policy, "policyURL,(result)=>{
+    if(result == "ok") {
+
+    } else {
+      
+    }
+  })>
+```
+
 #### *saveInfo(info)*
 
 >使用 NSUserDefaults 缓存一个字典
