@@ -804,7 +804,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 > MHPluginSDK.openLicense("license","license url","policy", "policyURL");
 
 
-### *openPrivacyLicense*
+### *openPrivacyLicense*  pre-release
 
 >
 >  @param license  软件许可以及使用协议的名称
