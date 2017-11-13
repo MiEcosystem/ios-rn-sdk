@@ -105,7 +105,25 @@ MHXiaomiBLE.loginXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', 10, (error, info) => 
   }
 });
 ```
-code为3时是token变化导致的失败，需要重新注册获取新的token
+注意，若登录失败，请查看 `error` 中的 `code` 错误码，错误码说明如下：
+
+`0` — 设备无法连接
+
+`1` — 设备登录时蓝牙连接断开
+
+`2` —  蓝牙读写失败
+
+`3` —  token 发生变化导致的失败，需要重新注册获取新的 token 
+
+`4` —  成功，一般不会出现在 `error` 中
+
+`5` —  未知错误
+
+`6` —  **设备被重置，有安全风险，请提醒用户使用 APP 解绑设备，并重新添加**
+
+`7` — 未获取到有效的电子钥匙
+
+`8` — 设备数字证书不可信
 
 
 #### *bindXiaoMiBLE(did,mac, callback)*
@@ -140,9 +158,101 @@ MHXiaomiBLE.bindXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) => {
 
 例子：
 
-```
+```javascript
 MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) => {
   
 });
 ```
 
+#### *encryptMessageXiaoMiBLE*(*message*,  *callback*) `AL-[125,)`
+
+描述：支持小米加密芯片的蓝牙设备，使用此方法将明文加密为密文后，可发送给设备
+
+参数：
+
+- `message` 待加密的明文
+
+- `callback(error,encrypted)` 加密回调，error 表示是否成功，encrypted 表示加密后的数据
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.encryptMessageXiaoMiBLE(msg,(error,encrypted)=>{
+    if (error) {
+      // 出错
+      return;
+    }
+    //console.log(encrypted.string);
+  });
+  ```
+
+#### *decryptMessageXiaoMiBLE*(*encrypted*, *callback*) `AL-[125,)`
+
+描述：支持小米加密芯片的蓝牙设备，使用此方法，可将从设备接收的密文解密
+
+参数：
+
+- `encrypted` 待解密密文
+
+- `callback(error,message)` 解密回调，error 表示是否成功，message 表示解密后的数据
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.decryptMessageXiaoMiBLE(message,(error,decrypted)=>{
+    if (error) {
+      //出错
+      return;
+    }
+    //console.log("解密消息内容为 " + JSON.stringify(decrypted));
+  });
+  ```
+
+#### *toggleLockXiaoMiBLE(cmd,timeoutInterval,callback)* `AL-[125,)`
+
+描述：小米安全芯片门锁便捷开关
+
+参数：
+
+- `cmd` 操作命令，可传入 `0` ，`1` ，`2`三个 int 值，分别代表 开锁，上锁，反锁
+
+- `timeoutInterval` 超时时间，类型为 float，单位为秒，若对应时间过去后仍没有回到设备的开关锁回复，则 callback 返回超时 error
+
+- `callback(error,message)` 回调，error 表示是否成功
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.toggleLockXiaoMiBLE(1,2.0,(error, message)=>{
+    if (error) {
+      //出错
+      return;
+    }
+    //console.log("上锁成功");
+  });
+  ```
+
+
+#### *secureTokenMD5(callback)*`AL-[125,)`
+
+描述：支持小米加密芯片的蓝牙设备，使用此方法，可获得设备注册后，生成的 token 的 MD5 值
+
+- `callback(error,message)` 回调，error 表示错误，message 表示获取的数据
+
+#### *isShareSecureKeyValid(callback)*`AL-[125,)`
+
+描述：支持小米加密芯片的蓝牙设备，在被分享的设备中，调用此方法，可判断分享的电子钥匙是否过期
+
+- `callback(error,message)` 回调，error 表示错误，message 表示获取的数据
+
+  例子：
+
+  ```javascript
+  MHXiaomiBLE.isShareSecureKeyValid((error,message)=>{
+  	if(!error){
+  		//根据 message 中的 ’valid‘ 字段判断，1 -- 有效；0 -- 无效（已经过期）
+  	}
+  })
+  ```
+
+  ​

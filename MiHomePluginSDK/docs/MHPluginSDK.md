@@ -1,22 +1,41 @@
 # MiHomePlugin API参考文档
+# 介绍
+------------
+
+API Level
+
+<img src="img/api_level.png" />
+
+
 ## MHPluginSDK模块 `AL-[100,)`
 
 MHPluginSDK 模块主要提供插件与米家主APP、智能设备，以及米家云端交互的API。包括获取设备信息、设置设备属性、向设备发送指令、访问米家云端接口、访问特定UI资源等等。
 
-```js
+```
 // 模块初始化
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 ```
 
-### 常量
+# 目录
+------------
+- [常量](#常量)
+- [可以在插件端监听的事件](#可以在插件端监听的事件)
+- [应用内可引用图片](#应用内可引用图片)
+- [远程过程调用相关](#远程过程调用相关)
+- [云端相关](#云端相关)
+- [属性相关](#属性相关)
+- [定时器相关](#定时器相关)
+- [弹窗](#弹窗)
+- [分享相关](#分享相关)
+
+## 常量
 #### *userId*
 >当前登录用户的小米id
 >
 >String
 >
->```js
 >var userId = MHPluginSDK.userId;
->```
+>
 
 #### *userName* 
 >当前登录用户的昵称
@@ -105,7 +124,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >
 
 
-### 可以在插件端监听的事件
+## 可以在插件端监听的事件
 #### *deviceStatusUpdatedEventName*
 >设备状态更新
 >
@@ -177,7 +196,7 @@ componentWillUnmount() {
 ```
 
 
-### 资源 URI
+### 应用内可引用图片
 
 #### *uriNaviBackButtonImage*
 >导航栏返回按钮
@@ -198,13 +217,7 @@ componentWillUnmount() {
 
 
 
-### API
-
-#### *keepScreenNotLock(flag)* `AL-[112,)`
-
->保持屏幕常亮，flag为true 或者 false
->不需要时需要设置回去！！！
-
+### 远程过程调用相关
 
 #### *sendEvent(eventName, body)*
 
@@ -309,7 +322,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 ```
 
 
-
+## 云端相关
 #### *callSmartHomeAPI(api, params, callback)*
 
 >调用米家云端 API
@@ -318,15 +331,111 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >`params` 参数字典或数组（视具体 API 而定）
 >`callback` 回调方法 **(Object response)**
 >
->具体不同设备开放的云端接口请参照米家云端文档或咨询米家后台。
+>具体不同设备开放的云端接口请参照与米家云端对接时提供的文档或说明，以云端给出的信息为准。
 >
->支持的部分云端 API：
->`/scene/list` 获取设备定时列表
->`/scene/delete` 删除设备定时
->`/scene/edit` 创建（编辑）设备定时
->`/home/latest_version` {"model": model} 获取最新固件版本（蓝牙设备）
->`/home/checkversion` {"pid":0, "did":did} 获取最新固件版本（WIFI设备）
+>**支持的部分云端 API：**
 >
+>- `/scene/list` 获取设备定时列表
+>
+>
+>
+>- `/scene/delete` 删除设备定时
+>
+>
+>
+>- `/scene/edit` 创建（编辑）设备定时
+>
+>
+>
+>- `/home/latest_version` {"model": model} 获取最新固件版本（蓝牙设备）
+>
+>
+>
+>- `/home/checkversion` {"pid":0, "did":did} 获取最新固件版本（WIFI设备）
+>
+>
+>插件获取设备上报给米家云端的 属性 与 事件 接口（包含蓝牙设备通过蓝牙网关上报的数据）：
+>
+>- ​	`/user/get_user_device_data`  读取与时间相关数据，请求参数示例：
+>
+>```javascript
+>    {
+>      "did":"123",   //设备 id
+>      "uid":'123',   //要查询的用户 uid 
+>      "key":"power", //与上报时一致
+>      "type":"prop", //与上报时一致，属性 为 prop ，事件为 event
+>      "time_start":"1473841870", //数据起点时间，单位为秒
+>      "time_end":"1473841880", //数据终点时间，单位为为秒
+>      "group": //返回数据的方式，默认 raw , 可选值为 hour、day、week、 month。
+>      "limit": //返回数据的条数，默认 20，最大 1000
+>    }
+>```
+>
+>- ​	`/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
+>
+>```javascript
+>{
+>  "0":{
+>    "did":"311223", //设备 id
+>    "props":["prop.usb_on","prop.on"]
+>  },
+>   "1":{
+>     "did":"311304",
+>     "props":["prop.usb_on","prop.on"]
+>  }
+>}
+>```
+>
+>- `/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
+>
+>
+>```javascript
+>{
+>  "0": {
+>    "uid": "xxx", //用户 uid
+>    "did": "123", //设备id
+>    "time": "1473841870", //时间戳，单位为秒
+>    "type": "prop", // 属性为 prop，事件为 event
+>    "key": "power",
+>    "value": {} 
+>  },
+>  "1": {
+>    "uid": "xxx",
+>    "did": "456",
+>    "time": "1473841888",
+>    "type": "prop",
+>    "key": "power",
+>    "value": {}
+>  }
+>}
+>```
+>
+>*注：米家服务器不解析该 `value` 故可按照自身需要定义内部格式，只要保证 `value` 最终是 `string` 即可。*	
+>
+>插件存取跟设备相关数据，设备解绑（被用户删除）时，数据会被服务器自动清理
+>
+>- `/device/getsetting` 获取数据，参数示例：
+>
+>  ```json
+>  {
+>  "did":xxx,
+>  "settings":["keyid_xxx_data"]
+>  }
+>  ```
+>
+>- `/device/setsetting` 设置数据，参数示例：
+>
+>  ```json
+>  {
+>   "did":xxx,
+>   "settings":{
+>      "keyid_xxx_data": "value1"
+>   }
+>  }
+>  ```
+
+示例：
+
 >```js
 >// 获取当前设备固件版本
 >MHPluginSDK.getDevicePropertyFromMemCache(["version"], (props) => {
@@ -345,25 +454,30 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
 >  AlertIOS.alert(JSON.stringify(response));
 >});
->```
-
-
-#### *callThirdPartyAPI(serverAppId, dids, params, callback)* 
->异步调用第三方对接米家云端的 API
->
->`serverAppId` 米家云端分配的 appId
->`dids` 设备 id 数组（可为空，若不为空则后台会对数组中的设备做校验）
->`params` 参数字典
->`callback` 回调方法 **(Int errorCode, Object response)**
->
->插件原则上不允许直接访问非米家后台的 API，如需访问第三方服务器（例如插件公司自己的服务器）的 API 必须通过米家后台中转。第三方对接米家云端的 API 将以异步的方式调用，细节对客户端透明，详细的服务器对接过程请与米家后台联系。
->
->```js
->MHPluginSDK.callThirdPartyAPI("1001", [], {"api":"testAPI"}, (errorCode, response) => {
+>// 获取设备上报数据
+>MHPluginSDK.callSmartHomeAPI('/user/get_user_device_data',{"did":MHPluginSDK.deviceId,"uid":MHPluginSDK.ownerId,"key":"power","type":"prop","time_start":"1473841870","time_end":"1473841880"}, (response) => {
 >  AlertIOS.alert(JSON.stringify(response));
 >});
 >```
 
+#### *fetchUserInfo(uids,  callback)*`AL-[125,)`
+
+> 获取小米账户的小米id、头像、昵称信息
+>
+> `uids` 数组，需要查询信息的小米id
+> `callback` 回调方法 **(Bool isSuccess,Array response)**
+>
+> 该方法支持批量查询，传入的`uids`为数组，查询的结果按序返回。当`uids`个数为 1 时，支持传入用户小米id、绑定的电话号码或邮箱；当`uids`个数大于 1 时，只支持传入小米 id
+>
+> ```javascript
+> MHPluginSDK.fetchUserInfo([uid_A,uid_B,uid_C,uid_D],(isSuccess,response)=>{
+>   if(!isSuccess){
+> 	//so bad. what can i do ?
+>     return;
+>   }
+>   //console.log(JSON.stringify(response));
+> });
+> ```
 
 #### *updateDeviceInfoCallback(callback)* `AL-[107,)`
 
@@ -373,7 +487,7 @@ MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
 >
 >可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被米家服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
 
-
+### 属性相关
 
 #### *getDevicePropertyFromMemCache(keys, callback)*
 
@@ -450,9 +564,13 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >
 >**注意** 此方法并不会发送 RPC 指令给设备来获取最新状态，只是返回当前 Server 中存储的对应属性值，可获取的设备属性需要在设备的 profile 中任何合法的 key，实际上可以看作一片 key-value pair，每次调用都会重新拉去服务器中最新值。
 
+#### *getUTCFromServer(callback)* `AL-[125,)`
 
+> 从米家服务器获取当前UTC时间戳（会发送网络请求）
+>
+> `callback` 回调方法 **(Object kvPairs)**
 
-#### *openAddDeviceGroupPage*
+#### openAddDeviceGroupPage*
 
 > 打开创建设备组页
 >
@@ -479,7 +597,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
     MHPluginSDK.openEditDeviceGroupPage(["12345","67890"]);
 ```
 
-
+### 定时器相关
 #### *openTimerSettingPage(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
 
 >提供设备定时设置的统一页面，用来让用户设置设备的定时开关。
@@ -501,7 +619,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 
 #### *openCMTimerSettingPage(onMethod, onParam, offMethod, offParam, plugInterface)* `AL-[122,)`
 
->创米插排专用定时接口
+>创米插排专用定时接口，只为了兼容早期的创米大插座，新产品建议采用openTimerSettingPage接口
 >
 >`onMethod` 定时到时设备“开”执行的 RPC 指令命令字字符串
 >`onParam` 定时到时设备“开”执行的 RPC 指令参数字符串（目前仅支持单参数）
@@ -537,9 +655,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
-
-
-#### *openDeviceUpgradePage*
+#### *openDeviceUpgradePage()*
 
 > 打开设备固件升级页面
 >
@@ -549,25 +665,40 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeviceUpgradePage();
 > ```
 
-
-#### *closeCurrentPage*
+#### *closeCurrentPage()*
 
 >退出插件
 >
 >**注意** 如果在插件设置页，则会退出设置页。
 
+#### *openDeleteDevice()* `AL-[107,)`
 
+> 解除设备绑定，设备会从用户的设备列表中删除，断开连接
+>
+> **注意** 调用后，插件会立即退出
+>
+> ```javascript
+> MHPluginSDK.openDeleteDevice();
+> ```
 
+#### *openDeleteDeviceWithCustomMessage(message)* `AL-[126,)`
+
+> 功能同`openDeleteDevice`，支持自定义解绑时弹出确认框中的文字提示
+>
+> **注意** 调用后，插件会立即退出
+>
+> ```javascript
+> MHPluginSDK.openDeleteDeviceWithCustomMessage("some tips");
+> ```
+
+### 弹窗
 #### *showFinishTips(content)*
 
 >显示一个已完成提示，时长1秒
 >
-
 ```
 MHPluginSDK.showFinishTips("数据获取成功！");
 ```
-
-
 
 #### *showFailTips(content)*
 
@@ -589,6 +720,112 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >使提示消失
 
 
+### 分享相关
+#### *openShareListBar(title, description, path, url)*
+
+>打开外链分享界面，用户可以选择分享到微信、朋友圈、米聊或QQ
+>
+>`title` 标题
+>`description` 说明
+>`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
+>`url` 网页URL
+>
+>```js
+>MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖", MHPluginSDK.basePath+"rockets.png", "http://open.home.mi.com");
+>```
+
+
+#### *shareToWeChatSession(title, description, path, url)*
+
+>直接分享到微信聊天
+>
+>`title` 标题
+>`description` 说明
+>`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
+>`url` 网页URL
+
+
+
+#### *shareToWeChatMoment(title, description, path, url)*
+>直接分享到微信朋友圈
+>
+>`title` 标题
+>`description` 说明
+>`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
+>`url` 网页URL
+
+#### *openShareDevicePage()*
+>分享设备
+>
+
+
+
+#### *shareToWB(title, description, path, url)*
+>直接分享到微博
+>
+>`title` 标题
+>`description` 说明
+>`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
+>`url` 网页URL
+
+
+
+#### *shareToML(title, description, path, url)*
+>直接分享到米聊
+>
+>`title` 标题
+>`description` 说明
+>`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
+>`url` 网页URL
+
+
+#### *onShare* `AL-[125,)` 
+
+> 全屏截图并分享到社交媒体
+>
+> MHPluginSDK.onShare();
+>
+> 
+>
+
+#### *openLicense*  `AL-[126,)`
+
+> 打开隐私协议弹窗
+>
+>  @param license  软件许可以及使用协议的名称
+>
+>  @param licenseURL 软件许可以及使用协议的详细内容 的url 
+>
+>  @param policy 用户隐私协议的名称
+>
+>  @param policyURL  用户隐私协议的详细url
+>
+>
+> MHPluginSDK.openLicense("license","license url","policy", "policyURL");
+
+
+### *openPrivacyLicense*  pre-release
+
+>
+>  @param license  软件许可以及使用协议的名称
+>
+>  @param licenseURL 软件许可以及使用协议的详细内容 的url 
+>
+>  @param policy 用户隐私协议的名称
+>
+>  @param policyURL  用户隐私协议的详细url
+>
+>  @param callBack   callback 
+>
+```
+  MHPluginSDK.openPrivacyLicense("license","licenseURL","policy, "policyURL,(result)=>{
+    if(result == "ok") {
+
+    } else {
+      
+    }
+  })
+```
 
 #### *saveInfo(info)*
 
@@ -597,7 +834,6 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >`info` 字典，值只能是简单数据类型
 >
 >**注意** 使用 NSUserDefaults 存储，退出插件不会消失，适合做轻量级数据的本地化存储。大数据量请使用 MHPluginFS 模块。
-
 
 
 #### *loadInfoCallback(callback)*
@@ -651,59 +887,6 @@ MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
 ```
 
 
-
-#### *openShareListBar(title, description, path, url)*
-
->打开外链分享界面，用户可以选择分享到微信、朋友圈、米聊或QQ
->
->`title` 标题
->`description` 说明
->`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
->`url` 网页URL
->
->```js
->MHPluginSDK.openShareListBar("米家开放平台", "小米智能火箭筒专卖", MHPluginSDK.basePath+"rockets.png", "http://open.home.mi.com");
->```
-
-
-#### *shareToWeChatSession(title, description, path, url)*
-
->直接分享到微信聊天
->
->`title` 标题
->`description` 说明
->`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
->`url` 网页URL
-
-
-
-#### *shareToWeChatMoment(title, description, path, url)*
->直接分享到微信朋友圈
->
->`title` 标题
->`description` 说明
->`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
->`url` 网页URL
-
-
-
-#### *shareToWB(title, description, path, url)*
->直接分享到微博
->
->`title` 标题
->`description` 说明
->`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
->`url` 网页URL
-
-
-
-#### *shareToML(title, description, path, url)*
->直接分享到米聊
->
->`title` 标题
->`description` 说明
->`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
->`url` 网页URL
 
 
 
@@ -828,30 +1011,6 @@ MHPluginSDK.openDevice('xiaomi.bledemo.v1', '23:23:93:a3:98', '23fasdf3asd', 'as
 });
 ```
 
-
-#### *openAuthSettingPage* `AL-[110,)`
-
->以push的方式打开授权页面
->
-
-
-
-#### *getAuthSateCallback(callback)* `AL-[110,)`
-
->获取当前device的授权状态，以回调的方式返回；
->
->`callback` 回调方法 **(Object response)**
->
->4种状态：
->
->`authStateNotFound`: 没有找到当前设备的状态；
->
->`authStateNoAuth`: 当前设备还没进行过授权；
->
->`authStateAuthValid`: 进行过授权但已经过期；
->
->`authStateAuthExpired`: 进行过授权而且还在有效期内；
-
 #### *getDevicesWithModel(model, callback)* `AL-[112,)`
 
 >获取设备列表中指定model的设备信息
@@ -890,7 +1049,7 @@ MHPluginSDK.firmwareNotCheckUpdate(false,(success,message) =>{
 #### *getCurrentCountryInfoCallback(callback)* `AL-[117,)`
 >获取当前登录的国家/地区
 >`callback` 回调方法 (success, countryInfo) ，success 为 *true* 时表示成功获取
->`countryInfo`： countryName: 国家 / 地区名称;  countryCode: 国家 / 地区代码
+>`countryInfo`： countryName: 国家 / 地区名称;  countryCode: 国家 / 地区代码 ;serverCode: 服务器代码 `AL-[126,)`
 
 ```javascript
 MHPluginSDK.getCurrentCountryInfoCallback((success, countryInfo) => {
@@ -946,9 +1105,9 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 
 #### *openNewMorePage* `AL-[119,)`
 
-> 打开更多设置页面(包括安全设置等设置)
+> 打开更多设置页面（通常包括安全设置，常见问题与用户反馈）
 >
-> **注意** 分享过来的设备是无法进行安全设置的，所以此时此方法无效。
+> **注意** API Level 小于 `127` 时，被分享的设备无法调用此接口；被分享者调用此接口时，不提供安全设置项
 >
 > ```js
 > MHPluginSDK.openNewMorePage();
@@ -1024,3 +1183,173 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 >          });
 >
 > ```
+
+
+#### ~~*openNewSettingPage*~~  (废弃， 请使用Demo 工程中提供的MHSetting页面)
+
+> 打开设置界面
+>
+> ```js
+> MHPluginSDK.openNewSettingPage();
+>
+> ```
+
+
+#### *openFeedbackInput* 
+
+> 打开反馈输入界面
+>
+> ```js
+> MHPluginSDK.openFeedbackInput();
+>
+> ```
+
+#### getUserDeviceData 获取设备上报的属性和事件历史记录
+
+> @param model 设别model
+>
+> @param did 设备的ID
+>
+> @param type 查询属性 type 用 prop， 查询事件 type 用event
+>
+> @param key 属性名，不需要用 prop 或者 event  前缀
+>
+> @param timeStart 起点时间，单位为秒
+>
+> @param timeEnd 终点时间，单位为秒
+>
+> @param callback 回调
+
+```javascript
+MHPluginSDK.getUserDeviceData(MHPluginSDK.deviceModel,MHPluginSDK.deviceId,'prop','power',1500083422,1500383422,(response,err)=>{
+  console.log("🔴 getUserDeviceData");
+  if(err){
+    console.log("error");
+    return;
+  }
+  console.log(response)
+});
+```
+
+
+#### *addCustomSettingItemWithTitle*
+
+>添加自定义设置项 的文字和事件：
+
+>第一个参数为设置项的名字
+>
+>第二个参数为设置项包含的事件（相当于NSNotification 中的key，这个函数就相当于
+>post 通知）
+
+```
+MHPluginSDK.addCustomSettingItemWithTitle('custom setting','custom.setting');
+  
+```
+
+#### *shareSecureKey(did,shareUid,status,activeTime,expireTime,week,readonly,callback)* `AL-[125,)`
+
+> 分享设备电子钥匙，支持安全芯片的设备可调用
+
+>  @param did 分享设备的did
+>
+>  @param shareUid 分享目标的uid
+>
+>  @param status 分享类别，1：暂时，2：周期，3：永久
+>
+>  @param activeTime 生效时间 UTC时间戳，单位为s
+>
+>  @param expireTime 过期时间 UTC时间戳，单位为s
+>
+>  @param week 生效日期（星期几，例如周一和周三对应1和3，[1, 3]），仅在status=2时不可为空
+>
+>  @param readonly 被分享人是否接受设备push，为 false 时接受，为 true 则不接受
+>
+>   @param callback
+
+```javascript
+var now = Math.floor(Date.now() / 1000);
+
+MHPluginSDK.shareSecureKey(MHPluginSDK.deviceId,"someone's mi id", 1, now, now + 3600,[],false,(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success
+});
+  
+```
+
+#### *updateSecureKey(did,keyId,status,activeTime,expireTime,week,callback)*`AL-[125,)`
+
+> 更新已分享的设备电子钥匙，支持安全芯片的设备可调用
+
+>   @param did 分享设备的did
+>
+>   @param keyid 电子钥匙id，可通过 *getSecureKey* 方法获取
+>
+>   @param status 分享类别，1：暂时，2：周期，3：永久
+>
+>   @param activeTime 生效时间 UTC时间戳，单位为s
+>
+>   @param expireTime 过期时间 UTC时间戳，单位为s
+>
+>   @param week 生效日期（星期几，例如周一和周三对应1和3，[1, 3]），仅在status=2时不可为空
+>
+>   @param callback
+
+```javascript
+var now = Math.floor(Date.now() / 1000);
+
+MHPluginSDK.updateSecureKey(MHPlugin.deviceId,"someone's keyid", 1, now, now + 3600,[],(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success
+});
+  
+```
+
+#### *deleteSecureKey(did,keyId,callback)*`AL-[125,)`
+
+> 删除已分享的设备电子钥匙，支持安全芯片的设备可调用
+
+>  @param did 分享设备的did
+>
+>  @param keyid 电子钥匙id
+>
+>  @param callback
+
+```javascript
+MHPluginSDK.deleteSecureKey(MHPlugin.deviceId,"someone's keyid",(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success
+});
+```
+
+#### *getSecureKey(did,callback)*`AL-[125,)`
+
+> 获取当前设备所有分享出去的电子钥匙，支持安全芯片的设备可调用
+
+>  @param did 分享设备的did
+>
+>  @param callback
+
+```javascript
+MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
+  if(!isSuccess){
+    console.log("some error " + JSON.stringify(response));
+    return;
+  }
+  //success, get all the keyid of the device
+});
+```
+
+
+#### *keepScreenNotLock(flag)* `AL-[112,)`
+
+>保持屏幕常亮，flag为true 或者 false
+>不需要时需要设置回去！！！
