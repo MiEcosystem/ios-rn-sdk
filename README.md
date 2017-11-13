@@ -23,7 +23,7 @@
 - [插件的打包和签名](#插件的打包和签名)
 - [插件的测试和发布](#插件的测试和发布)
 # 概要
-MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
+MiHomePluginSDK 是为接入米家APP的智能设备制作 iOS 版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
 
 **当前版本: 3.6**
 
@@ -41,24 +41,24 @@ MiHomePluginSDK 是为已接入米家APP的智能设备制作iOS版本设备控�
 
 # 各个功能模块文档
 
-- [config.plist 配置项含义](./config.md)
-- [MHPluginSDK 模块文档](./MHPluginSDK.md)
-- [MHBluetooth 模块文档](./MHBluetooth.md)
-- [MHBluetoothLE 模块文档](./MHBluetoothLE.md)
-- [MHMiotStore 模块文档](./MHMiotStore.md)
-- [MHXiaomiBLE 模块文档](./MHXiaomiBLE.md)
-- [MHPluginFS 模块文档](./MHPluginFS.md)
-- [MHMapSearch 模块文档（高德地图）](./MHMapSearch.md)
-- [MHAudio 模块文档（音频）](./MHAudio.md)
-- [使用 MHJSPatch 辅助开发插件](./MHJSPatch.md) （暂时弃用）
-- [插件的多语言化](./localization.md)
-- [使用 React Native 第三方开源组件](./library.md)
-- [插件页面和组件代码说明](./code.md)
-- [widget配置说明](./widgetConfig.md)
-- [rn升级蓝牙设备固件的说明文档](./blernfirmwareupdate.md)
-- [rn开发非小米协议蓝牙设备说明文档](./bleScanOCEmbed.md)
-- [rn借助chrome进行调试文档](./rn-chrome-debug.md)
-- [插件的生命周期说明文档](./lifeCycleDiscussion.md)
+- [config.plist 配置项含义](./MiHomePluginSDK/docs/config.md)
+- [MHPluginSDK 模块文档](./MiHomePluginSDK/docs/MHPluginSDK.md)
+- [MHBluetooth 模块文档](./MiHomePluginSDK/docs/MHBluetooth.md)
+- [MHBluetoothLE 模块文档](./MiHomePluginSDK/docs/MHBluetoothLE.md)
+- [MHMiotStore 模块文档](./MiHomePluginSDK/docs/MHMiotStore.md)
+- [MHXiaomiBLE 模块文档](./MiHomePluginSDK/docs/MHXiaomiBLE.md)
+- [MHPluginFS 模块文档](./MiHomePluginSDK/docs/MHPluginFS.md)
+- [MHMapSearch 模块文档（高德地图）](./MiHomePluginSDK/docs/MHMapSearch.md)
+- [MHAudio 模块文档（音频）](./MiHomePluginSDK/docs/MHAudio.md)
+- [使用 MHJSPatch 辅助开发插件](./MiHomePluginSDK/docs/MHJSPatch.md) （暂时弃用）
+- [插件的多语言化](./MiHomePluginSDK/docs/localization.md)
+- [使用 React Native 第三方开源组件](./MiHomePluginSDK/docs/library.md)
+- [插件页面和组件代码说明](./MiHomePluginSDK/docs/code.md)
+- [widget配置说明](./MiHomePluginSDK/docs/widgetConfig.md)
+- [rn升级蓝牙设备固件的说明文档](./MiHomePluginSDK/docs/blernfirmwareupdate.md)
+- [rn开发非小米协议蓝牙设备说明文档](./MiHomePluginSDK/docs/bleScanOCEmbed.md)
+- [rn借助chrome进行调试文档](./MiHomePluginSDK/docs/rn-chrome-debug.md)
+- [插件的生命周期说明文档](./MiHomePluginSDK/docs/lifeCycleDiscussion.md)
 
 #  示例代码 
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 
@@ -221,10 +221,10 @@ android插件设备状态可以通过事件上报，app端可以订阅事件，i
     1. 退出登录开发者账号、杀死客户端进程并重新使用开发者账号登陆。
     2. 切换到设备列表页卡，再切换回个人信息页卡。
     3. 如果反复尝试仍未出现，请联系米家工作人员。
-  
+
 6. 开启“开发者选项”，在弹出的对话框中按要求输入调试插件的信息：
     如图：![image](./img/develop_setting.png)
-    
+
     1. 设备 model ：调试设备的 model，符合该 model 的设备将加载本地插件，可以是任意设备。
     2. 调试服务器 IP ：前述步骤4中记下的电脑 IP 地址。
     3. 插件包名：欲调试的插件包名 plugin_name。
