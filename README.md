@@ -1,9 +1,5 @@
 # MiHomePluginSDK
 
-[Github项目主页](https://github.com/MiEcosystem/ios-rn-sdk)
-
-[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)
-
 # 目录
 
 - [概要](#概要)
@@ -23,21 +19,13 @@
 - [插件的打包和签名](#插件的打包和签名)
 - [插件的测试和发布](#插件的测试和发布)
 # 概要
-MiHomePluginSDK 是为接入米家APP的智能设备制作 iOS 版本设备控制插件的开发环境，米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/)框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)。插件可以不经过苹果审核进行动态更新，同时最大限度保留了原生App的体验。
+此项目为方便智能硬件接入小米米家 App（ iOS 版本）。基于此方案，智能硬件厂商需要开发自己的米家插件，用户使用米家 App 连接硬件之后，会自动下载、使用插件，获得与设备交互的能力与 UI。米家 iOS 客户端的插件基于 [React Native](https://facebook.github.io/react-native/) 框架实现，并融合了 [JSPatch](http://jspatch.com) 的一些功能(已暂时弃用)，可以实时动态更新，同时最大限度保留了原生 App 的体验。
 
-**当前版本: 3.6**
+**React Native 引擎版本：0.25.1**
 
-**发布时间: 2017-4-25**
+**当前 API Level ：128**
 
-**文档修改日期: 2017-4-25**
-
-**React Native引擎版本: 0.25.1**
-
-**Release API Level 119 -> App 3.14.0**
-
-**Max API Level 119  -> App 3.14.0**
-
-**本文档描述了米家 APP iOS客户端插件的申请、创建、开发、调试的流程，更多内容请见下列文档，遇到问题请先移步[wiki](https://github.com/MiEcosystem/ios-rn-sdk/wiki)**
+**兼容性：iOS 8 +**
 
 # 各个功能模块文档
 
@@ -70,11 +58,6 @@ MiHomePluginSDK 是为接入米家APP的智能设备制作 iOS 版本设备控�
 - 一个粒子系统的示例插件，SDK目录中 com.xiaomi.particledemo.ios 目录
 - 支持普通蓝牙设备开发示例插件，SDK目录中com.xiaomi.corebledemo.ios 目录
 - 一个rn开发非小米协议蓝牙设备的示例oc嵌入文件，在SDK目录中RNNormalBlePlugin目录
-
-## 最近更新
-
-1. 支持用chrome调试rn代码（需要向米家工作人员要一个debug版本的ipa，App Store版本不支持，具体操作见文档）
-2. 新的设置页，修改MHSetting.js自定义设置项
 
 ## 开发前必读
 
