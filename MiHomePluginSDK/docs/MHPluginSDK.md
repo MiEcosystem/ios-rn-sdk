@@ -1,11 +1,5 @@
 # MiHomePlugin API参考文档
 # 介绍
-------------
-
-API Level
-
-<img src="img/api_level.png" />
-
 
 ## MHPluginSDK模块 `AL-[100,)`
 
@@ -713,14 +707,20 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 
 >显示一个正在加载提示，一直存在直到调用 *dismissTips*
 
-
-
 #### *dismissTips()*
 
 >使提示消失
 
+#### *showBLESwitchGuide*() `AL-[128,)`
+
+> 显示一个引导动画，提示用户打开手机蓝牙开关。
+
+#### *dismissBLESwitchGuide()* `AL-[128,)`
+
+> 隐藏蓝牙开关引导动画。注：用户如果与动画有手势交互，动画隐藏，则无需再调用此方法。
 
 ### 分享相关
+
 #### *openShareListBar(title, description, path, url)*
 
 >打开外链分享界面，用户可以选择分享到微信、朋友圈、米聊或QQ
