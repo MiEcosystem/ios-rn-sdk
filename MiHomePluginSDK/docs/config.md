@@ -1,4 +1,5 @@
-# MiHomePlugin API参考文档
+MiHomePlugin API参考文档
+
 ## config.plist 配置项的含义
 
 config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件，用于配置一些插件的整体行为。
@@ -20,6 +21,8 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
         <array>
                 <string>250</string>
         </array>
+  	 	<key>supportIPhoneX</key>
+		<true/>
 </dict>
 </plist>
 ```
@@ -73,7 +76,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 > 作用：是否显示“功能设置”
 >
 > 类型：BOOL
-> 
+>
 > 不设置，或者设置为NO，根据设备是否是分享过来的，来决定是否隐藏。 
 >
 > 设置为YES，强制隐藏"功能设置"项目。
@@ -84,52 +87,60 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 #### *onMoreMenuHideFeedback*
 
 > “ 反馈 ”
-> 
+>
 >  类型： bool
-> 
+>
 >  设置为YES， 不显示"反馈"
 
 #### *onMoreMenuHideDeleteDevice*
 
 > “ 解除连接 ”
-> 
+>
 >  类型： bool
-> 
+>
 >  设置为YES， 不显示"解除连接"
 
 
 #### *onMoreMenuHideUpgradeDevice*
 
 > “ 检查固件升级”
-> 
+>
 >  类型： bool
-> 
+>
 >  设置为YES， 则不显示"检查固件升级"
-> 
+>
 >  要显示“检查固件升级”，需保证：设备不是共享的且不是虚拟设备
 
 #### *onMoreMenuHideChangeDeviceName*
 
 > “ 设备名称”
-> 
+>
 >  类型： bool
-> 
+>
 >  设置为YES， 则不显示"设备名称"
-> 
+>
 >  要显示“设备名称”，需保证：设备不是被分享过来的
 
 
 #### *onMoreMenuHideShare*
 
 > “ 设备共享”
-> 
+>
 >  类型： bool
-> 
+>
 >  设置为YES， 则不显示"设备共享"
-> 
+>
 >  要显示“设备共享”，需保证：设备不是被共享的过来的。
 
+#### *supportIPhoneX*
 
+> 是否适配 iPhoneX
+>
+> 类型：bool
+>
+> 假如你的插件适配了 iPhone X，请设置为 YES
+>
+> 否则不用添加该字段，或设置为 NO
 
 
 

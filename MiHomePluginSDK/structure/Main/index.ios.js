@@ -205,6 +205,7 @@ class PluginApp extends React.Component {
 
 var styles = StyleSheet.create({
   navBar: {
+    marginTop:24,
     backgroundColor: 'white',
   },
   navBarText: {

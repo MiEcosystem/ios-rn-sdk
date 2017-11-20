@@ -3,11 +3,13 @@
 <plist version="1.0">
 <dict>
         <key>pluginStructureVersion</key>
-	      <integer>2</integer>
+	    <integer>2</integer>
         <key>deviceStatusRefreshInterval</key>
         <integer>6</integer>
         <key>pluginFetchPropStatusMode</key>
-	      <integer>0</integer><!-- 0 polling, 1 subscribe, 2 not get-->
+	    <integer>0</integer><!-- 0 polling, 1 subscribe, 2 not get-->
+	    <key>supportIPhoneX</key>
+		<true/>
 <!--	<key>customSceneTriggerIds</key>
 	<array>
 		<string>250</string>
