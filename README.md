@@ -47,6 +47,7 @@
 - [rn开发非小米协议蓝牙设备说明文档](./MiHomePluginSDK/docs/bleScanOCEmbed.md)
 - [rn借助chrome进行调试文档](./MiHomePluginSDK/docs/rn-chrome-debug.md)
 - [插件的生命周期说明文档](./MiHomePluginSDK/docs/lifeCycleDiscussion.md)
+- [iPhone X 适配指南](./MiHomePluginSDK/docs/updatePluginsForiPhoneX.md)
 
 #  示例代码 
 - wifi 设备开发板示例插件，SDK 目录中 com.xiaomi.demoios 
