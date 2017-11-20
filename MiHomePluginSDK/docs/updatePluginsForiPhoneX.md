@@ -30,7 +30,7 @@ iPhone X 采用 @3X 图，开发尺寸为 **375 * 812** pt。其中 Status Bar �
 
 
 
-![](./img/iphoneX_4.png)
+![](./img/iPhoneX_4.png)
 
 
 
