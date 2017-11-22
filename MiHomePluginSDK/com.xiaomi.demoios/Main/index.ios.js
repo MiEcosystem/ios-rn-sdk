@@ -37,19 +37,21 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 var {height:screenHeight, widt:screenWidth} = Dimensions.get('window');
 var ImageButton = require('../CommonModules/ImageButton');
 var MHNavigationBar = require('../CommonModules/MHNavigationBar');
-
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
-
 // 首页信息
 var MainPage = require('./MainPage');
 var SceneMain = require('./SceneMain');
+const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
+let APPBAR_MARGINTOP = 0;
+if (MHPluginSDK.systemInfo.mobileModel === "iPhone10,3" || MHPluginSDK.systemInfo.mobileModel === "iPhone10,6") {
+  APPBAR_MARGINTOP = 24;
+}
 
 class PluginApp extends React.Component {
 
   constructor(props) {
     super(props);
 
-    if (MHPluginSDK.extraInfo && (MHPluginSDK.extraInfo.trigger || MHPluginSDK.extraInfo.action) && SceneMain) { //自定义场景入口
+      if (MHPluginSDK.extraInfo && (MHPluginSDK.extraInfo.trigger || MHPluginSDK.extraInfo.action) && SceneMain) { //自定义场景入口
       this._firstPage = SceneMain;
     }
     else { // 正常进入插件首页
@@ -80,6 +82,12 @@ class PluginApp extends React.Component {
         }
       }.bind(this),
       RightButton: function(route, navigator, index, navState) {
+
+        // MHPluginSDK.getUserDeviceData("model","did","prop","key",1234,10001,(response)=>{
+        //   console.log();
+        // });
+
+
         if (route.renderNavRightComponent) {
           return route.renderNavRightComponent(route, navigator, index, navState);
         } else {
@@ -206,7 +214,7 @@ class PluginApp extends React.Component {
 
 var styles = StyleSheet.create({
   navBar: {
-    marginTop:24,
+    marginTop:APPBAR_MARGINTOP,
     backgroundColor: 'white',
   },
   navBarText: {
