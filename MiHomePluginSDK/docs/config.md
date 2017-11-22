@@ -10,7 +10,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 <plist version="1.0">
 <dict>
         <key>pluginStructureVersion</key>
-        <integer>1</integer>
+        <integer>2</integer>
         <key>deviceStatusRefreshInterval</key>
         <integer>6</integer>
         <key>customSceneTriggerIds</key>
