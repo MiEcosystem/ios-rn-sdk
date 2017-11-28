@@ -113,6 +113,13 @@ class Setting extends Component {
           }
         },
 
+        {
+          'name': '使用条款和隐私协议',
+          'func': () => {
+            MHPluginSDK.reviewPrivacyAndProtocol();
+          }
+        },
+
       ];
 
       featureMenuData = [
