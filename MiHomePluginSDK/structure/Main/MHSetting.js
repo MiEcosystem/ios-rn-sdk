@@ -114,7 +114,7 @@ class Setting extends Component {
         },
 
         {
-          'name': '使用条款和隐私协议',
+          'name': LocalizedStrings.licenseAndPolicy,
           'func': () => {
             MHPluginSDK.reviewPrivacyAndProtocol();
           }
