@@ -144,7 +144,7 @@ config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件�
 ### *isShowPrivacyItemsInSettingView*
 >  类型：bool
 > 
->  对于还在使用已被废弃的
+>  对于还在使用已被废弃的
 >
 >>MHPluginSDK.openNewSettingPage();
 > 
