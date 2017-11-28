@@ -189,6 +189,23 @@ componentWillUnmount() {
 }
 ```
 
+#### *deviceCancelAuthorization*  (pre_release)
+> 用户撤销隐私授权时的回调
+> 
+```
+componentWillMount() {
+    this._deviceCancelAuthorization = DeviceEventEmitter.addListener(MHPluginSDK. deviceCancelAuthorization, (event) => {
+
+    });
+}
+
+componentWillUnmount() {
+    this._deviceCancelAuthorization();
+}
+
+```
+
+
 
 ### 应用内可引用图片
 
