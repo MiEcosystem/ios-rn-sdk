@@ -27,7 +27,7 @@ var MHMiotStore = require('NativeModules').MHMiotStore;
 例子：
 
 ```javascript
-MHMiotStore.openURL('www.xiaomi.com', (error) => {
+MHMiotStore.openURL('http://home.mi.com/shop/detail?gid=100260', (error) => {
   if(error)
     MHPluginSDK.showFailedTips('打开失败');
 });

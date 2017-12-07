@@ -113,6 +113,13 @@ class Setting extends Component {
           }
         },
 
+        {
+          'name': LocalizedStrings.licenseAndPolicy,
+          'func': () => {
+            MHPluginSDK.reviewPrivacyAndProtocol();
+          }
+        },
+
       ];
 
       featureMenuData = [

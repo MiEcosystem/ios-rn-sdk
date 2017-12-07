@@ -12,6 +12,7 @@ let MHLocalizableString = new LocalizedStrings({
    moreSetting:"Additional settings",
    addToDesktop:"Add to Home screen",
    resetDevice:"Reset device",
+   licenseAndPolicy:"User Agreement & Privacy Policy",
 
  },
  "zh-Hans":{
@@ -26,6 +27,7 @@ let MHLocalizableString = new LocalizedStrings({
    moreSetting:"更多设置",
    addToDesktop:"添加到桌面",
    resetDevice:"重置设备",
+   licenseAndPolicy:"使用条款和隐私政策",
  },
  "zh-Hant": {
    setting:"設置",
@@ -39,6 +41,7 @@ let MHLocalizableString = new LocalizedStrings({
    moreSetting:"更多設定",
    addToDesktop:"新增到桌面",
    resetDevice:"重置裝置",
+   licenseAndPolicy:"用戶協議和隱私政策",
  },
  "zh-HK":{
    setting:"設置",
@@ -52,6 +55,7 @@ let MHLocalizableString = new LocalizedStrings({
    moreSetting:"更多設定",
    addToDesktop:"新增到桌面",
    resetDevice:"重置裝置",
+   licenseAndPolicy:"用戶協議和隱私政策",
  },
  "zh-TW":{
    setting:"設置",
@@ -65,6 +69,7 @@ let MHLocalizableString = new LocalizedStrings({
    moreSetting:"更多設定",
    addToDesktop:"新增到桌面",
    resetDevice:"重置裝置",
+   licenseAndPolicy:"用戶協議和隱私政策",
  },
  "krea":{
    featureSetting:"바로가기 설정",
@@ -77,6 +82,7 @@ let MHLocalizableString = new LocalizedStrings({
    moreSetting:"추가 설정",
    addToDesktop:"홈 화면에 추가",
    resetDevice:"기기 초기화",
+   licenseAndPolicy:"이용 약관 & 개인 정보 보호 정책",
  }
 });
 
