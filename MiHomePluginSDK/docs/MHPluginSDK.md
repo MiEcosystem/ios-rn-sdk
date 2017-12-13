@@ -806,7 +806,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >
 
 
-### *openPrivacyLicense* `AL-[128,)` 
+#### *openPrivacyLicense* `AL-[128,)` 
 
 >
 >  @param license  软件许可以及使用协议的名称
