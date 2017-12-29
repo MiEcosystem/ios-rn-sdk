@@ -191,7 +191,7 @@ componentWillUnmount() {
 
 #### *deviceCancelAuthorization*  (pre_release)
 > 用户撤销隐私授权时的回调
-> 
+>
 ```
 componentWillMount() {
     this._deviceCancelAuthorization = DeviceEventEmitter.addListener(MHPluginSDK. deviceCancelAuthorization, (event) => {
@@ -1197,13 +1197,21 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 > ```
 
 
-#### *openFeedbackInput* 
+#### *openFeedbackInput*  
 
 > 打开反馈输入界面
 >
 > ```js
 > MHPluginSDK.openFeedbackInput();
 >
+> ```
+
+#### openVoiceCtrlDeviceAuthPage `AL-[131,)`
+
+> 打开语音设备授权控制页面。注意，不具有语音控制能力的设备与分享的设备不要调用此接口。
+>
+> ```js
+> MHPluginSDK.openVoiceCtrlDeviceAuthPage();
 > ```
 
 #### getUserDeviceData 获取设备上报的属性和事件历史记录
