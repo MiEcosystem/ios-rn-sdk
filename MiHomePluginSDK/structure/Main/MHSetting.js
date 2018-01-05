@@ -116,7 +116,9 @@ class Setting extends Component {
         {
           'name': LocalizedStrings.licenseAndPolicy,
           'func': () => {
-            MHPluginSDK.reviewPrivacyAndProtocol();
+            if(MHPluginSDK.apiLevel >= 129) {
+              MHPluginSDK.reviewPrivacyAndProtocol();
+            }
           }
         },
 
