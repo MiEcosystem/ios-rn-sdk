@@ -189,7 +189,7 @@ componentWillUnmount() {
 }
 ```
 
-#### *deviceCancelAuthorization*  (pre_release)
+#### *deviceCancelAuthorization*  `AL-[130,)`
 > 用户撤销隐私授权时的回调
 >
 ```
@@ -200,7 +200,7 @@ componentWillMount() {
 }
 
 componentWillUnmount() {
-    this._deviceCancelAuthorization();
+    this._deviceCancelAuthorization.remove();
 }
 
 ```
