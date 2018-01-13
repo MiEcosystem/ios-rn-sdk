@@ -60,7 +60,7 @@
 - 一个完整的真实 wifi 设备程序，SDK目录中 com.xiaomi.powerstripdemo.ios 目录
 - 一个支持横竖屏切换展示的示例程序，SDK目录中 com.xiaomi.orientationdemo.ios 目录
 - 一个应用SVG组件的示例程序，SDK目录中 com.xiaomi.svgdemo.ios 目录
-- 一个有关动画的示例程序，SDK目录中 com.xiaomi.artanimdemo.ios 目录
+- 一个有关React Native ART动画的示例程序，SDK目录中 com.xiaomi.artanimdemo.ios 目录，更多 ART 的 API 请参考[此处](https://github.com/react-native-china/react-native-ART-doc/blob/master/doc.md)
 - 一个粒子系统的示例程序，SDK目录中 com.xiaomi.particledemo.ios 目录
 - 支持普通蓝牙设备开发示例程序，SDK目录中com.xiaomi.corebledemo.ios 目录
 - 一个 rn 开发非小米协议蓝牙设备的示例 oc 嵌入文件，在SDK目录中 RNNormalBlePlugin 目录
