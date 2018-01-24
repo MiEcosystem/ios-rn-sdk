@@ -34,7 +34,7 @@ iPhone X 采用 @3X 图，开发尺寸为 **375 * 812** pt。其中 Status Bar �
 
 
 
-如果使用 `MHNavigationBar`组件，需要将其下移 24 pt，可参考 `com.xiaomi.demoios` 插件中 [index.ios.js](../com.xiaomi.demoios/Main/index.ios.js) 文件第209行，使用 `marginTop: 24` 来达到此目的。
+如果使用 `MHNavigationBar`组件，需要将其下移 24 pt，可参考 `com.xiaomi.demoios` 插件中 [index.ios.js](../com.xiaomi.demoios/Main/index.ios.js) 文件，使用 `marginTop: 24` 来达到此目的。
 
 
 
