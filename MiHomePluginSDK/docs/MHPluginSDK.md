@@ -319,19 +319,6 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 >**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档 
 >
 
-```
-// toggle 命令切换插座的开关状态，该命令没有参数，强制走局域网RPC
-MHPluginSDK.callMethodForceWay('toggle',[],{},1, (isSuccess, json) => {
-  console.log("toggle result:"+isSuccess+json);
-  if (isSuccess)
-  {
-    this.setState({
-      currentState: this.state.currentState == 'on' ? 'off' : 'on',
-    });
-  }
-});
-```
-
 
 ## 云端相关
 #### *callSmartHomeAPI(api, params, callback)*
