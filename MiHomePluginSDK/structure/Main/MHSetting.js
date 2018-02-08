@@ -116,8 +116,12 @@ class Setting extends Component {
         {
           'name': LocalizedStrings.licenseAndPolicy,
           'func': () => {
-            if(MHPluginSDK.apiLevel >= 129) {
+            if(MHPluginSDK.apiLevel >=133) {
+              MHPluginSDK.privacyAndProtocolReview("license","https://www.xiaomi.com","privacy","https://www.xiaomi.com");
+            } else if(MHPluginSDK.apiLevel >= 129) {
               MHPluginSDK.reviewPrivacyAndProtocol();
+            } else {
+              
             }
           }
         },

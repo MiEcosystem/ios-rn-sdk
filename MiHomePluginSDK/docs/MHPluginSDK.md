@@ -816,6 +816,24 @@ MHPluginSDK.showFinishTips("数据获取成功！");
   })
 ```
 
+#### *privacyAndProtocolReview* `AL-[133,)` 
+
+>  用于查看隐私协议和用户使用条款，参数说明
+>   
+>  license  软件许可以及使用协议的名称
+>
+>  licenseURL 软件许可以及使用协议的详细内容 的url 
+>
+>  policy 用户隐私协议的名称
+>
+>  policyURL  用户隐私协议的详细url
+>
+>
+```
+MHPluginSDK.privacyAndProtocolReview("license","https://www.xiaomi.com","privacy","https://www.xiaomi.com");
+
+```
+
 #### *saveInfo(info)*
 
 >使用 NSUserDefaults 缓存一个字典
