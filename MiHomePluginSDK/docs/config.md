@@ -1,5 +1,3 @@
-MiHomePlugin API参考文档
-
 ## config.plist 配置项的含义
 
 config.plist 文件位于插件包目录下，是个 XML 格式的 plist 文件，用于配置一些插件的整体行为。
