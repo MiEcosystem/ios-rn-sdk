@@ -819,7 +819,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 #### *privacyAndProtocolReview* `AL-[133,)` 
 
 >  用于查看隐私协议和用户使用条款，参数说明
->   
+>
 >  license  软件许可以及使用协议的名称
 >
 >  licenseURL 软件许可以及使用协议的详细内容 的url 
@@ -828,7 +828,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >
 >  policyURL  用户隐私协议的详细url
 >
->
+>  
 ```
 MHPluginSDK.privacyAndProtocolReview("license","https://www.xiaomi.com","privacy","https://www.xiaomi.com");
 
@@ -881,21 +881,13 @@ MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
 >```
 
 
-#### *addRecord(type, value, extra)*
+#### ~~*addRecord(type, value, extra)* 已弃用~~
 
-> 添加插件自定义统计事件点
+> ~~添加插件自定义统计事件点~~
 >
-> `type` 自定义事件类型字符串
-> `value` 自定义值字典
-> `extra` 附加字典，一般传空{}
-
-```
-MHPluginSDK.addRecord("kick_me", {"times": 2}, {});
-```
-
-
-
-
+> ~~`type` 自定义事件类型字符串~~
+> ~~`value` 自定义值字典~~
+> ~~`extra` 附加字典，一般传空{}~~
 
 #### *finishCustomSceneSetupWithTrigger(trigger)* `AL-[107,)`
 >完成场景设置，回传设置后的 trigger</b>

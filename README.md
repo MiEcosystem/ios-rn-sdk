@@ -31,14 +31,15 @@
 # 功能模块索引
 
 - [config.plist 配置项含义](./MiHomePluginSDK/docs/config.md)
-- [MHPluginSDK 模块文档](./MiHomePluginSDK/docs/MHPluginSDK.md)
+- [MHPluginSDK 基础模块文档](./MiHomePluginSDK/docs/MHPluginSDK.md)
 - [MHBluetooth 模块文档](./MiHomePluginSDK/docs/MHBluetooth.md)
 - [MHBluetoothLE 模块文档](./MiHomePluginSDK/docs/MHBluetoothLE.md)
 - [MHMiotStore 模块文档](./MiHomePluginSDK/docs/MHMiotStore.md)
 - [MHXiaomiBLE 模块文档](./MiHomePluginSDK/docs/MHXiaomiBLE.md)
-- [MHPluginFS 模块文档](./MiHomePluginSDK/docs/MHPluginFS.md)
-- [MHMapSearch 模块文档（高德地图）](./MiHomePluginSDK/docs/MHMapSearch.md)
-- [MHAudio 模块文档（音频）](./MiHomePluginSDK/docs/MHAudio.md)
+- [MHPluginFS 文件读写模块文档](./MiHomePluginSDK/docs/MHPluginFS.md)
+- [MHMapSearch 高德地图模块文档](./MiHomePluginSDK/docs/MHMapSearch.md)
+- [MHAudio 音频模块文档](./MiHomePluginSDK/docs/MHAudio.md)
+- [MHLog 日志统计模块](./MiHomePluginSDK/docs/MHLog.md)
 - [使用 MHJSPatch 辅助开发扩展程序](./MiHomePluginSDK/docs/MHJSPatch.md) （暂时弃用）
 - [扩展程序的多语言化](./MiHomePluginSDK/docs/localization.md)
 - [使用 React Native 第三方开源组件](./MiHomePluginSDK/docs/library.md)
