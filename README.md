@@ -205,7 +205,7 @@ MiHomePluginSDK 支持自定义自动化的开发（支持自定义场景条件�
 
 1. 在扩展程序包的 config.plist 里，用 customSceneTriggerIds 或 customSceneActionIds 的 key 指明该扩展程序包支持哪些自定义智能场景条件或动作的 sc_id / sa_id 字符串。
 
-   **注意**  sc_id 和 sa_id 的值请在 iot 开发平台 -> 开发 -> 自动化设置中查询。在表格中均显示为 id，**类别 if 为 sc_id，类型 then 为 sa_id**。
+   **注意**  sc_id 和 sa_id 的值请在 iot 开发平台 -> 开发 -> 自动化设置中查询。在表格中均显示为 id，**类别 if 为 sc_id，类别 then 为 sa_id**。
 
 2. 在扩展程序主目录下的 Main目录下进行自定义智能场景页面的开发(SceneMain.js文件)，该页面会在用户点击“个人中心” --> “自动化” --> “添加” --> “步骤一：添加触发条件”或“步骤二：添加执行任务”并选中相应设备和动作后进入。
 
