@@ -78,7 +78,11 @@
    ```
    brew install openssl
    ```
-4. iPhone真机: 由于要使用 Appstore 版本的米家APP进行调试(如果想获得调试便利，需要向米家工作人员要一个debug版本的米家ipa，rn 的调试选项在 release 模式下禁用了)，所以不能使用模拟器开发，必须使用一部 iOS 8.0 以上系统的 iPhone 真机。
+4. iPhone真机: 由于要使用 Appstore 版本的米家APP进行调试(如果想获得调试便利，需要一个debug版本的米家ipa，rn 的调试选项在 release 模式下禁用了)，所以不能使用模拟器开发，必须使用一部 iOS 8.0 以上系统的 iPhone 真机。
+
+> IPA下载地址： https://fir.im/MiHomeForIOS
+> 密码：
+  xiaomi666
 
 ## 扩展程序申请与创建
 
