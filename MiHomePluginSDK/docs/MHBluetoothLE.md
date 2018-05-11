@@ -1,14 +1,16 @@
 # MiHomePlugin API参考文档
 ## MHBluetoothLE模块 `AL-[110,)`
 
-插件通过 MHBluetoothLE 模块与蓝牙设备交互。此模块中封装了普通蓝牙设备的连接、断开、发现服务、读写、监听广播等功能。使用方式类似于 iOS开发中的CoreBluetooth.framework。
+扩展程序通过 MHBluetoothLE 模块与蓝牙设备交互。此模块中封装了普通蓝牙设备的连接、断开、发现服务、读写、监听广播等功能。使用方式类似于 iOS开发中的CoreBluetooth.framework。
+
+**注意扩展程序需要正确处理蓝牙的连接与断开。用户退出插件时，必须断开连接。**
 
 ```js
 // 模块初始化
 var MHBluetoothLE = require('NativeModules').MHBluetoothLE;
 ```
 
-**SDK 提供了一个蓝牙示例插件，见 com.xiaomi.corebledemo.ios  目录**
+**我们提供了一个蓝牙示例程序，见 com.xiaomi.corebledemo.ios  目录**
 
 ### 常量
 #### *event*
