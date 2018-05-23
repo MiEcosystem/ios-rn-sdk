@@ -632,6 +632,18 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeviceUpgradePage();
 > ```
 
+#### *setFirmwareUpdateErrDic(message)* ` AL-[136,)` 
+
+> 为设备固件升级失败添加自定义的errorCode与错误提示信息的索引
+>
+> `message` 以errorCode为key，以错误提示信息为value的字典。key和value的数据类型都须是string。
+>
+> **注意** 分享过来的设备是无法进行固件升级的，所以此时此方法无效。
+>
+> ```js
+> MHPluginSDK.setFirmwareUpdateErrDic({'1001': '请检查网络'})
+> ```
+
 #### *closeCurrentPage()*
 
 >退出插件
