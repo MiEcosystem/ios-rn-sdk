@@ -10,19 +10,8 @@ MHPluginSDK 模块主要提供插件与米家主APP、智能设备，以及米�
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
 ```
 
-# 目录
-------------
-- [常量](#常量)
-- [可以在插件端监听的事件](#可以在插件端监听的事件)
-- [应用内可引用图片](#应用内可引用图片)
-- [远程过程调用相关](#远程过程调用相关)
-- [云端相关](#云端相关)
-- [属性相关](#属性相关)
-- [定时器相关](#定时器相关)
-- [弹窗](#弹窗)
-- [分享相关](#分享相关)
 
-## 常量
+
 #### *userId*
 >当前登录用户的小米id
 >
@@ -115,10 +104,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >当前的设备是不是语音设备
 >
 >BOOL
->
 
-
-## 可以在插件端监听的事件
 #### *deviceStatusUpdatedEventName*
 >设备状态更新
 >
@@ -205,18 +191,12 @@ componentWillUnmount() {
 
 ```
 
-
-
-### 应用内可引用图片
-
 #### *uriNaviBackButtonImage*
 >导航栏返回按钮
 >
 >```js
 >var imgPath = MHPluginSDK.uriNaviBackButtonImage;
 >```
-
-
 
 #### *uriNaviMoreButtonImage*
 
@@ -225,10 +205,6 @@ componentWillUnmount() {
 >```js
 >var imgPath = MHPluginSDK.uriNaviMoreButtonImage;
 >```
-
-
-
-### 远程过程调用相关
 
 #### *sendEvent(eventName, body)*
 
@@ -283,8 +259,6 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 });
 ```
 
-
-
 #### *callMethodForceWay(method, params, extrainfo, way, callback)* `AL-[109,)`
 
 >调用设备 RPC 指令接口，指定发送方式（云端、局域网）
@@ -319,8 +293,6 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 >**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档 
 >
 
-
-## 云端相关
 #### *callSmartHomeAPI(api, params, callback)*
 
 >调用米家云端 API
@@ -485,8 +457,6 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 >
 >可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被米家服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
 
-### 属性相关
-
 #### *getDevicePropertyFromMemCache(keys, callback)*
 
 >从内存缓存中获取设备属性当前值（不会发送网络请求）
@@ -568,7 +538,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >
 > `callback` 回调方法 **(Object kvPairs)**
 
-#### openAddDeviceGroupPage*
+#### *openAddDeviceGroupPage*
 
 > 打开创建设备组页
 >
@@ -595,7 +565,6 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
     MHPluginSDK.openEditDeviceGroupPage(["12345","67890"]);
 ```
 
-### 定时器相关
 #### *openTimerSettingPage(onMethod, onParam, offMethod, offParam)* `AL-[101,)`
 
 >提供设备定时设置的统一页面，用来让用户设置设备的定时开关。
@@ -663,6 +632,18 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeviceUpgradePage();
 > ```
 
+#### *setFirmwareUpdateErrDic(message)* ` AL-[136,)` 
+
+> 为设备固件升级失败添加自定义的errorCode与错误提示信息的索引
+>
+> `message` 以errorCode为key，以错误提示信息为value的字典。key和value的数据类型都须是string。
+>
+> **注意** 分享过来的设备是无法进行固件升级的，所以此时此方法无效。
+>
+> ```js
+> MHPluginSDK.setFirmwareUpdateErrDic({'1001': '请检查网络'});
+> ```
+
 #### *closeCurrentPage()*
 
 >退出插件
@@ -689,7 +670,6 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeleteDeviceWithCustomMessage("some tips");
 > ```
 
-### 弹窗
 #### *showFinishTips(content)*
 
 >显示一个已完成提示，时长1秒
@@ -722,8 +702,6 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 #### *dismissBLESwitchGuide()* `AL-[128,)`
 
 > 隐藏蓝牙开关引导动画。注：用户如果与动画有手势交互，动画隐藏，则无需再调用此方法。
-
-### 分享相关
 
 #### *openShareListBar(title, description, path, url)*
 
@@ -772,8 +750,6 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >`path` 缩略图路径（可以是本地 basePath+imagePath 形式，也可以是网络图片 http://）
 >`url` 网页URL
 
-
-
 #### *shareToML(title, description, path, url)*
 >直接分享到米聊
 >
@@ -788,8 +764,6 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 > 全屏截图并分享到社交媒体
 >
 > MHPluginSDK.onShare();
->
-> 
 >
 
 
@@ -866,8 +840,6 @@ MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
 });
 ```
 
-
-
 #### *loadDeviceCurrentPlaceMarkCallback(callback)*
 
 >读取当前位置的省市信息（设备上一次绑定的位置）
@@ -915,8 +887,6 @@ MHPluginSDK.loadCurrentPlaceMarkCallback((placeMark, loopbackParams) => {
 >**注意** 此方法只在开发自定义智能场景插件 bundle 时使用，作用是插件自定义场景处理完成时将处理好的 payload 回传，请参见”开发自定义智能场景“章节
 >**注意** 此方法回传的payload会填到value字段里，无法自定义其它字段，已废弃，请使用finishCustomSceneSetupWithTrigger/Action方法替代
 
-
-
 #### *onFinishing(devices, model, callback)* ` AL-[110,)`
 
 > 把设备添加到设备列表当中
@@ -942,8 +912,6 @@ MHPluginSDK.onFinishing([peripheral.identifier], 'xiaomi.bledemo.v1', (error, bo
     });
 ```
 
-
-
 #### *openDevice(did, model, callback)* ` AL-[110,)`
 
 > 打开某设备列表中的某个设备
@@ -957,8 +925,6 @@ MHPluginSDK.onFinishing([peripheral.identifier], 'xiaomi.bledemo.v1', (error, bo
 ```javascript
 MHPluginSDK.openDevice(device.did, 'xiaomi.bledemo.v1', () => {});
 ```
-
-
 
 #### *applyForDeviceIDAndToken(model, mac,callback)* ` AL-[110,)`
 
@@ -979,8 +945,6 @@ MHPluginSDK.applyForDeviceIDAndToken('xiaomi.bledemo.v1', '23:23:93:a3:98', (err
   }
 });
 ```
-
-
 
 #### *bindDevice(model, mac, did, token, name, passwd, callback)* ` AL-[110,)`
 
