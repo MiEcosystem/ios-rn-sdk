@@ -641,7 +641,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > **注意** 分享过来的设备是无法进行固件升级的，所以此时此方法无效。
 >
 > ```js
-> MHPluginSDK.setFirmwareUpdateErrDic({'1001': '请检查网络'})
+> MHPluginSDK.setFirmwareUpdateErrDic({'1001': '请检查网络'});
 > ```
 
 #### *closeCurrentPage()*
