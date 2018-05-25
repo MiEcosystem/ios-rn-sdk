@@ -285,3 +285,6 @@ MHBluetooth.getPeripheralInfo((success,peripheral)=>{
 
 MHBluetooth.readRSSI();
 ```
+
+
+

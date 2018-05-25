@@ -1324,3 +1324,18 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 
 >保持屏幕常亮，flag为true 或者 false
 >不需要时需要设置回去！！！
+
+#### *getConnectedWifi(callBack)* `AL-[137,)`
+
+>获取手机所连接的wifi信息
+>
+>暂时信息里只有SSID
+
+```js
+MHPluginSDK.getConnectedWifi((isSuccess,message) =>{
+	if(isSuccess){
+        bindkey = message["SSID"];
+	}	
+});
+```
+
