@@ -26,7 +26,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 >String
 
 #### *avatarURL* `AL-[122,)`
->当前登录用户的昵称
+>当前登录用户的头像 url
 >
 >String
 
@@ -295,140 +295,16 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 
 #### *callSmartHomeAPI(api, params, callback)*
 
->调用米家云端 API
+>调用米家后台 API，与米家服务器交互。
 >
->`api` 云端提供的 API 接口命令字字符串
+>`api` 后台提供的 API 接口命令字字符串
 >`params` 参数字典或数组（视具体 API 而定）
 >`callback` 回调方法 **(Object response)**
 >
->具体不同设备开放的云端接口请参照与米家云端对接时提供的文档或说明，以云端给出的信息为准。
+>不同设备开放的接口请参照与米家后台对接时提供的文档或说明，以后台给出的信息为准。米家客户端只封装透传网络请求，无法对接口调用结果解释，有问题请直接联系项目对接后台人员或 PM。
 >
->**支持的部分云端 API：**
+>**后台常用 API 整理见：[文档](./callSmartHomeAPI.md)**
 >
->- `/scene/list` 获取设备定时列表
->
->
->
->- `/scene/delete` 删除设备定时
->
->
->
->- `/scene/edit` 创建（编辑）设备定时
->
->
->
->- `/home/latest_version` {"model": model} 获取最新固件版本（蓝牙设备）
->
->
->
->- `/home/checkversion` {"pid":0, "did":did} 获取最新固件版本（WIFI设备）
->
->
->插件获取设备上报给米家云端的 属性 与 事件 接口（包含蓝牙设备通过蓝牙网关上报的数据）：
->
->- ​	`/user/get_user_device_data`  读取与时间相关数据，请求参数示例：
->
->```javascript
->    {
->      "did":"123",   //设备 id
->      "uid":'123',   //要查询的用户 uid 
->      "key":"power", //与上报时一致
->      "type":"prop", //与上报时一致，属性 为 prop ，事件为 event
->      "time_start":"1473841870", //数据起点时间，单位为秒
->      "time_end":"1473841880", //数据终点时间，单位为为秒
->      "group": //返回数据的方式，默认 raw , 可选值为 hour、day、week、 month。
->      "limit": //返回数据的条数，默认 20，最大 1000
->    }
->```
->
->- ​	`/device/batchdevicedatas` 读取与时间无关数据，请求参数示例：
->
->```javascript
->{
->  "0":{
->    "did":"311223", //设备 id
->    "props":["prop.usb_on","prop.on"]
->  },
->   "1":{
->     "did":"311304",
->     "props":["prop.usb_on","prop.on"]
->  }
->}
->```
->
->- `/user/set_user_device_data`   插件上报设备数据（属性与事件）至米家云端，支持批量，请求参数示例：
->
->
->```javascript
->{
->  "0": {
->    "uid": "xxx", //用户 uid
->    "did": "123", //设备id
->    "time": "1473841870", //时间戳，单位为秒
->    "type": "prop", // 属性为 prop，事件为 event
->    "key": "power",
->    "value": {} 
->  },
->  "1": {
->    "uid": "xxx",
->    "did": "456",
->    "time": "1473841888",
->    "type": "prop",
->    "key": "power",
->    "value": {}
->  }
->}
->```
->
->*注：米家服务器不解析该 `value` 故可按照自身需要定义内部格式，只要保证 `value` 最终是 `string` 即可。*	
->
->插件存取跟设备相关数据，设备解绑（被用户删除）时，数据会被服务器自动清理
->
->- `/device/getsetting` 获取数据，参数示例：
->
->  ```json
->  {
->  "did":xxx,
->  "settings":["keyid_xxx_data"]
->  }
->  ```
->
->- `/device/setsetting` 设置数据，参数示例：
->
->  ```json
->  {
->   "did":xxx,
->   "settings":{
->      "keyid_xxx_data": "value1"
->   }
->  }
->  ```
-
-示例：
-
->```js
->// 获取当前设备固件版本
->MHPluginSDK.getDevicePropertyFromMemCache(["version"], (props) => {
->  console.log("current version"+props.version);
->});
->// 获取最新固件版本（蓝牙设备）
->MHPluginSDK.callSmartHomeAPI("/home/latest_version", {"model":MHPluginSDK.deviceModel}, (response) => {
->  console.log("latest version"+JSON.stringify(response));
->});
->// 获取最新固件版本（WIFI设备）
->// pid 固定为0
->MHPluginSDK.callSmartHomeAPI("/home/checkversion", {"pid":0, "did":MHPluginSDK.deviceId}, (response) => {
->  console.log("latest version"+JSON.stringify(response));
->});
->// 删除已经设置的定时
->MHPluginSDK.callSmartHomeAPI('/scene/delete', delDate, (response) => {
->  AlertIOS.alert(JSON.stringify(response));
->});
->// 获取设备上报数据
->MHPluginSDK.callSmartHomeAPI('/user/get_user_device_data',{"did":MHPluginSDK.deviceId,"uid":MHPluginSDK.ownerId,"key":"power","type":"prop","time_start":"1473841870","time_end":"1473841880"}, (response) => {
->  AlertIOS.alert(JSON.stringify(response));
->});
->```
 
 #### *fetchUserInfo(uids,  callback)*`AL-[125,)`
 
@@ -1117,9 +993,11 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 
 #### *setUserConfigs(componentId,data,callback)* `AL-[121,)`
 
-> 存储信息
+> 云端存储**与用户相关数据**。会跟随账户，注意与 `/device/setsetting` 存储[设备相关数据](./callSmartHomeAPI.md)的接口区分。
 >
-> 注意：componentId需要向米家后台申请，不用用未申请的componentId，破坏其他插件的数据
+> 同一用户（解绑）删除某设备之后，添加同 model 设备，userconfigs 数据不会被删除。 
+>
+> 注意：componentId需要向米家后台申请，不要用未申请的componentId，破坏其他插件的数据
 >
 > data中key （例子中是0、100）要间隔开，底层会根据数据大小分包存储，建议隔100一个key，key的最大值为3万多
 >
