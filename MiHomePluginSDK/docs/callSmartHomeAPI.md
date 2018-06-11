@@ -111,7 +111,7 @@
 
 小⽶提供文件存储云服务 ( File Storage Service，简称 FDS )，厂商有文件存储管理需求时可使用。
 
-MIOT 设备使用 FDS 请参考指南：[MIOT FDS功能指南-微服务.pdf](MIOT FDS功能指南-微服务.pdf)
+MIOT 设备使用 FDS 请参考指南：[MIOT FDS功能指南-微服务.pdf](./MIOT%20FDS功能指南-微服务.pdf)
 
 扩展程序端接口参考指南中 **app侧接口** 章节。注意 *callSmartHomeAPI* 方法会自动帮你填充 `/app` 前缀。如：
 
