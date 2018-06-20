@@ -863,6 +863,49 @@ MHPluginSDK.getDevicesWithModel("xiaomi.watch.band2",(success,devices) =>{
 
           })
 ```
+#### *callSpecMethod(method,params,callback)*` AL-[138,)`
+
+>MiotSpec方法，暂时只支持获取、设置设备的属性
+>
+>` method` string类型，用于区分操作类型：get_properties 获取设备属性、set_properties 设置设备属性
+>
+>`params` 用于存放方法参数字典的数组（支持同时获取、设置多个属性），字典内具体参数参照下文。
+>
+>` callback(bool,array)` 返回成功/失败标识，以及结果/error。
+>
+>**get_properties**
+>
+>key:did    value:设备did
+>
+>key:siid   value:设备siid
+>
+>key:piid   value:设备piid
+>
+>**set_properties**
+>
+>key:did      value:设备did
+>
+>key:siid      value:设备siid
+>
+>key:piid     value:设备piid
+>
+>key:value  value:要设置的值
+
+```js
+var array = [{
+    			did: 123,
+    			siid: 456,
+    			pid: 789
+			}];
+MHPluginSDK.callSpecMethod("get_properties",array,(success,message) => {
+    if (success) {
+        JSON.stringify(message)
+    }
+})
+```
+
+
+
 #### *firmwareNotCheckUpdate(notCheckUpdateFlag, callback)* `AL-[116,)`
 
 >设置设备控制页不检查固件升级
