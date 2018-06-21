@@ -255,4 +255,23 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
   })
   ```
 
-  ​
+
+#### *getBindKey(callback)*`AL-[137,)`
+
+描述：支持小米蓝牙协议的，且已经连接的设备可通过此方法获取bindKey
+
++ ` callback(isSuccess, message)`回调，isSuccess表示是否成功， message在成功的情况下表示bindkey， 在失败的情况下表示error。
+
+  例子：
+
+  ```js
+  MHXiaomiBLE.getBindKey((isSuccess,message)=>{
+  	if(isSuccess){
+          // bindkey
+      } else {
+          // error
+      }
+  })
+  ```
+
+  
