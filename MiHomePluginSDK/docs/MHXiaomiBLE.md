@@ -39,8 +39,6 @@ MHXiaomiBLE.getDefaultDevice((error, device) => {
 });
 ```
 
-
-
 #### *scanXiaoMiBLE(model, timeout, callback)*
 
 描述：搜索某model的小米蓝牙设备
@@ -82,8 +80,6 @@ MHXiaomiBLE.registerXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', 10, (error, info) 
   }
 });
 ```
-
-
 
 #### *loginXiaoMiBLE(did,mac, timeout, callback)*
 
@@ -274,4 +270,22 @@ MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) =>
   })
   ```
 
-  
+
+#### *oneTimePassword(interval, digits, callback)*`AL-[137,)`
+
+描述：支持米家安全芯片的设备，通过此方法获取一次性密码组
+
+- `interval`，时间间隔，单位为秒，类型为 number，传入 1 到 60 的整数
+- `digits`，密码位数，类型为 number，传入 6 到 8 的整数
+- `callback` 回调，密码组或者错误通过此返回
+
+示例：
+
+```javascript
+MHXiaomiBLE.oneTimePassword(30,  8, (error,passwds)=>{
+    if(!error){
+        //parse passwds array
+	}
+}); 
+```
+
