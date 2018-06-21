@@ -11,7 +11,7 @@ var MHXiaomiBLE = require('NativeModules').MHXiaomiBLE;
 ```
 
 ### 常量
-*didFoundXiaoMiBLEDevice* 发现小米某model的蓝牙设备通知
+####*didFoundXiaoMiBLEDevice* 发现小米某model的蓝牙设备通知
 
 ```javascript
 MHXiaomiBLE.didFoundXiaoMiBLEDevice
@@ -97,7 +97,7 @@ MHXiaomiBLE.registerXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', 10, (error, info) 
 ```javascript
 MHXiaomiBLE.loginXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', 10, (error, info) => {
   if(error){
-  	MHPluginSDK.showFailedTips('登录失败：'+error.message); 
+  	MHPluginSDK.showFailedTips('登录失败：'+error.message);
   }
 });
 ```
@@ -109,7 +109,7 @@ MHXiaomiBLE.loginXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', 10, (error, info) => 
 
 `2` —  蓝牙读写失败
 
-`3` —  token 发生变化导致的失败，需要重新注册获取新的 token 
+`3` —  token 发生变化导致的失败，需要重新注册获取新的 token
 
 `4` —  成功，一般不会出现在 `error` 中
 
@@ -137,7 +137,7 @@ MHXiaomiBLE.loginXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', 10, (error, info) => 
 ```javascript
 MHXiaomiBLE.bindXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) => {
   if(error){
-   	MHPluginSDK.showFailedTips('注册失败：'+error.message); 
+   	MHPluginSDK.showFailedTips('注册失败：'+error.message);
   }
 });
 ```
@@ -156,7 +156,7 @@ MHXiaomiBLE.bindXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) => {
 
 ```javascript
 MHXiaomiBLE.disconnectXiaoMiBLE('xdffe98sd9', '09:09:09:09:09', (error, info) => {
-  
+
 });
 ```
 
@@ -286,6 +286,5 @@ MHXiaomiBLE.oneTimePassword(30,  8, (error,passwds)=>{
     if(!error){
         //parse passwds array
 	}
-}); 
+});
 ```
-
