@@ -15,7 +15,6 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK
 ### 常量
 
 #### *userId*
-
 >当前登录用户的小米id
 >
 >String
@@ -23,7 +22,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK
 >var userId = MHPluginSDK.userId;
 >
 
-#### *userName* 
+#### *userName*
 >当前登录用户的昵称
 >
 >String
@@ -57,7 +56,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK
 #### *pageName* `AL-[110,)`
 > 页面 插件需要展示的页面
 >
-> String 
+> String
 > `main` 插件页的主页面
 > `connect` 插件页的快联页
 > `sence` 插件页的场景页
@@ -122,7 +121,7 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK
 >```javascript
 > // 假设采用订阅方式，需在 key 之前加前缀，属性为 prop.xxx, 事件为 event.xxx
 >MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power","event.isOn"]);
-> 
+>
 > // 若采用轮询方法，则无法轮询事件，只能查询 prop，直接填入 key
 > // MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
 >
@@ -231,7 +230,7 @@ componentWillUnmount() {
 >  // 假设设备的 profile 中有 power/brightness/color 几个属性 和 isOn 事件
 >
 >  //若为订阅模式
->MHPluginSDK.registerDeviceStatusProps(["prop.power", "prop.brightness", "prop.color","event.isOn"]); 
+>MHPluginSDK.registerDeviceStatusProps(["prop.power", "prop.brightness", "prop.color","event.isOn"]);
 >
 >  //如果是轮询方式
 >MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]);
@@ -298,11 +297,10 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 >
 >`callback` 回调方法 **(BOOL isLocal)**
 >
->**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档 
+>**注意** 此接口只适用于 WIFI 设备，蓝牙设备的控制请参见 MHBluetooth 文档
 >
 
 #### *callSmartHomeAPI(api, params, callback)*
-
 >调用米家后台 API，与米家服务器交互。
 >
 >`api` 后台提供的 API 接口命令字字符串
@@ -315,7 +313,6 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 >
 
 #### *fetchUserInfo(uids,  callback)*`AL-[125,)`
-
 > 获取小米账户的小米id、头像、昵称信息
 >
 > `uids` 数组，需要查询信息的小米id
@@ -334,7 +331,6 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 > ```
 
 #### *updateDeviceInfoCallback(callback)* `AL-[107,)`
-
 >向云端请求一次当前设备的信息，其中包含了当前设备是否在线
 >
 >`callback` 回调方法 **(Object response)**
@@ -342,7 +338,6 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 >可以用这个请求来查询设备是否在线，但是请求间隔不能小于20s，否则可能会被米家服务器打击；**设备在线状态建议采用客户端计时，状态轮询几次无结果时认为设备已离线，一般无须用这个请求实现。**
 
 #### *getDevicePropertyFromMemCache(keys, callback)*
-
 >从内存缓存中获取设备属性当前值（不会发送网络请求）
 >
 >`keys` 属性名数组
@@ -355,7 +350,7 @@ MHPluginSDK.callMethod('toggle',[],{}, (isSuccess, json) => {
 
 ```
 NSString* mac;            //设备的mac地址                 
-NSString* version;        //设备当前固件版本 
+NSString* version;        //设备当前固件版本
 double longitude;         //上次绑定时的经度
 double latitude;          //上次绑定时的纬度
 NSString* name;           //设备名称，用户可以修改
@@ -408,7 +403,6 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 
 
 #### *getDevicePropertyFromSrvCache(keys, callback)* `AL-[108,)`
-
 >从服务器缓存中获取设备上报的属性值（会发送网络请求）
 >
 >`keys` 属性名数组
@@ -442,7 +436,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >                             );
 > ```
 >
-> 
+>
 >
 > **注意** 只有特定设备支持编辑设备组统一管理，此方法目前只支持特定设备，使用请与米家联系。
 ```js
@@ -494,14 +488,14 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >
 >```js
 >MHPluginSDK.openTimerSettingPageWithVariousTypeParams(
->"set_power", ['on', 'smooth', 500], 
+>"set_power", ['on', 'smooth', 500],
 >"set_power", ['off', 'smooth', 500]);
 >```
 >如果只有“开”或者“关”，只需要把用不到的参数置为null。
 >
 >```js
 >MHPluginSDK.openTimerSettingPageWithVariousTypeParams(
->null, null, 
+>null, null,
 >"set_power", ['off', 'smooth', 500]);//只有关
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
@@ -516,7 +510,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.openDeviceUpgradePage();
 > ```
 
-#### *setFirmwareUpdateErrDic(message)* ` AL-[136,)` 
+#### *setFirmwareUpdateErrDic(message)* ` AL-[136,)`
 
 > 为设备固件升级失败添加自定义的errorCode与错误提示信息的索引
 >
@@ -656,20 +650,20 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >
 >  @param license  软件许可以及使用协议的名称
 >
->  @param licenseURL 软件许可以及使用协议的详细内容 的url 
+>  @param licenseURL 软件许可以及使用协议的详细内容 的url
 >
 >  @param policy 用户隐私协议的名称
 >
 >  @param policyURL  用户隐私协议的详细url
 >
->  @param callBack   callback 
+>  @param callBack   callback
 >
 ```
   MHPluginSDK.openPrivacyLicense("license","licenseURL","policy, "policyURL,(result)=>{
     if(result == "ok") {
 
     } else {
-      
+
     }
   })
 ```
@@ -680,7 +674,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >
 >  license  软件许可以及使用协议的名称
 >
->  licenseURL 软件许可以及使用协议的详细内容 的url 
+>  licenseURL 软件许可以及使用协议的详细内容 的url
 >
 >  policy 用户隐私协议的名称
 >
@@ -917,7 +911,7 @@ MHPluginSDK.callSpecMethod("get_properties",array,(success,message) => {
 #### *firmwareNotCheckUpdate(notCheckUpdateFlag, callback)* `AL-[116,)`
 
 >设置设备控制页不检查固件升级
->`callback` 回调方法 (success, message) 
+>`callback` 回调方法 (success, message)
 
 ```javascript
 //设置不检查更新
@@ -927,7 +921,7 @@ MHPluginSDK.firmwareNotCheckUpdate(true,(success,message) =>{
             }
 
           })
-//检查更新则设置回来 
+//检查更新则设置回来
 MHPluginSDK.firmwareNotCheckUpdate(false,(success,message) =>{
             if (success) {
               alert(message);
@@ -1029,7 +1023,7 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 >
 > 注意：componentId需要向米家后台申请，不用用未申请的componentId，破坏其他插件的数据
 >
-> 
+>
 >
 > ```js
 > MHPluginSDK.getUserConfigs(20000, [0,100], (success, config, error)=>{
@@ -1046,7 +1040,7 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 
 > 云端存储**与用户相关数据**。会跟随账户，注意与 `/device/setsetting` 存储[设备相关数据](./callSmartHomeAPI.md)的接口区分。
 >
-> 同一用户（解绑）删除某设备之后，添加同 model 设备，userconfigs 数据不会被删除。 
+> 同一用户（解绑）删除某设备之后，添加同 model 设备，userconfigs 数据不会被删除。
 >
 > 注意：componentId需要向米家后台申请，不要用未申请的componentId，破坏其他插件的数据
 >
@@ -1143,7 +1137,7 @@ MHPluginSDK.getUserDeviceData(MHPluginSDK.deviceModel,MHPluginSDK.deviceId,'prop
 
 ```
 MHPluginSDK.addCustomSettingItemWithTitle('custom setting','custom.setting');
-  
+
 ```
 
 #### *shareSecureKey(did,shareUid,status,activeTime,expireTime,week,readonly,callback)* `AL-[125,)`
@@ -1176,7 +1170,7 @@ MHPluginSDK.shareSecureKey(MHPluginSDK.deviceId,"someone's mi id", 1, now, now +
   }
   //success
 });
-  
+
 ```
 
 #### *updateSecureKey(did,keyId,status,activeTime,expireTime,week,callback)*`AL-[125,)`
@@ -1207,7 +1201,7 @@ MHPluginSDK.updateSecureKey(MHPlugin.deviceId,"someone's keyid", 1, now, now + 3
   }
   //success
 });
-  
+
 ```
 
 #### *deleteSecureKey(did,keyId,callback)*`AL-[125,)`
@@ -1264,7 +1258,7 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 MHPluginSDK.getConnectedWifi((isSuccess,message) =>{
 	if(isSuccess){
         let ssid = message["SSID"];
-	}	
+	}
 });
 ```
 #### *getServiceTokenWithSid* `AL-[137,)`
@@ -1280,4 +1274,3 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
   }
 })
 ```
-

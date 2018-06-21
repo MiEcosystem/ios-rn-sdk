@@ -13,38 +13,56 @@ var MHBluetoothLE = require('NativeModules').MHBluetoothLE;
 **我们提供了一个蓝牙示例程序，见 com.xiaomi.corebledemo.ios  目录**
 
 ### 常量
-#### *event*
+### *event*
 `MHBluetoothLE`模块所有的消息类型 Object
 
-* event.centralManagerDidUpdateState central mananger 状态发生改变（蓝牙关闭，打开等）
-* event.centralManager_didDisconnectPeripheral_error 设备断开连接
-* event.centralManager_didConnectPeripheral_error 设备连接成功
-* event.centralManager_didFailToConnectPeripheral_error 设备连接失败
-* event.centralManager_didDiscoverPeripheral_advertisementData_RSSI 发现设备
-* event.peripheralDidUpdateName 设备名称改变
-* event.peripheral_didModifyServices 设备服务修改
-* event.peripheralDidUpdateRSSI_error 设备RSSI值更改(<=iOS8)
-* event.peripheral_didReadRSSI_error 设备RSSI值读取和改变(>iOS8)
-* event.peripheral_didDiscoverServices 发现设备支持的所有服务
-* event.peripheral_didDiscoverIncludedServicesForService_error 发现某服务下的服务
-* event.peripheral_didDiscoverCharacteristicsForService_error 发现某服务下的特征
-* event.peripheral_didUpdateValueForCharacteristic_error 某服务特征内容发生改变(读取或者通知)
-* event.peripheral_didWriteValueForCharacteristic_error 向某服务特征写入数据完成
-* event.peripheral_didUpdateNotificationStateForCharacteristic_error 某通知类型服务特征改变通知状态
-* event.peripheral_didDiscoverDescriptorsForCharacteristic_error 发现某服务特征描述
-* event.peripheral_didUpdateValueForDescriptor_error 某服务特征描述内容发生改变(读取）
-* event.peripheral_didWriteValueForDescriptor_error 向某服务特征描述写入数据完成
+#### event.centralManagerDidUpdateState central mananger
+>状态发生改变（蓝牙关闭，打开等）
+#### event.centralManager_didDisconnectPeripheral_error
+>设备断开连接
+#### event.centralManager_didConnectPeripheral_error
+>设备连接成功
+#### event.centralManager_didFailToConnectPeripheral_error
+>设备连接失败
+#### event.centralManager_didDiscoverPeripheral_advertisementData_RSSI
+>发现设备
+#### event.peripheralDidUpdateName
+>设备名称改变
+#### event.peripheral_didModifyServices
+>设备服务修改
+#### event.peripheralDidUpdateRSSI_error
+>设备RSSI值更改(<=iOS8)
+#### event.peripheral_didReadRSSI_error
+>设备RSSI值读取和改变(>iOS8)
+#### event.peripheral_didDiscoverServices
+>发现设备支持的所有服务
+#### event.peripheral_didDiscoverIncludedServicesForService_error
+>发现某服务下的服务
+#### event.peripheral_didDiscoverCharacteristicsForService_error
+>发现某服务下的特征
+#### event.peripheral_didUpdateValueForCharacteristic_error
+>某服务特征内容发生改变(读取或者通知)
+#### event.peripheral_didWriteValueForCharacteristic_error
+>向某服务特征写入数据完成
+#### event.peripheral_didUpdateNotificationStateForCharacteristic_error
+>某通知类型服务特征改变通知状态
+#### event.peripheral_didDiscoverDescriptorsForCharacteristic_error
+>发现某服务特征描述
+#### event.peripheral_didUpdateValueForDescriptor_error
+>某服务特征描述内容发生改变(读取）
+#### event.peripheral_didWriteValueForDescriptor_error
+>向某服务特征描述写入数据完成
 
-``` javascript 
+``` javascript
 var events = MHBluetoothLE.event;
 ```
 
 
 
 #### *scanOption*
-`MHBluetoothLE` 模块扫描设备的选项key 
+`MHBluetoothLE` 模块扫描设备的选项key
 类型: `Object`
-* scanOption.allowDuplicatesKey 设置一个Boolean值表示扫描时是否需要重复过滤 
+* scanOption.allowDuplicatesKey 设置一个Boolean值表示扫描时是否需要重复过滤
 * scanOption.solicitedServiceUUIDsKey 指定此扫描选项将导致管理器也扫描寻求数组中包含的任何服务的外设。
 
 #### *initOption*
@@ -175,7 +193,7 @@ MHBluetoothLE.startScan([ServiceUUID], options, (error) => {
     MHPluginSDk.showFailedTips(error.message);
   }
 });
- 
+
 ```
 
 #### *stopScan(callback(error))*
@@ -189,7 +207,7 @@ MHBluetoothLE.startScan([ServiceUUID], options, (error) => {
 例子：
 
 ```javascript
-MHBluetoothLE.stopScan(() => {});	
+MHBluetoothLE.stopScan(() => {});
 ```
 
 
@@ -305,7 +323,7 @@ MHBluetoothLE.isEnabled((isEnable) => {
 
 ```javascript
 MHBluetoothLE.connectDevice(did, (error, peripheral) => {
-  
+
 });
 ```
 
@@ -325,7 +343,7 @@ MHBluetoothLE.connectDevice(did, (error, peripheral) => {
 
 描述: 连接插件扫描到的设备
 
-参数： 
+参数：
 
 * `identifier` 设备的identitier
 * `options` 连接配置选项  设置key 参见 常量`connectOption`
@@ -502,7 +520,7 @@ MHBluetoothLE.readRSSI(peripheral.identifier, (error, peripheral, rssi) => {
 * write 有响应写数据
 * notify 通知
 * indicate 表现
-* authenticatedSignedWrites 
+* authenticatedSignedWrites
 * extendedProperties
 * notifyEncryptionRequired
 * indicateEncryptionRequired
@@ -644,7 +662,7 @@ MHBluetoothLE.discoverDescriptors(characteristic.peripheral, characteristic.serv
 
 #### *readValue*(identifier, serviceUUID, characteristicUUID, callback)
 
-描述：读取某设备的某服务的某特征值 
+描述：读取某设备的某服务的某特征值
 
 参数：
 
@@ -693,7 +711,7 @@ MHBluetoothLE.writeWithoutResponse(service.peripheral, service.uuid, Characteris
 
 
 
-#### *writeValue(identifier, serviceUUID, characteristicUUID, msg, callback)* 
+#### *writeValue(identifier, serviceUUID, characteristicUUID, msg, callback)*
 
 描述：向某设备的某服务的某特征写入数据
 
@@ -770,7 +788,7 @@ MHBluetoothLE.disableNotify(characteristic.peripheral, characteristic.service, c
 
 #### *readDescriptorValue(identifier, serviceUUID, characteristicUUID, descriptorUUID, callback)*
 
-描述：读取某设备的某服务的某特征值 
+描述：读取某设备的某服务的某特征值
 
 参数：
 
@@ -796,7 +814,7 @@ MHBluetoothLE.readDescriptorValue(descriptor.peripheral, descriptor.service, des
 
 #### writeDescriptorValue(identifier, serviceUUID, characteristicUUID, descriptorUUID, body, callback)*
 
-描述：读取某设备的某服务的某特征值 
+描述：读取某设备的某服务的某特征值
 
 参数：
 
@@ -887,4 +905,3 @@ setTimeout(() => {
 
 
 > **更多代码示例请看com.xiaomi.corebledemo.ios**
-
