@@ -871,7 +871,7 @@ MHPluginSDK.getDevicesWithModel("xiaomi.watch.band2",(success,devices) =>{
 
           })
 ```
-#### *callSpecMethod(method,params,callback)*` AL-[138,)`
+#### *callSpecMethod(method,params,callback)* ` pre_releae`
 
 >MiotSpec方法，暂时只支持获取、设置设备的属性
 >
@@ -1263,13 +1263,14 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 ```js
 MHPluginSDK.getConnectedWifi((isSuccess,message) =>{
 	if(isSuccess){
-        bindkey = message["SSID"];
+        let ssid = message["SSID"];
 	}	
 });
-
+```
 #### *getServiceTokenWithSid* `AL-[137,)`
 > 传入域名返回 serverToken 等信息，**目前只支持小爱音箱的域名**
-```
+
+```javascript
 MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
   if(!error) {
     result["serviceToken"]
