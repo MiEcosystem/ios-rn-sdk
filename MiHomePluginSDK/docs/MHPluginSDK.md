@@ -1213,7 +1213,7 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 
 
 #### *getServiceTokenWithSid* `AL-[137,)`
-> 传入域名返serverToken 等信息，**目前只支持小爱音箱的域名**
+> 传入域名返回 serverToken 等信息，**目前只支持小爱音箱的域名**
 ```
 MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
   if(!error) {
