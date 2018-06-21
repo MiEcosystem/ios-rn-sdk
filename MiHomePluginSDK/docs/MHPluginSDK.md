@@ -871,7 +871,7 @@ MHPluginSDK.getDevicesWithModel("xiaomi.watch.band2",(success,devices) =>{
 
           })
 ```
-#### *callSpecMethod(method,params,callback)* ` pre_releae`
+#### *callSpecMethod(method,params,callback)* ` pre_release`
 
 >MiotSpec方法，暂时只支持获取、设置设备的属性
 >
