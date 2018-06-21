@@ -5,14 +5,17 @@
 
 MHPluginSDK 模块主要提供插件与米家主APP、智能设备，以及米家云端交互的API。包括获取设备信息、设置设备属性、向设备发送指令、访问米家云端接口、访问特定UI资源等等。
 
-```
+```javascript
 // 模块初始化
-var MHPluginSDK = require('NativeModules').MHPluginSDK;
+var MHPluginSDK = require('NativeModules').MHPluginSDK
 ```
 
 
+
+### 常量
 
 #### *userId*
+
 >当前登录用户的小米id
 >
 >String
@@ -108,32 +111,32 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK;
 #### *deviceStatusUpdatedEventName*
 >设备状态更新
 >
->在插件运行在前台时，可以通过调用 registerDeviceStatusProps 方法（见下文档）注册属性值变化的监听，注册分两种，轮询获取属性或订阅（mipush的推送），推荐使用订阅方式。方式的选择可以通过config.plist中的pluginFetchPropStatusMode key设置
+>当扩展程序运行在前台时，可以通过调用 registerDeviceStatusProps 方法（见下文档）注册设备的属性和事件，同时监听该常量。
 >
->当采用轮询方式时，APP会定期（默认每 6s 一次，可通过 config.plist 中的配置项进行调整）向设备发送 get_props 请求来获取设备指定属性集合的最新状态。之后插件会接收到本事件，触发事件回调。
+>当米家 App 获取到设备属性、事件时，会通过该常量发出通知。插件监听通知，从内存中获取对应结果从而进行相应处理。
 >
->插件可以在该事件回调中进行相应的 state 设置，从而触发界面更新，来展示设备的最新状态。
+>获取设备状态模式分为两种：定时轮询和订阅。在 config.plist 中修改，前者为定时向设备发送 rpc 命令查询结果，后者为设备属性发生变化或事件发生时，服务器端基于小米推送向客户端发送 push。
 >
->```js
->componentDidMount: function() {
->  // 指定发送 get_props 获取的属性集合
->  MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power"]);
->  // 如采用轮询，则为 
->  //MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
->  // 订阅定期状态轮询的通知
->  var {DeviceEventEmitter} = require('react-native');
->  var subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
->    // 从device属性的内存缓存中拿到轮询的状态结果
->    MHPluginSDK.getDevicePropertyFromMemCache(["rgb","power"], (props) => {
->      if (props.rgb)
->      {
->        var sRGB = "#" + this.getNewRGB(props.rgb >> 16, (props.rgb >> 8) & 0x00ff, (props.rgb & 0x0000ff));
->        // 设置 state 刷新页面
->        this.setState({"resultViewColor":sRGB});
->      }
->    });
+>示例：
+>
+>```javascript
+> // 假设采用订阅方式，需在 key 之前加前缀，属性为 prop.xxx, 事件为 event.xxx
+>MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power","event.isOn"]);
+> 
+> // 若采用轮询方法，则无法轮询事件，只能查询 prop，直接填入 key
+> // MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
+>
+> //记得初始化 DeviceEventEmitter
+>const {DeviceEventEmitter} = require('react-native');
+> //  监听
+>let subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+>
+>  // 从device属性的内存缓存中拿到轮询的状态结果，同样，订阅需要添加前缀，轮询不用
+>  MHPluginSDK.getDevicePropertyFromMemCache(["prop.rgb","prop.power","event.isOn"], (result) => {
+>    //console.log(result);
 >  });
->},
+>
+>});
 >```
 
 
@@ -178,20 +181,19 @@ componentWillUnmount() {
 #### *deviceCancelAuthorization*  `AL-[130,)`
 > 用户撤销隐私授权时的回调
 >
-```
+```javascript
 componentWillMount() {
     this._deviceCancelAuthorization = DeviceEventEmitter.addListener(MHPluginSDK. deviceCancelAuthorization, (event) => {
 
     });
 }
-
 componentWillUnmount() {
     this._deviceCancelAuthorization.remove();
 }
-
 ```
 
 #### *uriNaviBackButtonImage*
+
 >导航栏返回按钮
 >
 >```js
@@ -206,6 +208,10 @@ componentWillUnmount() {
 >var imgPath = MHPluginSDK.uriNaviMoreButtonImage;
 >```
 
+
+
+### 方法
+
 #### *sendEvent(eventName, body)*
 
 >发送一个事件。
@@ -215,22 +221,24 @@ componentWillUnmount() {
 >
 >其它模块可通过 DeviceEventEmitter.addListener 方法来注册并响应 sendEvent 发送的事件。
 
-
-
 #### *registerDeviceStatusProps(propArr)*
 
->设置定时向设备RPC获取属性时的属性名集合
+>注册获取设备状态时的 属性名 /  事件名集合
 >
->`propArr` 注册定时向发送 get_props 获取的属性名数组，具体参见该设备的 profile
+>`propArr` 属性名 / 事件名 数组，具体参见该设备的 profile
 >
 >```js
->  // 假设灯的 profile 中有 power/brightness/color 几个属性
->  MHPluginSDK.registerDeviceStatusProps(["prop.power", "prop.brightness", "prop.color"]); 
+>  // 假设设备的 profile 中有 power/brightness/color 几个属性 和 isOn 事件
+>
+>  //若为订阅模式
+>MHPluginSDK.registerDeviceStatusProps(["prop.power", "prop.brightness", "prop.color","event.isOn"]); 
 >
 >  //如果是轮询方式
->  //MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]);
+>MHPluginSDK.registerDeviceStatusProps(["power", "brightness", "color"]);
 >
->  // APP会在插件运行时每6s获取一次灯的电源开关状态、亮度以及颜色值，插件通过监听 MHPluginSDK.deviceStatusUpdatedEventName 来处理回调。
+>  //注意订阅模式为设备状态发生改变时，收到通知。轮询为定时获取当时属性。
+>
+>  //插件通过监听 MHPluginSDK.deviceStatusUpdatedEventName 来处理回调。
 >```
 
 
@@ -1258,5 +1266,17 @@ MHPluginSDK.getConnectedWifi((isSuccess,message) =>{
         bindkey = message["SSID"];
 	}	
 });
+
+#### *getServiceTokenWithSid* `AL-[137,)`
+> 传入域名返回 serverToken 等信息，**目前只支持小爱音箱的域名**
+```
+MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
+  if(!error) {
+    result["serviceToken"]
+    result["ph"]
+    result["slh"]
+    result["cUserId"]
+  }
+})
 ```
 
