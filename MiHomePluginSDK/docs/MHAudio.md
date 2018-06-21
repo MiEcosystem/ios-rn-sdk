@@ -9,8 +9,10 @@ var MHAudio = require('NativeModules').MHAudio;
 ```
 
 ### 常量
-#### 无
-
+#### *isAbleToRecord* `AL-[137,)` 
+> 常量类型 bool
+>
+> 判断App 是否有录音的权限
 
 
 ### 可以在插件端监听的事件
@@ -182,6 +184,7 @@ _convertButtonClicked() {
       }
     });
 ```
+
 
 
 
