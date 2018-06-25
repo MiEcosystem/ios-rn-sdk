@@ -16,8 +16,8 @@ var MHBluetoothLE = require('NativeModules').MHBluetoothLE;
 ### *event*
 `MHBluetoothLE`模块所有的消息类型 Object
 
-#### event.centralManagerDidUpdateState central mananger
->状态发生改变（蓝牙关闭，打开等）
+#### event.centralManagerDidUpdateState
+>central mananger 状态发生改变（蓝牙关闭，打开等）
 #### event.centralManager_didDisconnectPeripheral_error
 >设备断开连接
 #### event.centralManager_didConnectPeripheral_error
