@@ -14,7 +14,7 @@
 
 扩展程序   <====>   米家服务器   <====>  网关    <====>  Mesh 设备
 
-Mesh 设备采用 `miot-spec` 接入，扩展程序作为控制端遵循该规范发送、接收数据。米家  iOS App 在 `MHPluginSDK` 基础模块中封装了 `callSpecMethod()` 方法，扩展程序直接填入参数调用即可。
+Mesh 设备采用 `miot-spec` 接入，扩展程序作为控制端遵循该规范发送、接收数据。米家  iOS App 在 `MHPluginSDK` 基础模块中封装了 `callSpecMethod()` 方法，扩展程序直接填入参数调用即可。`miot-spec` [文档](https://github.com/MiEcosystem/miot-spec-doc)。
 
 获取设备属性：
 
