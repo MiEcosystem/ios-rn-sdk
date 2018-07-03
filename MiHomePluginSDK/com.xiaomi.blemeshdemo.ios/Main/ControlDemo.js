@@ -73,12 +73,12 @@ class ControlDemo extends React.Component {
   }
 
   _setPowerOff(){
-    let params = [{"did":MHPluginSDK.deviceId, "siid":2, "piid":1, "value":"false"}];
+    let params = [{"did":MHPluginSDK.deviceId, "siid":2, "piid":1, "value":false}];
     this._cmdSet(params);
   }
 
   _setPowerOn(){
-    let params = [{"did":MHPluginSDK.deviceId, "siid":2, "piid":1, "value":"true"}];
+    let params = [{"did":MHPluginSDK.deviceId, "siid":2, "piid":1, "value":true}];
     this._cmdSet(params);
   }
 
