@@ -1248,20 +1248,21 @@ MHPluginSDK.getSecureKey(MHPlugin.deviceId,(isSuccess,response)=>{
 >保持屏幕常亮，flag为true 或者 false
 >不需要时需要设置回去！！！
 
-#### *getConnectedWifi(callBack)* `AL-[137,)`
+#### *getConnectedWifi(callBack)* `AL-[138,)`
 
 >获取手机所连接的wifi信息
 >
->暂时信息里只有SSID
+>暂时信息里只有SSID 与 BSSID
 
 ```js
 MHPluginSDK.getConnectedWifi((isSuccess,message) =>{
 	if(isSuccess){
         let ssid = message["SSID"];
+        let bssid = message["BSSID"];
 	}
 });
 ```
-#### *getServiceTokenWithSid* `AL-[137,)`
+#### *getServiceTokenWithSid* `AL-[138,)`
 > 传入域名返回 serverToken 等信息，**目前只支持小爱音箱的域名**
 
 ```javascript
