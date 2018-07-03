@@ -107,55 +107,6 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK
 >
 >BOOL
 
-#### *deviceStatusUpdatedEventName*
->设备状态更新
->
->当扩展程序运行在前台时，可以通过调用 registerDeviceStatusProps 方法（见下文档）注册设备的属性和事件，同时监听该常量。
->
->当米家 App 获取到设备属性、事件时，会通过该常量发出通知。插件监听通知，从内存中获取对应结果从而进行相应处理。
->
->获取设备状态模式分为两种：定时轮询和订阅。在 config.plist 中修改，前者为定时向设备发送 rpc 命令查询结果，后者为设备属性发生变化或事件发生时，服务器端基于小米推送向客户端发送 push。
->
->示例：
->
->```javascript
-> // 假设采用订阅方式，需在 key 之前加前缀，属性为 prop.xxx, 事件为 event.xxx
->MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power","event.isOn"]);
->
-> // 若采用轮询方法，则无法轮询事件，只能查询 prop，直接填入 key
-> // MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
->
-> //记得初始化 DeviceEventEmitter
->const {DeviceEventEmitter} = require('react-native');
-> //  监听
->let subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
->
->  // 从device属性的内存缓存中拿到轮询的状态结果，同样，订阅需要添加前缀，轮询不用
->  MHPluginSDK.getDevicePropertyFromMemCache(["prop.rgb","prop.power","event.isOn"], (result) => {
->    //console.log(result);
->  });
->
->});
->```
-
-
-#### *onReceivingForegroundPushEventName*
->插件在前台时收到 APNS 推送
->
->米家APP在后台时，收到苹果的 APNS 推送，用户点击推送会启动米家 APP，并转到相应推送设备的插件首页，此时 MHPluginSDK.extraInfo 里包含了推送的相关参数。
->
->米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
->
->米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert，插件会收到本通知，并触发通知的事件回调，携带参数在通知回调中给出。
-
-```
-var {DeviceEventEmitter} = require('react-native');
-var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegroundPushEventName,(notification) => {
-    // 插件在前台收到push通知回调
-    console.log(JSON.stringify(notification));
-  });
-```
-
 #### *viewWillAppear* `AL-[115,)`
 >从 Native 界面返回到插件
 >
@@ -1275,3 +1226,156 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
   }
 })
 ```
+
+### 推送功能
+
+#### 获取设备状态的更新
+
+当扩展程序运行在前台时，可以通过调用  `registerDeviceStatusProps `方法注册设备的属性和事件，同时监听 `deviceStatusUpdatedEventName` 常量。
+
+当米家 App 获取到设备属性、事件时，会通过常量发出通知。插件监听通知，从内存中获取对应结果从而进行相应处理。
+
+获取设备状态模式分为两种：轮询和订阅，在 `config.plist` 中可以配置。前者为定时向设备发送 rpc 命令查询结果，后者为设备属性发生变化或事件发生时，服务器端基于小米推送向客户端发送 push，插件通过监听 `deviceStatusUpdatedEventName` 得到变化的值。
+
+**示例：**
+
+```js
+// 假设采用订阅方式，需在 key 之前加前缀，属性为 prop.xxx, 事件为 event.xxx
+MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power","event.isOn"]);
+
+// 若采用轮询方法，则无法轮询事件，只能查询 prop，直接填入 key
+// MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
+
+// 记得初始化 DeviceEventEmitter
+const {DeviceEventEmitter} = require('react-native');
+// 监听
+let subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+
+ // 从device属性的内存缓存中拿到轮询的状态结果，同样，订阅需要添加前缀，轮询不用
+ MHPluginSDK.getDevicePropertyFromMemCache(["prop.rgb","prop.power","event.isOn"], (result) => {
+   console.log(result);
+ });
+
+});
+```
+
+#### 接收 APNS 推送
+
+- 米家APP在后台时，收到苹果的 APNS (*Apple Push Notification Service*)推送，用户点击推送会启动米家 APP，并转到相应推送设备的插件首页，此时 `MHPluginSDK.extraInfo` 里包含了推送的相关参数。
+- 米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
+- 米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert。插件只需监听 `onReceivingForegroundPushEventName` 常量，就会收到本通知，携带参数在通知回调中给出。
+
+**示例：**
+
+```js
+var {DeviceEventEmitter} = require('react-native');
+var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegroundPushEventName,(notification) => {
+    // 插件在前台收到push的通知回调
+    console.log(JSON.stringify(notification));
+  });
+```
+
+推送的相关参数，即 `pushMessage` ，其基本的数据格式为：
+
+```json
+{ 
+  "uid": "8804275",
+  "type": "share",                            // 消息类型
+  "msgid":"d1158c0311dac0a4a8a5777b233debc6", // 消息ID，用于去重
+  "body": {                                   // 消息体
+  }
+}
+```
+
+ `pushMessage` 分为五种：
+
+1. 分享
+
+   - 分享邀请
+
+     ```json
+     {
+       "uid": "8804275",
+       "type": "share"
+       "msgid":"d1158c0311dac0a4a8a5777b233debc6",
+       "body": {
+       	"action": "share_request"
+       }
+     }
+     ```
+
+   - 分享结果
+
+     ```json
+     {
+       "uid": "8804275",
+       "type": "share",
+       "msgid":"d1158c0311dac0a4a8a5777b233debc6",
+       "body":{
+       	"action": "share_response"
+       }
+     }
+     ```
+
+2. 设备
+
+   ```json
+   {
+     "uid": "8804275",
+     "type": "device",
+     "msgid":"d1158c0311dac0a4a8a5777b233debc6",
+     "body": {
+       "did": "10460",
+       "model": "zhimi.airpurifier.v1",
+       "subid":1212312
+       "attrs": [{
+         "key":"prop.aqi",
+         "value":[20],
+         "time":1414084527
+       }]
+     }
+   }
+   ```
+
+3. 场景通知
+
+   ```json
+   {
+     "type": "scene",
+     "body":{
+       "model":"zhimi.airpurifier.v1",
+       "event":"pollute_alert",
+       "did":"1234",
+       "time": 32123142，
+       "extra":{...}
+     }
+   }
+   ```
+
+4. 广告推广
+
+   ```json
+   {
+     "uid": "8804275",
+     "type": "adv",
+     "msgid":"d1158c0311dac0a4a8a5777b233debc6",
+     "body":{
+     	"url":"http://www.xiaomi.com/"
+     }
+   }
+   ```
+
+5. 商城跳转
+
+   ```json
+   {
+     "uid": "8804275",
+     "type": "shop",
+     "msgid":"d1158c0311dac0a4a8a5777b233debc6",
+     "body":{
+       action: "1" // 1代表首页，2代表商品详情页，后续可扩展
+       gid: "1" //商品id
+     }
+   }
+   ```
+
