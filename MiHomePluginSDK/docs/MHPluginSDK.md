@@ -1275,107 +1275,15 @@ var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegro
   });
 ```
 
-推送的相关参数，即 `pushMessage` ，其基本的数据格式为：
+推送的相关参数，即 `pushMessage` 。插件只接收与设备相关的 `pushMessage` ，数据格式如下：
 
 ```json
-{ 
-  "uid": "8804275",
-  "type": "share",                            // 消息类型
-  "msgid":"d1158c0311dac0a4a8a5777b233debc6", // 消息ID，用于去重
-  "body": {                                   // 消息体
-  }
+{
+  "did": "50602798",
+  "value": {
+  },
+  "event": "alarm",
+  "time": 1452173835
 }
 ```
-
- `pushMessage` 分为五种：
-
-1. 分享
-
-   - 分享邀请
-
-     ```json
-     {
-       "uid": "8804275",
-       "type": "share"
-       "msgid":"d1158c0311dac0a4a8a5777b233debc6",
-       "body": {
-       	"action": "share_request"
-       }
-     }
-     ```
-
-   - 分享结果
-
-     ```json
-     {
-       "uid": "8804275",
-       "type": "share",
-       "msgid":"d1158c0311dac0a4a8a5777b233debc6",
-       "body":{
-       	"action": "share_response"
-       }
-     }
-     ```
-
-2. 设备
-
-   ```json
-   {
-     "uid": "8804275",
-     "type": "device",
-     "msgid":"d1158c0311dac0a4a8a5777b233debc6",
-     "body": {
-       "did": "10460",
-       "model": "zhimi.airpurifier.v1",
-       "subid":1212312
-       "attrs": [{
-         "key":"prop.aqi",
-         "value":[20],
-         "time":1414084527
-       }]
-     }
-   }
-   ```
-
-3. 场景通知
-
-   ```json
-   {
-     "type": "scene",
-     "body":{
-       "model":"zhimi.airpurifier.v1",
-       "event":"pollute_alert",
-       "did":"1234",
-       "time": 32123142，
-       "extra":{...}
-     }
-   }
-   ```
-
-4. 广告推广
-
-   ```json
-   {
-     "uid": "8804275",
-     "type": "adv",
-     "msgid":"d1158c0311dac0a4a8a5777b233debc6",
-     "body":{
-     	"url":"http://www.xiaomi.com/"
-     }
-   }
-   ```
-
-5. 商城跳转
-
-   ```json
-   {
-     "uid": "8804275",
-     "type": "shop",
-     "msgid":"d1158c0311dac0a4a8a5777b233debc6",
-     "body":{
-       action: "1" // 1代表首页，2代表商品详情页，后续可扩展
-       gid: "1" //商品id
-     }
-   }
-   ```
 
