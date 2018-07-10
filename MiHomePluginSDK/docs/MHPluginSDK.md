@@ -473,6 +473,94 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.setFirmwareUpdateErrDic({'1001': '请检查网络'});
 > ```
 
+#### *getAvailableFirmwareForDids(dids, callback)* `AL-[138,)`
+
+> 获取固件的状态，可以确认是否需要升级，也可以获得当前的升级状态。
+>
+> `dids`设备did构成的数组
+>
+> `callback`回调方法 **(BOOL res, Object json)**
+>
+> 请求成功的回调中`json`有用字段
+>
+> - `currentVersion`当前固件版本号
+> - `did`设备did
+> - `isLatest`是否是最新版本
+> - `latest`最新固件版本号
+> - `otaFailedCode`OTA升级时的错误代码
+> - `otaFailedReason`OTA升级失败的原因
+> - `otaProgress`OTA进度
+> - `otaStartTime`OTA开始时间
+> - `otaStatus`当前OTA状态
+> - `timeOutTime`允许超时时间
+> - `updateState`固件当前状态，枚举值
+>   - 0 初始化
+>   - 1 可升级
+>   - 2 设备离线，无法升级
+>   - 3 下载固件
+>   - 4 安装固件
+>   - 5 安装完成
+>   - 6 安装成功
+>   - 7 安装失败
+>   - 8 检测是否有固件可更新时出错 
+>   - 9 状态未知
+>   - 10 超时
+>   - 11 其他错误
+> - `updating`是否正在更新
+
+```js
+MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
+  console.log(res, json);
+  if (res && json.length > 0) {
+    if (json[0].isLatest) {
+      console.log('当前固件版本号：' +
+                  json[0].currentVersion +
+                  ' 无可用更新，不需要升级。')
+    } else {
+      console.log('有新的固件可升级！' + '当前版本号：' +
+                  json[0].currentVersion + ' 新版本号：' +
+                  json[0].latest);
+    }
+  }
+});
+```
+
+#### *updateFirmwareForDid(did, callback)* `AL-[138,)`
+
+> 检查到有可用更新时，可以主动更新固件。
+>
+> `did`设备did
+>
+> `callback`回调方法 **(BOOL res, Object json)**
+>
+> 请求成功之后，在回调中可以调用`getAvailableFirmwareForDids`获取OTA的进度和状态。
+
+```js
+MHPluginSDK.updateFirmwareForDid(MHPluginSDK.deviceId, (res, json) => {
+  console.log(res, json);
+  if (res && json !== null) {
+    // 当然这里应该定时调用，demo 这里只调用了一次
+    MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
+      if (res && json.length > 0) {
+        let status = json[0].updateState;
+        switch (status) {
+          case 3:
+            this.setState({ currentStatus: "下载中" });
+            break;
+          case 4:
+            this.setState({ currentStatus: "安装中" });
+            break;
+          case 5:
+            this.setState({ currentStatus: "安装完成" });
+            break;
+        }
+        // 还可以根据otaProgress属性更新ProgressBar组件或者刷新进度条
+      }
+    })
+  }
+})
+```
+
 #### *closeCurrentPage()*
 
 >退出插件
