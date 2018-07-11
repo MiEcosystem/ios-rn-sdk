@@ -507,6 +507,12 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >   - 10 超时
 >   - 11 其他错误
 > - `updating`是否正在更新
+>
+> 请求失败的回调中`json`字段
+>
+> - `code`错误代码
+> - `domain`错误分类
+> - `localDescription `错误描述
 
 ```js
 MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
@@ -525,7 +531,7 @@ MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
 });
 ```
 
-#### *updateFirmwareForDid(did, callback)* `AL-[138,)`
+#### *startUpdateFirmwareForDid(did, callback)* `AL-[138,)`
 
 > 检查到有可用更新时，可以主动更新固件。
 >
@@ -533,12 +539,20 @@ MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
 >
 > `callback`回调方法 **(BOOL res, Object json)**
 >
+> 请求成功的回调中`json`是一个字符串：`'ok'`表示有可用升级并开始升级；`'already latest'`表示已经是最新版本，无需升级。
+>
+> 请求失败的回调中`json`字段
+>
+> - `code`错误代码
+> - `domain`错误分类
+> - `localDescription `错误描述
+>
 > 请求成功之后，在回调中可以调用`getAvailableFirmwareForDids`获取OTA的进度和状态。
 
 ```js
-MHPluginSDK.updateFirmwareForDid(MHPluginSDK.deviceId, (res, json) => {
+MHPluginSDK.startUpdateFirmwareForDid(MHPluginSDK.deviceId, (res, json) => {
   console.log(res, json);
-  if (res && json !== null) {
+  if (res && json === "ok") {
     // 当然这里应该定时调用，demo 这里只调用了一次
     MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
       if (res && json.length > 0) {
@@ -557,6 +571,10 @@ MHPluginSDK.updateFirmwareForDid(MHPluginSDK.deviceId, (res, json) => {
         // 还可以根据otaProgress属性更新ProgressBar组件或者刷新进度条
       }
     })
+  } else if (res && json === "already latest") {
+    console.log("无可用更新，无需升级");
+  } else if (!res) {
+    console.log("更新失败", JSON.stringify(json));
   }
 })
 ```
