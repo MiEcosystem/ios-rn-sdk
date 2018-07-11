@@ -531,7 +531,7 @@ MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
 });
 ```
 
-#### *startUpdateFirmwareForDid(did, callback)* `AL-[138,)`
+#### *startUpgradingFirmwareWithDid(did, callback)* `AL-[138,)`
 
 > 检查到有可用更新时，可以主动更新固件。
 >
@@ -550,7 +550,7 @@ MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
 > 请求成功之后，在回调中可以调用`getAvailableFirmwareForDids`获取OTA的进度和状态。
 
 ```js
-MHPluginSDK.startUpdateFirmwareForDid(MHPluginSDK.deviceId, (res, json) => {
+MHPluginSDK.startUpgradingFirmwareWithDid(MHPluginSDK.deviceId, (res, json) => {
   console.log(res, json);
   if (res && json === "ok") {
     // 当然这里应该定时调用，demo 这里只调用了一次
