@@ -164,7 +164,7 @@ componentWillUnmount() {
 
 #### *onReceivingForegroundPushEventName*
 
-> 插件通过监听 `onReceivingForegroundPushEventName` 接收APNS的推送，详见[订阅APNS推送](#user-content-订阅APNS推送)。
+> 插件通过监听 `onReceivingForegroundPushEventName` 接收APNS的推送，详见[订阅APNS推送](#user-content-订阅apns推送)。
 
 ### 方法
 
