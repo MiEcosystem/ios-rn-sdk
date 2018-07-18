@@ -158,7 +158,13 @@ componentWillUnmount() {
 >var imgPath = MHPluginSDK.uriNaviMoreButtonImage;
 >```
 
+#### *deviceStatusUpdatedEventName*
 
+> 插件通过监听 `deviceStatusUpdatedEventName` 订阅设备的状态更新，详见[订阅设备状态的更新](#user-content-订阅设备状态的更新)。
+
+#### *onReceivingForegroundPushEventName*
+
+> 插件通过监听 `onReceivingForegroundPushEventName` 接收 ASPN 的推送，详见[订阅 APNS 推送](#user-content-订阅 APNS 推送)。
 
 ### 方法
 
@@ -473,7 +479,7 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > MHPluginSDK.setFirmwareUpdateErrDic({'1001': '请检查网络'});
 > ```
 
-#### *getAvailableFirmwareForDids(dids, callback)* `AL-[138,)`
+#### *getAvailableFirmwareForDids(dids, callback)* `AL-[139,)`
 
 > 获取固件的状态，可以确认是否需要升级，也可以获得当前的升级状态。
 >
@@ -531,7 +537,7 @@ MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
 });
 ```
 
-#### *startUpgradingFirmwareWithDid(did, callback)* `AL-[138,)`
+#### *startUpgradingFirmwareWithDid(did, callback)* `AL-[139,)`
 
 > 检查到有可用更新时，可以主动更新固件。
 >
@@ -1333,9 +1339,9 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
 })
 ```
 
-### 推送功能
+### 订阅
 
-#### 获取设备状态的更新
+#### 订阅设备状态的更新
 
 当扩展程序运行在前台时，可以通过调用  `registerDeviceStatusProps `方法注册设备的属性和事件，同时监听 `deviceStatusUpdatedEventName` 常量。
 
@@ -1343,7 +1349,7 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
 
 获取设备状态模式分为两种：轮询和订阅，在 `config.plist` 中可以配置。前者为定时向设备发送 rpc 命令查询结果，后者为设备属性发生变化或事件发生时，服务器端基于小米推送向客户端发送 push，插件通过监听 `deviceStatusUpdatedEventName` 得到变化的值。
 
-**示例：**
+示例：
 
 ```js
 // 假设采用订阅方式，需在 key 之前加前缀，属性为 prop.xxx, 事件为 event.xxx
@@ -1365,13 +1371,13 @@ let subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdate
 });
 ```
 
-#### 接收 APNS 推送
+#### 订阅 APNS 推送
 
 - 米家APP在后台时，收到苹果的 APNS (*Apple Push Notification Service*)推送，用户点击推送会启动米家 APP，并转到相应推送设备的插件首页，此时 `MHPluginSDK.extraInfo` 里包含了推送的相关参数。
 - 米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
 - 米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert。插件只需监听 `onReceivingForegroundPushEventName` 常量，就会收到本通知，携带参数在通知回调中给出。
 
-**示例：**
+示例：
 
 ```js
 var {DeviceEventEmitter} = require('react-native');
