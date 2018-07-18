@@ -1371,7 +1371,7 @@ let subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdate
 });
 ```
 
-#### 订阅 APNS 推送
+#### 订阅APNS推送
 
 - 米家APP在后台时，收到苹果的 APNS (*Apple Push Notification Service*)推送，用户点击推送会启动米家 APP，并转到相应推送设备的插件首页，此时 `MHPluginSDK.extraInfo` 里包含了推送的相关参数。
 - 米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
