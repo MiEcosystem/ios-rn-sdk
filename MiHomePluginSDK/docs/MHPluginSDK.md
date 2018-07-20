@@ -107,55 +107,6 @@ var MHPluginSDK = require('NativeModules').MHPluginSDK
 >
 >BOOL
 
-#### *deviceStatusUpdatedEventName*
->设备状态更新
->
->当扩展程序运行在前台时，可以通过调用 registerDeviceStatusProps 方法（见下文档）注册设备的属性和事件，同时监听该常量。
->
->当米家 App 获取到设备属性、事件时，会通过该常量发出通知。插件监听通知，从内存中获取对应结果从而进行相应处理。
->
->获取设备状态模式分为两种：定时轮询和订阅。在 config.plist 中修改，前者为定时向设备发送 rpc 命令查询结果，后者为设备属性发生变化或事件发生时，服务器端基于小米推送向客户端发送 push。
->
->示例：
->
->```javascript
-> // 假设采用订阅方式，需在 key 之前加前缀，属性为 prop.xxx, 事件为 event.xxx
->MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power","event.isOn"]);
->
-> // 若采用轮询方法，则无法轮询事件，只能查询 prop，直接填入 key
-> // MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
->
-> //记得初始化 DeviceEventEmitter
->const {DeviceEventEmitter} = require('react-native');
-> //  监听
->let subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
->
->  // 从device属性的内存缓存中拿到轮询的状态结果，同样，订阅需要添加前缀，轮询不用
->  MHPluginSDK.getDevicePropertyFromMemCache(["prop.rgb","prop.power","event.isOn"], (result) => {
->    //console.log(result);
->  });
->
->});
->```
-
-
-#### *onReceivingForegroundPushEventName*
->插件在前台时收到 APNS 推送
->
->米家APP在后台时，收到苹果的 APNS 推送，用户点击推送会启动米家 APP，并转到相应推送设备的插件首页，此时 MHPluginSDK.extraInfo 里包含了推送的相关参数。
->
->米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
->
->米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert，插件会收到本通知，并触发通知的事件回调，携带参数在通知回调中给出。
-
-```
-var {DeviceEventEmitter} = require('react-native');
-var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegroundPushEventName,(notification) => {
-    // 插件在前台收到push通知回调
-    console.log(JSON.stringify(notification));
-  });
-```
-
 #### *viewWillAppear* `AL-[115,)`
 >从 Native 界面返回到插件
 >
@@ -207,7 +158,13 @@ componentWillUnmount() {
 >var imgPath = MHPluginSDK.uriNaviMoreButtonImage;
 >```
 
+#### *deviceStatusUpdatedEventName*
 
+> 插件通过监听 `deviceStatusUpdatedEventName` 订阅设备的状态更新，详见[订阅设备状态的更新](#user-content-订阅设备状态的更新)。
+
+#### *onReceivingForegroundPushEventName*
+
+> 插件通过监听 `onReceivingForegroundPushEventName` 接收APNS的推送，详见[订阅APNS推送](#user-content-订阅apns推送)。
 
 ### 方法
 
@@ -521,6 +478,112 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > ```js
 > MHPluginSDK.setFirmwareUpdateErrDic({'1001': '请检查网络'});
 > ```
+
+#### *getAvailableFirmwareForDids(dids, callback)* `AL-[139,)`
+
+> 获取固件的状态，可以确认是否需要升级，也可以获得当前的升级状态。
+>
+> `dids`设备did构成的数组
+>
+> `callback`回调方法 **(BOOL res, Object json)**
+>
+> 请求成功的回调中`json`有用字段
+>
+> - `currentVersion`当前固件版本号
+> - `did`设备did
+> - `isLatest`是否是最新版本
+> - `latest`最新固件版本号
+> - `otaFailedCode`OTA升级时的错误代码
+> - `otaFailedReason`OTA升级失败的原因
+> - `otaProgress`OTA进度
+> - `otaStartTime`OTA开始时间
+> - `otaStatus`当前OTA状态
+> - `timeOutTime`允许超时时间
+> - `updateState`固件当前状态，枚举值
+>   - 0 初始化
+>   - 1 可升级
+>   - 2 设备离线，无法升级
+>   - 3 下载固件
+>   - 4 安装固件
+>   - 5 安装完成
+>   - 6 安装成功
+>   - 7 安装失败
+>   - 8 检测是否有固件可更新时出错 
+>   - 9 状态未知
+>   - 10 超时
+>   - 11 其他错误
+> - `updating`是否正在更新
+>
+> 请求失败的回调中`json`字段
+>
+> - `code`错误代码
+> - `domain`错误分类
+> - `localDescription `错误描述
+
+```js
+MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
+  console.log(res, json);
+  if (res && json.length > 0) {
+    if (json[0].isLatest) {
+      console.log('当前固件版本号：' +
+                  json[0].currentVersion +
+                  ' 无可用更新，不需要升级。')
+    } else {
+      console.log('有新的固件可升级！' + '当前版本号：' +
+                  json[0].currentVersion + ' 新版本号：' +
+                  json[0].latest);
+    }
+  }
+});
+```
+
+#### *startUpgradingFirmwareWithDid(did, callback)* `AL-[139,)`
+
+> 检查到有可用更新时，可以主动更新固件。
+>
+> `did`设备did
+>
+> `callback`回调方法 **(BOOL res, Object json)**
+>
+> 请求成功的回调中`json`是一个字符串：`'ok'`表示有可用升级并开始升级；`'already latest'`表示已经是最新版本，无需升级。
+>
+> 请求失败的回调中`json`字段
+>
+> - `code`错误代码
+> - `domain`错误分类
+> - `localDescription `错误描述
+>
+> 请求成功之后，在回调中可以调用`getAvailableFirmwareForDids`获取OTA的进度和状态。
+
+```js
+MHPluginSDK.startUpgradingFirmwareWithDid(MHPluginSDK.deviceId, (res, json) => {
+  console.log(res, json);
+  if (res && json === "ok") {
+    // 当然这里应该定时调用，demo 这里只调用了一次
+    MHPluginSDK.getAvailableFirmwareForDids([MHPluginSDK.deviceId], (res, json) => {
+      if (res && json.length > 0) {
+        let status = json[0].updateState;
+        switch (status) {
+          case 3:
+            this.setState({ currentStatus: "下载中" });
+            break;
+          case 4:
+            this.setState({ currentStatus: "安装中" });
+            break;
+          case 5:
+            this.setState({ currentStatus: "安装完成" });
+            break;
+        }
+        // 还可以根据otaProgress属性更新ProgressBar组件或者刷新进度条
+      }
+    })
+  } else if (res && json === "already latest") {
+    console.log("无可用更新，无需升级");
+  } else if (!res) {
+    console.log("更新失败", JSON.stringify(json));
+  }
+})
+```
 
 #### *closeCurrentPage()*
 
@@ -1275,3 +1338,64 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
   }
 })
 ```
+
+### 订阅
+
+#### 订阅设备状态的更新
+
+当扩展程序运行在前台时，可以通过调用  `registerDeviceStatusProps `方法注册设备的属性和事件，同时监听 `deviceStatusUpdatedEventName` 常量。
+
+当米家 App 获取到设备属性、事件时，会通过常量发出通知。插件监听通知，从内存中获取对应结果从而进行相应处理。
+
+获取设备状态模式分为两种：轮询和订阅，在 `config.plist` 中可以配置。前者为定时向设备发送 rpc 命令查询结果，后者为设备属性发生变化或事件发生时，服务器端基于小米推送向客户端发送 push，插件通过监听 `deviceStatusUpdatedEventName` 得到变化的值。
+
+示例：
+
+```js
+// 假设采用订阅方式，需在 key 之前加前缀，属性为 prop.xxx, 事件为 event.xxx
+MHPluginSDK.registerDeviceStatusProps(["prop.rgb","prop.power","event.isOn"]);
+
+// 若采用轮询方法，则无法轮询事件，只能查询 prop，直接填入 key
+// MHPluginSDK.registerDeviceStatusProps(["rgb","power"]);
+
+// 记得初始化 DeviceEventEmitter
+const {DeviceEventEmitter} = require('react-native');
+// 监听
+let subscription = DeviceEventEmitter.addListener(MHPluginSDK.deviceStatusUpdatedEventName,(notification) => {
+
+ // 从device属性的内存缓存中拿到轮询的状态结果，同样，订阅需要添加前缀，轮询不用
+ MHPluginSDK.getDevicePropertyFromMemCache(["prop.rgb","prop.power","event.isOn"], (result) => {
+   console.log(result);
+ });
+
+});
+```
+
+#### 订阅APNS推送
+
+- 米家APP在后台时，收到苹果的 APNS (*Apple Push Notification Service*)推送，用户点击推送会启动米家 APP，并转到相应推送设备的插件首页，此时 `MHPluginSDK.extraInfo` 里包含了推送的相关参数。
+- 米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件未启动，则会弹出一个 Alert 提示用户转到相应的插件，携带参数同上。
+- 米家APP在前台时，收到苹果的 APNS 推送，如果此时相关设备插件正在展示，则不再弹出 Alert。插件只需监听 `onReceivingForegroundPushEventName` 常量，就会收到本通知，携带参数在通知回调中给出。
+
+示例：
+
+```js
+var {DeviceEventEmitter} = require('react-native');
+var subscription = DeviceEventEmitter.addListener(MHPluginSDK.onReceivingForegroundPushEventName,(notification) => {
+    // 插件在前台收到push的通知回调
+    console.log(JSON.stringify(notification));
+  });
+```
+
+推送的相关参数，即 `pushMessage` 。插件只接收与设备相关的 `pushMessage` ，数据格式如下：
+
+```json
+{
+  "did": "50602798",
+  "value": {
+  },
+  "event": "alarm",
+  "time": 1452173835
+}
+```
+
