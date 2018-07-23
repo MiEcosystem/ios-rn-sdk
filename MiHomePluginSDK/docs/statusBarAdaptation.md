@@ -11,13 +11,13 @@ const { NativeEventEmitter, StatusBarIOS, NativeModules } = require('react-nativ
 
 const { StatusBarManager } = NativeModules;
 
-//  监听状态栏高度变化
+// 监听状态栏高度变化
 componentWillMount() {
    this._statusBarFrameWillChange = DeviceEventEmitter.addListener("statusBarFrameWillChange", (event) => {
             
     }); 
 
-// 获取 状态栏的高度
+// 获取状态栏的高度
 StatusBarManager.getHeight((respoense)=> {
       console.log(respoense)
     })
