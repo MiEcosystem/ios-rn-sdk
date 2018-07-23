@@ -457,15 +457,15 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
-#### *requestBtGatewayListData(callback)* `AL-[139,)`
+#### *requestBtGatewayListData(callback)* `AL-[140,)`
 
 > 查看当前账户下是否有支持蓝牙网关功能的设备。若有，则返回蓝牙网关设备列表和附近可以接入的蓝牙设备。
 >
 > ```js
-> MHPluginSDK.requestBtGatewayListData((res, json) => {
->   console.log(res, json);
+> MHPluginSDK.requestBtGatewayListData((isSuccess, result) => {
+>   console.log(isSuccess, result);
 > });
-> // json格式如下：
+> // result格式如下：
 > [
 >     {
 >         // 可接入该蓝牙网关设备的蓝牙设备
