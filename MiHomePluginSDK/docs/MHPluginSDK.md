@@ -457,6 +457,43 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 >```
 >**注意** 可以把不需要的参数置为null，但是不可以不写。
 
+#### *requestBtGatewayListData(callback)*
+
+> 查看当前账户下是否有支持蓝牙网关功能的设备。若有，则返回蓝牙网关设备列表和附近可以接入的蓝牙设备。
+>
+> ```js
+> MHPluginSDK.requestBtGatewayListData((res, json) => {
+>   console.log(res, json);
+> });
+> // json格式如下：
+> [
+>     {
+>         // 可接入该蓝牙网关设备的蓝牙设备
+>         "linkingDevices": [
+>             {
+>                 "RSSI": 2, // 0 1 2 3 信号强度依次减弱
+>                 "btDevice": {
+>                     "did": "",
+>                     "model": "",
+>                     "isOnline": true,
+>                     "mac": "",
+>                     "name": ""
+>                 }
+>             }
+>         ],
+>         // 蓝牙网关设备
+>         "btGatewayDevice": {
+>             "did": "",
+>             "version": "", // 固件版本号
+>             "model": "",
+>             "isOnline": true,
+>             "mac": "",
+>             "name": ""
+>         }
+>     }
+> ]
+> ```
+
 #### *openDeviceUpgradePage()*
 
 > 打开设备固件升级页面
