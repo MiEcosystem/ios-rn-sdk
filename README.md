@@ -48,7 +48,7 @@
 - [rn借助chrome进行调试文档](./MiHomePluginSDK/docs/rn-chrome-debug.md)
 - [扩展程序的生命周期说明文档](./MiHomePluginSDK/docs/lifeCycleDiscussion.md)
 - [iPhone X 适配指南](./MiHomePluginSDK/docs/updatePluginsForiPhoneX.md)
-- [来电or热点状态栏高度变化适配指南](./MiHomePluginSDK/docs/statusBarAdaptation.md)
+- [状态栏高度变化适配指南](./MiHomePluginSDK/docs/statusBarAdaptation.md)
 - [扩展程序支持蓝牙网关说明](./MiHomePluginSDK/docs/btGateway.md)
 - [在扩展程序中使用自定义字体](./MiHomePluginSDK/docs/font.md)
 
