@@ -1338,7 +1338,30 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
   }
 })
 ```
+#### *getInfraredGatewayDevice(callback)* `AL-[,)`
+> 得到红外网关设备
 
+>  @param callback 回调方法 **( Object devices)** 
+
+```js
+MHPluginSDK.getInfraredGatewayDevice((devices)=>{
+    //devices 是红外设备
+    if (devices.length > 0) {
+
+    }
+
+});
+```
+
+#### *openConnectSucceedPage(model,did)* `AL-[,)`
+> 打开快联成功页面
+
+>  @param model 快联成功的设备model
+>
+>  @param did 快联成功的设备did
+```js
+MHPluginSDK.openConnectSucceedPage(model,did);
+```
 ### 订阅
 
 #### 订阅设备状态的更新
