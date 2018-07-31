@@ -131,6 +131,7 @@ componentWillUnmount() {
 #### *deviceCancelAuthorization*  `AL-[130,)`
 > 用户撤销隐私授权时的回调
 >
+
 ```javascript
 componentWillMount() {
     this._deviceCancelAuthorization = DeviceEventEmitter.addListener(MHPluginSDK. deviceCancelAuthorization, (event) => {
@@ -140,6 +141,7 @@ componentWillMount() {
 componentWillUnmount() {
     this._deviceCancelAuthorization.remove();
 }
+
 ```
 
 #### *uriNaviBackButtonImage*
@@ -747,17 +749,19 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 
 #### *openPrivacyLicense* `AL-[129,)` 
 
+>  授权用户使用条款和隐私协议
 >
->  @param license  软件许可以及使用协议的名称
+>  `userAgreement`  用户使用条款的名称
 >
->  @param licenseURL 软件许可以及使用协议的详细内容 的url
+>  `userAgreementURL` 用户使用条款详细内容的url
 >
->  @param policy 用户隐私协议的名称
+>  `privacyPolicy` 隐私协议的名称
 >
->  @param policyURL  用户隐私协议的详细url
+>  `privacyPolicyURL`  隐私协议的详细内容的url
 >
->  @param callBack   callback
+>  `callBack`  同意或者取消授权的回调，同意时`result` 为`ok`
 >
+
 ```
   MHPluginSDK.openPrivacyLicense("license","licenseURL","policy, "policyURL,(result)=>{
     if(result == "ok") {
@@ -770,19 +774,21 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 
 #### *privacyAndProtocolReview* `AL-[133,)` 
 
->  用于查看隐私协议和用户使用条款，参数说明
+>  查看用户使用条款和隐私协议
 >
->  license  软件许可以及使用协议的名称
+>  `userAgreement`  用户使用条款的名称
 >
->  licenseURL 软件许可以及使用协议的详细内容 的url
+>  `userAgreementURL` 用户使用条款详细内容的url
 >
->  policy 用户隐私协议的名称
+>  `privacyPolicy` 隐私协议的名称
 >
->  policyURL  用户隐私协议的详细url
+>  `privacyPolicyURL`  隐私协议的详细内容的url
 >
->  
+>   撤销授权的通知请监听：deviceCancelAuthorization
+>
+ 
 ```
-MHPluginSDK.privacyAndProtocolReview("license","https://www.xiaomi.com","privacy","https://www.xiaomi.com");
+MHPluginSDK.privacyAndProtocolReview(userAgreement, userAgreementURL, privacyPolicy, privacyPolicyURL);
 
 ```
 
