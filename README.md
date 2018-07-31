@@ -20,7 +20,7 @@
 
 **React Native 引擎版本：0.25.1**
 
-**当前 API Level ：139**
+**当前 API Level ：140**
 
 **兼容性：iOS 9 +**
 

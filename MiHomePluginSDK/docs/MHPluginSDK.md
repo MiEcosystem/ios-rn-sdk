@@ -10,8 +10,6 @@ MHPluginSDK 模块主要提供插件与米家主APP、智能设备，以及米�
 var MHPluginSDK = require('NativeModules').MHPluginSDK
 ```
 
-
-
 ### 常量
 
 #### *userId*
@@ -786,7 +784,7 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 >
 >   撤销授权的通知请监听：deviceCancelAuthorization
 >
- 
+
 ```
 MHPluginSDK.privacyAndProtocolReview(userAgreement, userAgreementURL, privacyPolicy, privacyPolicyURL);
 
@@ -1379,7 +1377,19 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
     result["slh"]
     result["cUserId"]
   }
-})
+});
+```
+
+#### *deviceToken(callback)* `AL-[140,)`
+
+> 获取设备 Token。设备 Token 在设备快连入网时生成，能唯一标识设备的生命周期，直至被重置、重新快连入网。注意该 Token 并非设备与服务器交互时认证所用 Token，只能用于标识作用。
+
+```javascript
+MHPluginSDK.deviceToken((error,token)=>{
+    if(!error){
+    	//console.log(token)
+	}
+});
 ```
 
 ### 订阅
