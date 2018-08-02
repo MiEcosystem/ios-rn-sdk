@@ -1338,7 +1338,7 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
   }
 })
 ```
-#### *getInfraredGatewayDevice(callback)* `AL-[,)`
+#### *getInfraredGatewayDevice(callback)* `AL-[140,)`
 > 得到红外网关设备
 
 >  @param callback 回调方法 **( Object devices)** 
@@ -1353,7 +1353,7 @@ MHPluginSDK.getInfraredGatewayDevice((devices)=>{
 });
 ```
 
-#### *openConnectSucceedPage(model,did)* `AL-[,)`
+#### *openConnectSucceedPage(model,did)* `AL-[140,)`
 > 打开快联成功页面
 
 >  @param model 快联成功的设备model
