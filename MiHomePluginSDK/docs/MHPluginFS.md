@@ -240,7 +240,7 @@ var MHPluginFS = require('NativeModules').MHPluginFS;
 >  }
 >});
 >```
->```html
+>```js
 ><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
@@ -266,7 +266,7 @@ var MHPluginFS = require('NativeModules').MHPluginFS;
 >   }
 > });
 >```
->```html
+>```js
 ><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
@@ -288,7 +288,7 @@ var MHPluginFS = require('NativeModules').MHPluginFS;
 >  }
 >});
 >```
->```html
+>```js
 ><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
