@@ -1081,6 +1081,26 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 > MHPluginSDK.openRoomManagementPage();
 > ```
 
+
+
+####*getAutoRecordWithDid(did,callback)* `AL-[141,]`
+
+> 获取自动化名称和id
+>
+> `did`,设备did
+>
+> `callback`,回调方法 (success, result) ，success 为 *true* 时表示成功获取,result为自动化数据数组
+>
+> ```js
+> MHPluginSDK.getAutoRecordWithDid('123',(success,result)=> {
+>     if (success) {
+>         console.log(JSON.stringify(result));
+>     }
+> })
+> ```
+
+
+
 #### *openIftttAutoPage* `AL-[119,)`
 
 > 打开自动化页面
