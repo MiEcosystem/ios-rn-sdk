@@ -32,12 +32,11 @@ var MHPluginFS = require('NativeModules').MHPluginFS;
 >
 >```js
 >MHPluginFS.readFileList((isSuccess, result) => {
->  result.forEach(function(e){  
+>  result.forEach(function(e){
+>  	console.log(e.name);
+>  });
+>});   
 >```
-    console.log(e.name);  
-  });
-});
-```
 
 #### *writeFile(filename, utf8Content, callback)*
 >写文件
@@ -100,25 +99,25 @@ var MHPluginFS = require('NativeModules').MHPluginFS;
 >**注意** 接收文件的URL需要插件开发者自己提供。
 >
 >```js
-var params = {
-  uploadUrl: 'http://127.0.0.1:3000',
-  method: 'POST', // default 'POST',support 'POST' and 'PUT'
-  headers: {
-      'Accept': 'application/json',
-  },
-  fields: {
-      'hello': 'world',
-  },
-  files: [
-  {
-      filename: 'filename.png', // 只能上传插件sandbox里的文件
-  },
-  ]
-};
-MHPluginFS.uploadFile(params, (c, response) => {
-  console.log(response.state, response.data);
-});
-```
+>var params = {
+> uploadUrl: 'http://127.0.0.1:3000',
+> method: 'POST', // default 'POST',support 'POST' and 'PUT'
+> headers: {
+>     'Accept': 'application/json',
+> },
+> fields: {
+>     'hello': 'world',
+> },
+> files: [
+> {
+>     filename: 'filename.png', // 只能上传插件sandbox里的文件
+> },
+> ]
+>};
+>MHPluginFS.uploadFile(params, (c, response) => {
+> console.log(response.state, response.data);
+>});
+>```
 
 #### *uploadFileToFDS(params, callback)* `AL-[103,)`
 >上传文件到小米云FDS
@@ -129,42 +128,41 @@ MHPluginFS.uploadFile(params, (c, response) => {
 >**注意** 专门用来向FDS发送文件，参数格式与uploadFile保持一致，一次只能发送一个文件
 >
 >```js
-> MHPluginSDK.callSmartHomeAPI("/home/genpresignedurl", {"did":MHPluginSDK.deviceId,"suffix":"png"}, (response) => {
+>MHPluginSDK.callSmartHomeAPI("/home/genpresignedurl", { "did": MHPluginSDK.deviceId, "suffix": "png" }, (response) => {
 >  // console.log("+++++++++++++++++++++++"+JSON.stringify(response));
->  if (response !== null && response.code === 0 && result !== null ) {
+>  if (response !== null && response.code === 0 && result !== null) {
+>    var result = response.result;
+>    if (result.hasOwnProperty('png') && result.png !== null) {
+>      var png = result.png;
+>      if (png.url !== null) {
+>        var obj_name = png.obj_name;
+>        var name = obj_name.substring(obj_name.length - 22);
+>        MHPluginFS.writeFileThroughBase64(name, picture, (isSuccess) => {
+>          if (isSuccess) {
+>            var params = {
+>              uploadUrl: png.url,
+>              method: 'PUT', // default 'POST',support 'POST' and 'PUT'
+>              headers: {
+>                "Content-Type": ""
+>              },
+>              files: [
+>                {
+>                  filename: name, // 只能上传插件sandbox里的文件
+>                },
+>              ]
+>            };
+>            MHPluginFS.uploadFileToFDS(params, (c, response) => {
+>              console.log(response.state, response.data);
+>            });
+>          };
+>        });
+>      };
+>    };
+>  } else {
+>    AlertIOS.alert("温馨提示", "上传头像失败，请重试！");
+>  };
+>});
 >```
-    var result = response.result;
-    if (result.hasOwnProperty('png') && result.png !== null) {
-      var png = result.png;
-      if (png.url !== null) {
-        var obj_name = png.obj_name;
-        var name = obj_name.substring(obj_name.length-22);
-        MHPluginFS.writeFileThroughBase64(name, picture, (isSuccess) => {
-          if (isSuccess) {
-            var params = {
-              uploadUrl: png.url,
-              method: 'PUT', // default 'POST',support 'POST' and 'PUT'
-              headers: {
-                "Content-Type":""
-              },             
-              files: [
-                {
-                  filename: name, // 只能上传插件sandbox里的文件
-                },
-              ]
-            };
-            MHPluginFS.uploadFileToFDS(params, (c, response) => {
-              console.log(response.state, response.data);
-            });
-          };
-        });
-      };
-    };
-  } else {
-    AlertIOS.alert("温馨提示","上传头像失败，请重试！");
-  };
-});
-```
 
 #### *downloadFile(url, filename, callback)*
 >下载文件到插件存储空间
@@ -176,26 +174,26 @@ MHPluginFS.uploadFile(params, (c, response) => {
 >**注意** 回调方法只有在最后成功或者失败后才会执行，result中包含下载完成的本地文件完整路径。如果需要监听下载进度，请订阅 *MHPluginFS.fileIsDownloadingEventName* 事件
 >
 >```js
-// 下载文件
-MHPluginFS.downloadFile(url, "test.zip", (success, result) => {
-  if (success && result.path) {
-    MHPluginFS.readFileToBase64(result.filename, (success, base64Content) => {
-      if (success) {
-        MHPluginFS.dataLengthOfBase64Data(base64Content, (length) => {
-          MHPluginFS.subBase64DataOfBase64Data(base64Content, 3500, 100, (success, base64SubData) => {
-            alert(""+base64SubData);
-          });
-        });
-      }
-    });
-  }
-});
-// 订阅下载进度
-var { DeviceEventEmitter } = require('react-native');
-subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventName, (notification) => {
-  console.log(""+JSON.stringify(notification));
-});
-```
+>// 下载文件
+>MHPluginFS.downloadFile(url, "test.zip", (success, result) => {
+> if (success && result.path) {
+>   MHPluginFS.readFileToBase64(result.filename, (success, base64Content) => {
+>     if (success) {
+>       MHPluginFS.dataLengthOfBase64Data(base64Content, (length) => {
+>         MHPluginFS.subBase64DataOfBase64Data(base64Content, 3500, 100, (success, base64SubData) => {
+>           alert(""+base64SubData);
+>         });
+>       });
+>     }
+>   });
+> }
+>});
+>// 订阅下载进度
+>var { DeviceEventEmitter } = require('react-native');
+>subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventName, (notification) => {
+> console.log(""+JSON.stringify(notification));
+>});
+>```
 
 #### *dataLengthOfBase64Data(base64Data, callback)*
 >获取data长度
@@ -237,16 +235,12 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 >
 >```js
 >MHPluginFS.screenShot('test1.png', (isSuccess, response) => {
+>  if (isSuccess) {
+>  	console.log(response);
+>  }
+>});
 >```
-	if (isSuccess) {
-		console.log(response);
-	}
-});
->```
->
->**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
->
->​```js
+>```js
 ><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
@@ -257,23 +251,22 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 >`rect` 截屏范围；不用考虑屏幕的scale，接口内部已做处理；
 >`callback` 回调方法 **(bool isSuccess, String imagePath)**
 >
->```js
->var rect = {
->```
-        l: 0,
-        t: 0,
-        w: 414,
-        h: 200,
-      };
-      MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
-        if (isSuccess) {
-          console.log(response);
-        }
-      });
->```
 >**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
 >
->​```js
+>```js
+>var rect = {
+>   l: 0,
+>   t: 0,
+>   w: 414,
+>   h: 200,
+> };
+> MHPluginFS.screenShotInRect('test2.png', rect, (isSuccess, response) => {
+>   if (isSuccess) {
+>     console.log(response);
+>   }
+> });
+>```
+>```js
 ><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
 
@@ -284,24 +277,20 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 >`imageName` 图片的名称，格式为png
 >`callback` 回调方法 **(bool isSuccess, String imagePath)**
 >
+>**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
+>
 >```js
 >var findNodeHandle = require('findNodeHandle');
 >var myScrollView = findNodeHandle(this.refs.myScrollView);
 >MHPluginFS.screenShotInRect(myScrollView,'test2.png', (isSuccess, response) => {
+>  if (isSuccess) {
+>    console.log(response);
+>  }
+>});
 >```
-    if (isSuccess) {
-        console.log(response);
-    }
-
+>```js
+><Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
 >```
->**注意** imagePath是存储图片的全路径，加载图片的时候直接使用即可
->```
->
-```js
-<Image style={styles.img} source={{uri:this.imagePath, scale:PixelRatio.get()}} />
-```
-
-
 
 #### *amapScreenShot(viewRef, imageName, callback)* `AL-[114,)`
 >高德地图截屏
@@ -310,18 +299,17 @@ subscription = DeviceEventEmitter.addListener(MHPluginFS.fileIsDownloadingEventN
 >`imageName` 截取图片的存储名称，格式为png，会自动添加后缀.png
 >`callback` 回调方法 **(bool isSuccess, String imagePath)**
 >
-```js
-var findNodeHandle = require('findNodeHandle');
-var myMapViewRef = findNodeHandle(this.refs.myMapView);
-MHPluginFS.amapScreenShot(myMapViewRef, 'mapToShare.png',  (isSuccess, imagePath) => {
-
-    if (isSuccess) {
-        console.log(imagePath);
-    }
-}
-//  imagePath是存储图片的全路径，加载图片的时候直接使用即可
-```
-
+>```js
+>var findNodeHandle = require('findNodeHandle');
+>var myMapViewRef = findNodeHandle(this.refs.myMapView);
+>MHPluginFS.amapScreenShot(myMapViewRef, 'mapToShare.png',  (isSuccess, imagePath) => {
+>
+>    if (isSuccess) {
+>        console.log(imagePath);
+>    }
+>}
+>//  imagePath是存储图片的全路径，加载图片的时候直接使用即可
+>```
 
 #### *getRGBAValueFromImageAtPath(imagePath, points, callback)* `AL-[115,)`
 
@@ -332,13 +320,12 @@ MHPluginFS.amapScreenShot(myMapViewRef, 'mapToShare.png',  (isSuccess, imagePath
 >`callback` 回调方法 **(bool isSuccess, Array colorValues)** 
 >
 >colorValues 为色值的数组，如果points参数不为空，为各个点的色值，rgba值组成的数组，[0, 255]；如果points为空，则返回色值的二维数组，大小为所有像素点,长宽的乘积
-```js
-var fsSDK = require('NativeModules').MHPluginFS;   fsSDK.getRGBAValueFromImageAtPath(this.props.app.sourceOfImage("hello_raise.jpg").uri,[{x:20,y:20},{x:40,y:60}],(success,rgba) =>{
-      if (success) {
-        console.warn("第一个点色值" + rgba[0]);
-        console.warn("第二个点色值" + rgba[1]);
-      }
-
-    });
-    
-```
+>
+>```js
+>var fsSDK = require('NativeModules').MHPluginFS;   fsSDK.getRGBAValueFromImageAtPath(this.props.app.sourceOfImage("hello_raise.jpg").uri,[{x:20,y:20},{x:40,y:60}],(success,rgba) =>{
+>  if (success) {
+>    console.warn("第一个点色值" + rgba[0]);
+>    console.warn("第二个点色值" + rgba[1]);
+>  }
+> });
+>```
