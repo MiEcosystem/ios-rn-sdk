@@ -1391,7 +1391,7 @@ MHPluginSDK.deviceToken((error,token)=>{
 	}
 });
 ```
-#### *getInfraredGatewayDevice(callback)* `AL-[141,)`
+#### *getInfraredGatewayDevice(callback)* `AL-[142,)`
 > 得到红外网关设备
 
 >  @param callback 回调方法 **( Object devices)** 
