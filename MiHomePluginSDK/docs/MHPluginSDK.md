@@ -1083,7 +1083,7 @@ MHPluginSDK.getMiWatchConfigWithCallback((success,config) =>{
 
 
 
-####*getAutoRecordWithDid(did,callback)* `AL-[141,]`
+#### *getAutoRecordWithDid(did,callback)* `AL-[141,]`
 
 > 获取自动化名称和id
 >
