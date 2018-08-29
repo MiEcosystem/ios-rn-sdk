@@ -1405,10 +1405,10 @@ MHPluginSDK.getServiceTokenWithSid("xxx.xiaomi.com",(error,result)=>{
 > 获取设备 Token。设备 Token 在设备快连入网时生成，能唯一标识设备的生命周期，直至被重置、重新快连入网。注意该 Token 并非设备与服务器交互时认证所用 Token，只能用于标识作用。
 
 ```javascript
-MHPluginSDK.deviceToken((error,token)=>{
-    if(!error){
+MHPluginSDK.deviceToken((success,token)=>{
+    if(success){
     	//console.log(token)
-	}
+     }
 });
 ```
 #### *getInfraredGatewayDevice(callback)* `AL-[142,)`
