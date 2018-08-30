@@ -1432,9 +1432,21 @@ MHPluginSDK.getInfraredGatewayDevice((devices)=>{
 >  @param model 快联成功的设备model
 >
 >  @param did 快联成功的设备did
-```js
+> 
+
+```
 MHPluginSDK.openConnectSucceedPage(model,did);
 ```
+
+#### *jumpWifiSettingPage* `AL-[143,)`
+> 跳转到wifi列表
+> 
+
+```
+MHPluginSDK.jumpWifiSettingPage();
+```
+
+
 ### 订阅
 
 #### 订阅设备状态的更新
