@@ -1439,7 +1439,7 @@ MHPluginSDK.openConnectSucceedPage(model,did);
 ```
 
 #### *jumpWifiSettingPage* `AL-[143,)`
-> 跳转到wifi列表
+> 跳转至系统设置页中无线局域网（WiFi）列表
 > 
 
 ```
