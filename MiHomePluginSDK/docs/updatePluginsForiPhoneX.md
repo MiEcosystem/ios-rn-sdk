@@ -48,4 +48,8 @@ iPhone X 采用 @3X 图，开发尺寸为 **375 * 812** pt。其中 Status Bar �
 
 #### 最后
 
+**常见问题：**
+
+1. [iPhoneX 页面返回的时候顶部有一条状块出现](https://github.com/MiEcosystem/ios-rn-sdk/issues/53)
+
 更多问题可在本项目直接开 [issues](https://github.com/MiEcosystem/ios-rn-sdk/issues/new) 。
