@@ -1001,7 +1001,7 @@ MHPluginSDK.getDevicesWithModel("xiaomi.watch.band2",(success,devices) =>{
 var array = [{
     			did: 123,
     			siid: 456,
-    			pid: 789
+    			piid: 789
 			}];
 MHPluginSDK.callSpecMethod("get_properties",array,(success,message) => {
     if (success) {
