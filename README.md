@@ -173,7 +173,7 @@
            ```
            npm start --reset-cache
            ```
-          
+              
            **注意** 如果出现错误，请检查 node 与 npm 是否已经正确安装。
 
 4. 查看本机 IP 地址：
@@ -181,7 +181,7 @@
            ​```
            ifconfig en0
            ​```
-          
+              
            **注意** 请确保电脑与手机处在同一局域网内，不然无法调试。
 
 5. 客户端切换到个人信息页卡，检查是否出现“开发者选项”。如果并没有出现，请按如下步骤重试：
@@ -218,17 +218,26 @@ MiHomePluginSDK 支持自定义自动化的开发（支持自定义场景条件�
 
 3. 该页面的目的是引导用户完成对该自定义自动化条件/动作的额外设置。（比如展示一个调色板并让用户选择符合场景触发条件时将灯泡设置成的目标颜色，或展示一个温度选择列表并让用户选择特定温度作为温度传感器的触发条件等）
 
-4. 完成设置后，需要调用API将设置好的trigger或action字典传回：
+4. 如果是新建一个自动化动作，`extraInfo.payload.did`为空字符串；如果是编辑一个自动化动作，`extraInfo.payload.did`不为空。以此区分新建和修改。
+
+   ```js
+   let extraInfo = MHPluginSDK.extraInfo;
+   // 判断是编辑还是新建
+   let value = extraInfo.payload.did ? extraInfo.payload.value : "";
+   ```
+
+5. 完成设置后，需要调用API将设置好的trigger或action字典传回：
 
    ```js
    // 如果是开发自定义触发条件
    MHPluginSDK.finishCustomSceneSetupWithTrigger(trigger);
    // 如果是开发自定义动作
    MHPluginSDK.finishCustomSceneSetupWithAction(action);
-
+   
    ```
 
 ### 调试本地扩展程序自动化
+
 1. 参见“调试本地扩展程序”章节，完成电脑和手机上的设置，并在开发者选项中设置自定义自动化sc_id(开发条件）或sa_id（开发动作）以及相应 checkbox。
 2. 点击个人中心页中的自动化，添加场景，选择步骤一：触发条件或二：添加任务。
 3. 单击对应设备的对应动作，如果 sc_id 或 sa_id 匹配，则会读取电脑上的扩展程序进行调试。
