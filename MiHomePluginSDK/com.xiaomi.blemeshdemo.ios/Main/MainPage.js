@@ -21,6 +21,7 @@ const MHPluginSDK = require('NativeModules').MHPluginSDK;
 const MHBluetooth = require('NativeModules').MHBluetooth;
 const Setting = require('./MHSetting');
 const ControlDemo = require('./ControlDemo');
+const BLEDemo = require("./BLEDemo");
 const ImageButton = require('../CommonModules/ImageButton');
 
 const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
@@ -34,8 +35,9 @@ class MainPage extends React.Component {
   }
 
   render() {
-    let rowControlDemo = this._createMenuRow("控制示例");
-    let rowDFUDemo = this._createMenuRow("固件升级");
+    let rowControlDemo = this._createMenuRow(ControlDemo);
+    let rowDFUDemo = this._createMenuRow({ route: { title: "固件升级" } });
+    let rowBLEDemo = this._createMenuRow(BLEDemo);
 
     return (
       <View style={styles.containerAll} >
@@ -47,31 +49,32 @@ class MainPage extends React.Component {
         <View style={styles.containerMenu}>
           {rowControlDemo}
           {rowDFUDemo}
+          {rowBLEDemo}
         </View>
       </View>
     );
   }
 
-  _createMenuRow(title) {
+  _createMenuRow(component) {
+    let title = component.route.title;
     return [
-      (<TouchableHighlight key={"touch_"+title} style={styles.rowContainer} underlayColor='#838383' onPress={()=>this._onOpenSubPage(title)}>
+      (<TouchableHighlight key={"touch_" + title} style={styles.rowContainer} underlayColor='#838383' onPress={() => this._onOpenSubPage(component)}>
         <View style={styles.rowContainer}>
           <Text style={styles.title}>{title}</Text>
           <Image style={styles.subArrow} source={this.props.app.sourceOfImage("sub_arrow.png")} />
         </View>
       </TouchableHighlight>),
-      (<View key={"sep_"+title} style={styles.separator} />)
+      (<View key={"sep_" + title} style={styles.separator} />)
     ];
   }
 
-  _onOpenSubPage(title) {
-    if (title === "控制示例") {
-        this.props.navigator.push({
-          ...ControlDemo.route,
-        });
-    }
-    else if (title  === "固件升级") {
-        MHBluetooth.openMeshDFU();
+  _onOpenSubPage(component) {
+    if (component.route.title === "固件升级") {
+      MHBluetooth.openMeshDFU();
+    } else {
+      this.props.navigator.push({
+        ...component.route,
+      });
     }
   }
 
@@ -130,20 +133,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#000000',
     flex: 1,
-    marginLeft:15
+    marginLeft: 15
   },
   subArrow: {
-     width: 9,
-     height: 17,
-     marginRight: 15,
+    width: 9,
+    height: 17,
+    marginRight: 15,
     alignSelf: 'center',
   },
   separator: {
-     height: 0.5,
-     alignSelf: 'stretch',
-     backgroundColor: '#dddddd',
-     marginLeft:15,
-     marginRight: 15,
+    height: 0.5,
+    alignSelf: 'stretch',
+    backgroundColor: '#dddddd',
+    marginLeft: 15,
+    marginRight: 15,
   },
 });
 
@@ -160,26 +163,26 @@ const route = {
   title: MHPluginSDK.deviceName,
   component: MainPage,
   navLeftButtonStyle: {
-    tintColor:'#ffffff',
+    tintColor: '#ffffff',
   },
   navTitleStyle: {
-    color:'#ffffff',
+    color: '#ffffff',
   },
   navBarStyle: {
-    backgroundColor:'transparent',
+    backgroundColor: 'transparent',
   },
   isNavigationBarHidden: false,
-  renderNavRightComponent: function(route, navigator, index, navState) {
+  renderNavRightComponent: function (route, navigator, index, navState) {
     if (MHPluginSDK.userId == MHPluginSDK.ownerId) // 非分享设备
     {
       return (
-        <View style={{left:0, width:29+15*2, height:APPBAR_HEIGHT, justifyContent:'center', alignItems:'center'}}>
+        <View style={{ left: 0, width: 29 + 15 * 2, height: APPBAR_HEIGHT, justifyContent: 'center', alignItems: 'center' }}>
           <ImageButton
-            source={{uri:MHPluginSDK.uriNaviMoreButtonImage, scale:PixelRatio.get()}}
+            source={{ uri: MHPluginSDK.uriNaviMoreButtonImage, scale: PixelRatio.get() }}
             onPress={() => {
               openMorePage(navigator);
             }}
-            style={[{width:29, height:29, tintColor: '#ffffff'}]}
+            style={[{ width: 29, height: 29, tintColor: '#ffffff' }]}
           />
         </View>
       );

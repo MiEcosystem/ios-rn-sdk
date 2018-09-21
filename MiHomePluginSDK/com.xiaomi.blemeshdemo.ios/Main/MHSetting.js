@@ -21,6 +21,7 @@ var {
 } = React;
 
 var MHPluginSDK = require('NativeModules').MHPluginSDK;
+const MHDeviceGroup = require('NativeModules').MHDeviceGroup;
 var MoreMenu = require('./MoreMenu');
 
 var BUTTONS = [
@@ -32,7 +33,7 @@ class Setting extends Component {
   constructor(props) {
     super(props);
     var ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2)=>r1!==r2,
+      rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
     });
     this._createMenuData();
@@ -43,25 +44,25 @@ class Setting extends Component {
     };
   }
 
-  componentDidMount(){
-    this._deviceNameChangedListener = DeviceEventEmitter.addListener(MHPluginSDK.deviceNameChangedEvent, (event)=>{this._handleNameChange(event)});
+  componentDidMount() {
+    this._deviceNameChangedListener = DeviceEventEmitter.addListener(MHPluginSDK.deviceNameChangedEvent, (event) => { this._handleNameChange(event) });
   }
 
-  componentWillUnMount(){
+  componentWillUnMount() {
     if (this._deviceNameChangedListener) {
       this._deviceNameChangedListener.remove();
     }
   }
 
-  _handleNameChange(event){
-      MHGlobal.deviceName = event.newName;
-      var ds = new ListView.DataSource({
-        rowHasChanged: (r1, r2)=>r1!==r2,
-        sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-      });
-      this.setState ( {
-        dataSource: ds.cloneWithRowsAndSections(this._menuData),
-      });
+  _handleNameChange(event) {
+    MHGlobal.deviceName = event.newName;
+    var ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2,
+      sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+    });
+    this.setState({
+      dataSource: ds.cloneWithRowsAndSections(this._menuData),
+    });
   }
 
   _createMenuData() {
@@ -73,15 +74,15 @@ class Setting extends Component {
       commonMenuData = [
         {
           // 'name': LocalizedStrings.how,
-          'name':LocalizedStrings.deviceName,
-          'subtitle':MHGlobal.deviceName,
+          'name': LocalizedStrings.deviceName,
+          'subtitle': MHGlobal.deviceName,
           'func': () => {
             MHPluginSDK.openChangeDeviceName();
           }
         },
         {
           // 'name': LocalizedStrings.how,
-          'name':LocalizedStrings.locationManagement,
+          'name': LocalizedStrings.locationManagement,
           'func': () => {
             MHPluginSDK.openRoomManagementPage();
           }
@@ -98,12 +99,13 @@ class Setting extends Component {
             MHPluginSDK.openIftttAutoPage();
           }
         },
-        // {
-        //   'name': LocalizedStrings.firmwareUpgrate,
-        //   'func': () => {
-        //     MHPluginSDK.openDeviceUpgradePage();
-        //   }
-        // },
+        {
+          // TODO: 创建灯组 待本地化
+          'name': "创建灯组",
+          'func': () => {
+            MHDeviceGroup.create(MHPluginSDK.deviceId);
+          }
+        },
         {
           'name': LocalizedStrings.moreSetting,
           'func': () => {
@@ -120,9 +122,9 @@ class Setting extends Component {
         {
           'name': LocalizedStrings.licenseAndPolicy,
           'func': () => {
-            if(MHPluginSDK.apiLevel >=133) {
-              MHPluginSDK.privacyAndProtocolReview("license","https://www.xiaomi.com","privacy","https://www.xiaomi.com");
-            } else if(MHPluginSDK.apiLevel >= 129) {
+            if (MHPluginSDK.apiLevel >= 133) {
+              MHPluginSDK.privacyAndProtocolReview("license", "https://www.xiaomi.com", "privacy", "https://www.xiaomi.com");
+            } else if (MHPluginSDK.apiLevel >= 129) {
               MHPluginSDK.reviewPrivacyAndProtocol();
             } else {
 
@@ -160,19 +162,19 @@ class Setting extends Component {
 
   render() {
     return (
-      <View style = {{backgroundColor:'rgb(235,235,236)',marginTop:64,marginBottom:0,flex:1}}>
-      <View style = {{backgroundColor:'rgb(174,174,174)',height:1,}}></View>
-       <ScrollView style = {{backgroundColor:'rgb(235,235,236)'}}>
-        <View style={styles.container}>
-          <StatusBar barStyle='default' />
-          <ListView style={styles.list} dataSource={this.state.dataSource} renderRow={this._renderRow.bind(this)} renderSectionHeader={this._renderSectionHeader.bind(this) } />
-        </View>
+      <View style={{ backgroundColor: 'rgb(235,235,236)', marginTop: 64, marginBottom: 0, flex: 1 }}>
+        <View style={{ backgroundColor: 'rgb(174,174,174)', height: 1, }}></View>
+        <ScrollView style={{ backgroundColor: 'rgb(235,235,236)' }}>
+          <View style={styles.container}>
+            <StatusBar barStyle='default' />
+            <ListView style={styles.list} dataSource={this.state.dataSource} renderRow={this._renderRow.bind(this)} renderSectionHeader={this._renderSectionHeader.bind(this)} />
+          </View>
         </ScrollView>
-        </View>
+      </View>
     );
   }
 
-  _renderSectionHeader(sectionData,sectionID){
+  _renderSectionHeader(sectionData, sectionID) {
     return (
       <View>
         <View style={styles.sectionHeader}>
@@ -185,21 +187,21 @@ class Setting extends Component {
   _renderRow(rowData, sectionID, rowID) {
     if (sectionID != '') {
       return (
-        <TouchableHighlight  onPress={() => this._pressRow(sectionID,rowID)}>
-          <View style={{backgroundColor:'#ffffff'}}>
+        <TouchableHighlight onPress={() => this._pressRow(sectionID, rowID)}>
+          <View style={{ backgroundColor: '#ffffff' }}>
             <View style={styles.rowContainer}>
               <Text style={styles.title}>{rowData.name}</Text>
-              <Text style= {styles.subtitle}>{rowData.subtitle?MHGlobal.deviceName:'' }</Text>
+              <Text style={styles.subtitle}>{rowData.subtitle ? MHGlobal.deviceName : ''}</Text>
               <Image style={styles.subArrow} source={this.props.app.sourceOfImage("sub_arrow.png")} />
             </View>
-            <View style={rowID != this._menuData[sectionID].length - 1?styles.separator:{}}></View>
+            <View style={rowID != this._menuData[sectionID].length - 1 ? styles.separator : {}}></View>
           </View>
         </TouchableHighlight>
       );
-    }else {
+    } else {
       return (
-        <TouchableHighlight  onPress={() => this._pressRow(sectionID,rowID)}>
-          <View style={{backgroundColor:'#ffffff'}}>
+        <TouchableHighlight onPress={() => this._pressRow(sectionID, rowID)}>
+          <View style={{ backgroundColor: '#ffffff' }}>
             <View style={styles.rowContainer}>
               <Text style={styles.reset}>{rowData.name}</Text>
             </View>
@@ -210,8 +212,8 @@ class Setting extends Component {
 
   }
 
-  _pressRow(sectionID,rowID) {
-    console.log("sectionID"+sectionID+"row"+rowID+"clicked!");
+  _pressRow(sectionID, rowID) {
+    console.log("sectionID" + sectionID + "row" + rowID + "clicked!");
     this._menuData[sectionID][rowID].func();
   }
 
@@ -225,12 +227,12 @@ class Setting extends Component {
 
   showActionSheet() {
     ActionSheetIOS.showActionSheetWithOptions({
-          options: BUTTONS,
-          destructiveButtonIndex: 1,
-          },
-          (buttonIndex) => {
+      options: BUTTONS,
+      destructiveButtonIndex: 1,
+    },
+      (buttonIndex) => {
 
-          });
+      });
   }
 };
 
@@ -246,26 +248,26 @@ var styles = StyleSheet.create({
   },
 
   rowContainer: {
-  	alignSelf: 'stretch',
+    alignSelf: 'stretch',
     flexDirection: 'row',
     flex: 1,
     // padding: 20,
-    backgroundColor:'#ffffff',
-    height:50,
-    marginLeft:20,
-    marginRight:20,
+    backgroundColor: '#ffffff',
+    height: 50,
+    marginLeft: 20,
+    marginRight: 20,
     // justifyContent: 'center',
-    alignItems:'center'
+    alignItems: 'center'
   },
-  sectionHeader:{
+  sectionHeader: {
     height: 30,
     backgroundColor: 'rgb(235,235,236)',
     justifyContent: 'center',
     // padding:10,
-    marginLeft:10,
+    marginLeft: 10,
   },
-  sectionHeaderText:{
-    fontSize:14,
+  sectionHeaderText: {
+    fontSize: 14,
   },
   list: {
     alignSelf: 'stretch',
@@ -284,28 +286,28 @@ var styles = StyleSheet.create({
     // alignItems: 'center',
     flex: 1,
     // height:49,
-    color:'rgb(251,0,0)',
-    textAlign:'center'
+    color: 'rgb(251,0,0)',
+    textAlign: 'center'
   },
   subtitle: {
     // alignSelf: 'stretch',
     fontSize: 14,
     // alignItems: 'center',
     flex: 1,
-    color:'rgb(138,138,138)',
-    textAlign:"right",
-    marginRight:5
+    color: 'rgb(138,138,138)',
+    textAlign: "right",
+    marginRight: 5
 
   },
   subArrow: {
-     width: 6.5,
-     height: 13,
+    width: 6.5,
+    height: 13,
   },
   separator: {
-  	height: 0.75,
-  	backgroundColor: '#dddddd',
-  	marginLeft: 20,
-  	marginRight: 20
+    height: 0.75,
+    backgroundColor: '#dddddd',
+    marginLeft: 20,
+    marginRight: 20
   }
 });
 
@@ -313,11 +315,11 @@ var route = {
   key: 'Setting',
   title: LocalizedStrings.setting,
   component: Setting,
-  renderNavRightComponent: function(route, navigator, index, navState) {
+  renderNavRightComponent: function (route, navigator, index, navState) {
     return (<View />);
   },
   navBarStyle: {
-    backgroundColor:'rgb(235,235,236)',
+    backgroundColor: 'rgb(235,235,236)',
   },
 }
 

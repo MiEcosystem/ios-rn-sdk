@@ -1,8 +1,8 @@
 {
-  "package_name":"com.xiaomi.blemeshdemo.ios",
-  "developer_id":"894158105",
-  "models":"xiaomi.dev.blemesh01",
-  "min_api_level":"138",
-  "version":"3",
-  "platform":"iphone"
+  "package_name": "com.xiaomi.blemeshdemo.ios",
+  "developer_id": "894158105",
+  "models": "xiaomi.dev.blemesh01|xiaomi.dev.blemesh02|xiaomi.dev.telinkf",
+  "min_api_level": "143",
+  "version": "8",
+  "platform": "iphone"
 }
