@@ -20,7 +20,7 @@
 
 **React Native 引擎版本：0.25.1**
 
-**当前 API Level ：137**
+**当前 API Level ：140**
 
 **兼容性：iOS 9 +**
 
@@ -48,6 +48,7 @@
 - [rn借助chrome进行调试文档](./MiHomePluginSDK/docs/rn-chrome-debug.md)
 - [扩展程序的生命周期说明文档](./MiHomePluginSDK/docs/lifeCycleDiscussion.md)
 - [iPhone X 适配指南](./MiHomePluginSDK/docs/updatePluginsForiPhoneX.md)
+- [状态栏高度变化适配指南](./MiHomePluginSDK/docs/statusBarAdaptation.md)
 - [扩展程序支持蓝牙网关说明](./MiHomePluginSDK/docs/btGateway.md)
 - [在扩展程序中使用自定义字体](./MiHomePluginSDK/docs/font.md)
 
