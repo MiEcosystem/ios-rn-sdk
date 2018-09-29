@@ -3,7 +3,7 @@ name: 🤗 Support Question
 about: 如果你对sdk的使用有一些疑问 💬，请先查阅文档或者确认自己的使用方法无误！
 
 ---
-**check [文档](https://github.com/MiEcosystem/ios-rn-sdk/tree/master/MiHomePluginSDK/docs) before issue**
+**check [docs](https://github.com/MiEcosystem/ios-rn-sdk/tree/master/MiHomePluginSDK/docs) before issue**
 
 ## Support Question
 
