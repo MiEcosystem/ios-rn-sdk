@@ -16,6 +16,11 @@ about: sdk好像出了点问题 🤔，不过提bug前确认使用方法无误�
 - app版本: [e.g. v6.0.0, db]
 - 相关模块和API: [e.g. MHPluginSDK.saveInfo]
 
+**复现步骤**
+1. xxx
+2. xxx
+3. xxx
+
 **其他的上下文或者截图**
 提供更多的上下文，有截图更好。
 
