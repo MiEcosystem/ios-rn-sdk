@@ -790,6 +790,38 @@ MHPluginSDK.privacyAndProtocolReview(userAgreement, userAgreementURL, privacyPol
 
 ```
 
+
+#### *showDeclarationWithConfig*  `pre-release` 
+
+>  弹窗：显示《软件使用条款》和《隐私协议》以及《用户体验计划》的入口
+>
+>  `privacyTitle `  用户使用条款的名称
+>
+>  `privacyURL ` 用户使用条款详细内容的url
+>
+>  `agreementTitle ` 隐私协议的名称
+>
+>  `agreementURL `  隐私协议的详细内容的url
+>
+>  `experiencePlanURL ` 用户体验计划的url
+> 
+>  
+
+```
+ const config = {
+​      privacyTitle: "隐私协议标题",
+​      privacyURL: MHPluginSDK.basePath + privacy.html,
+​      agreementTitle: "用户使用条款",
+​      agreementURL: MHPluginSDK.basePath + agreement.html,
+​      experiencePlanURL: MHPluginSDK.basePath + experiencePlan.html
+​    }
+
+MHPluginSDK.showDeclarationWithConfig(config, (result) => {
+  console.log("🔴result")
+  console.log(result)
+})
+```
+
 #### *saveInfo(info)*
 
 >使用 NSUserDefaults 缓存一个字典
