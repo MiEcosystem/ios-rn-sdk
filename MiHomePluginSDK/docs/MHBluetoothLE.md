@@ -726,7 +726,7 @@ MHBluetoothLE.writeWithoutResponse(service.peripheral, service.uuid, Characteris
 例子：
 
 ```javascript
-MHBluetoothLE.writeWithoutResponse(service.peripheral, service.uuid, CharacteristicUUID_READ_NORDIC, 'FF00FF00', (error, characteristc) => {
+MHBluetoothLE.writeValue(service.peripheral, service.uuid, CharacteristicUUID_READ_NORDIC, 'FF00FF00', (error, characteristc) => {
     if (error) {
       MHPluginSDK.showFilTips('数据写入失败');
       return;
