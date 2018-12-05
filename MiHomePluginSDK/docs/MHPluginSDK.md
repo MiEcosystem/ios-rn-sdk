@@ -763,9 +763,9 @@ MHPluginSDK.showFinishTips("数据获取成功！");
 ```
   MHPluginSDK.openPrivacyLicense("license","licenseURL","policy, "policyURL,(result)=>{
     if(result == "ok") {
-
+		// 同意隐私和使用条款的授权
     } else {
-
+		// 不同意隐私和使用条款的授权
     }
   })
 ```
@@ -791,7 +791,7 @@ MHPluginSDK.privacyAndProtocolReview(userAgreement, userAgreementURL, privacyPol
 ```
 
 
-#### *showDeclarationWithConfig*  `pre-release` 
+#### *showDeclarationWithConfig*  `AL-[145,)` 
 
 >  弹窗：显示《软件使用条款》和《隐私协议》以及《用户体验计划》的入口
 >
@@ -804,7 +804,8 @@ MHPluginSDK.privacyAndProtocolReview(userAgreement, userAgreementURL, privacyPol
 >  `agreementURL `  隐私协议的详细内容的url
 >
 >  `experiencePlanURL ` 用户体验计划的url
-> 
+>  
+>   callBack 表示同意或者取消授权的回调，同意时result 为ok
 >  
 
 ```
@@ -817,9 +818,28 @@ MHPluginSDK.privacyAndProtocolReview(userAgreement, userAgreementURL, privacyPol
 ​    }
 
 MHPluginSDK.showDeclarationWithConfig(config, (result) => {
-  console.log("🔴result")
-  console.log(result)
+  if(result == "ok") {
+	// 同意隐私和使用条款的授权
+    } else {
+	// 不同意隐私和使用条款的授权
+    }
 })
+```
+
+#### *isOpenUserExperiencePlan* `AL-[145,)` 
+
+>
+> 判断是否开启了用户体验计划 
+> 
+
+```
+MHPluginSDK.isOpenUserExperiencePlan((result)=>{
+ if(result) {
+ 	// 开启了用户体验计划
+ } else {
+ 	// 未开启用户体验计划
+ }
+)
 ```
 
 #### *saveInfo(info)*
