@@ -494,6 +494,14 @@ MHPluginSDK.setDevicePropertyToMemCache({"power":"on", "abc":"def"});
 > ]
 > ```
 
+#### *openDeviceTimeZoneSettingPage()* ` AL-[147,)` 
+
+> 打开设备时区设置页面
+>
+> ```js
+> MHPluginSDK.openDeviceTimeZoneSettingPage();
+> ```
+
 #### *openDeviceUpgradePage()*
 
 > 打开设备固件升级页面
