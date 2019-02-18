@@ -292,3 +292,9 @@ MHXiaomiBLE.oneTimePassword(30,  8, (error,passwds)=>{
 	}
 });
 ```
+
+
+
+####*openOneTimePassword(interval, digits)*`AL-[147,)`
+
+和`oneTimePassword `的作用一样，不过这个接口是自带了UI交互逻辑的
