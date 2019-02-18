@@ -1455,6 +1455,19 @@ MHPluginSDK.jumpWifiSettingPage();
 ```
 
 
+
+#### *goToMeshGateWayGuideLineWebView* `AL-[146,)`
+
+> 跳转至`蓝牙mesh网关`的用户指南页面
+
+```
+MHPluginSDK.goToMeshGateWayGuideLineWebView();
+```
+
+
+
+
+
 ### 订阅
 
 #### 订阅设备状态的更新
